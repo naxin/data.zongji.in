@@ -57,10 +57,10 @@
 		$form->review 			= $row['form_review'];
 	}else{
 		$form->id 				= 0;
-		$form->name 			= 'Untitled Form';
-		$form->description 		= 'This is your form description. Click here to edit.';
+		$form->name 			= '新的表单';
+		$form->description 		= '这里是表单的描述,点击可以进行编辑.';
 		$form->redirect 		= '';
-		$form->success_message  = 'Success! Your submission has been saved!';
+		$form->success_message  = '提交成功!';
 		$form->password 		= '';
 		$form->frame_height 	= 0;
 		$form->unique_ip 		= 0;
@@ -178,13 +178,13 @@ EOT;
 <ul id="form_elements"></ul>
 
 <div class="notification" style="display: <?php if(empty($element)){ echo 'block'; } else { echo 'none'; }; ?>;" id="nofields" onclick="display_fields(0)">
-<h2>You have no fields yet!</h2>
-<p>Click the buttons on the right to add fields to your form.</p>
+<h2>您还没有添加字段!</h2>
+<p>点击右侧的字段可以添加到这里.</p>
 </div>
 
 <div id="div_button" class="buttons <?php if(empty($element)){ echo ' hide'; } ?>">
 <a href="#" id="form_save_button" class="positive">
-<img src="images/icons/filesave.gif" alt=""> Save Form</a>
+<img src="images/icons/filesave.gif" alt=""> 保存</a>
 </div>
 </form>
 <div id="debug_box"></div>
@@ -193,9 +193,9 @@ EOT;
 
 <div id="sidebar">
 <ul id="tabs" class="add_field_tab">
-<li id="add_field_tab"><a href="javascript:display_fields(0);" title="Add a Field">Add a Field</a></li>
-<li id="field_prop_tab"><a href="javascript:display_field_properties();" title="Field Properties">Field Properties</a></li>
-<li id="form_prop_tab"><a href="javascript:display_form_properties();" title="Form Properties">Form Properties</a></li>
+<li id="add_field_tab"><a href="javascript:display_fields(0);" title="Add a Field">添加组件</a></li>
+<li id="field_prop_tab"><a href="javascript:display_field_properties();" title="Field Properties">编辑组件</a></li>
+<li id="form_prop_tab"><a href="javascript:display_form_properties();" title="Form Properties">表单设置</a></li>
 </ul>
 
 
@@ -230,16 +230,16 @@ EOT;
 
 <form style="display: block;" id="element_properties" action="" onsubmit="return false;">
 <div class="element_inactive" id="element_inactive">
-<h3><b>Please select a field</b></h3>
-<p>Click on a field on the left to change its properties.</p>
+<h3><b>请先选择一个组件</b></h3>
+<p>从左侧区域先选择一个组件以进行编辑</p>
 </div>
 
 <div class="num" id="element_position">1</div>
 <ul id="all_properties">
 <li>
 <label class="desc" for="element_label">
-Field Label 
-<a href="#" class="tooltip" title="Field Label" rel="Field Label is one or two words placed directly above the field.">(?)</a>
+组件标题
+<a href="#" class="tooltip" title="Field Label" rel="组件标题将显示在组件之上">(?)</a>
 </label>
 <textarea id="element_label" class="textarea" 
 					 onkeyup="set_properties(this.value, 'title')"
@@ -248,45 +248,45 @@ Field Label
 
 <li class="left half" id="prop_element_type">
 <label class="desc" for="element_type">
-Field Type 
-<a href="#" class="tooltip" title="Field Type" rel="Field Type detemines what kind of data can be collected by your field. After you save the form, the field type cannot be changed.">(?)</a>
+组件类型
+<a href="#" class="tooltip" title="Field Type" rel="组件类型是指您想收集哪种数据，保存之后不可改变">(?)</a>
 </label>
 <select class="select full" id="element_type" autocomplete="off" tabindex="12" onchange="set_properties(JJ(this).val(), 'type')">
-<option value="text">Single Line Text</option>
-<option value="textarea">Paragraph Text</option>
-<option value="radio">Multiple Choice</option>
-<option value="checkbox">Checkboxes</option>
-<option value="select">Drop Down</option>
-<option value="number">Number</option>
-<option value="simple_name">Name</option>
-<option value="date">Date</option>
-<option value="time">Time</option>
-<option value="phone">Phone</option>
-<option value="money">Price</option>
-<option value="url">Web Site</option>
+<option value="text">单行文本</option>
+<option value="textarea">多行文本</option>
+<option value="radio">单项选择</option>
+<option value="checkbox">复选</option>
+<option value="select">下拉菜单</option>
+<option value="number">数字</option>
+<option value="simple_name">名字</option>
+<option value="date">日期</option>
+<option value="time">时间</option>
+<option value="phone">电话</option>
+<option value="money">价格</option>
+<option value="url">网址</option>
 <option value="email">Email</option>
-<option value="address">Address</option>
-<option value="file">File Upload</option>
-<option value="section">Section Break</option>
+<option value="address">地址</option>
+<option value="file">文件上传</option>
+<option value="section">节间隔</option>
 </select>
 </li>
 
 <li class="right half" id="prop_element_size">
 <label class="desc" for="field_size">
-Field Size
-<a href="#" class="tooltip" title="Field Size" rel="This property set the visual appearance of the field in your form. It does not limit nor increase the amount of data that can be collected by the field.">(?)</a>
+组件尺寸
+<a href="#" class="tooltip" title="Field Size" rel="组件的大小">(?)</a>
 </label>
 <select class="select full" id="field_size" autocomplete="off" tabindex="13" onchange="set_properties(JJ(this).val(), 'size')">
-<option value="small">Small</option>
-<option value="medium">Medium</option>
-<option value="large">Large</option>
+<option value="small">小</option>
+<option value="medium">中</option>
+<option value="large">大</option>
 </select>
 </li>
 
 <li class="right half" id="prop_date_format">
 <label class="desc" for="field_size">
-Date Format
-<a href="#" class="tooltip" title="Date Format" rel="You can choose between American and European Date Formats">(?)</a>
+日期格式
+<a href="#" class="tooltip" title="Date Format" rel="你可以选择其中一种日期格式">(?)</a>
 </label>
 <select class="select full" id="date_type" autocomplete="off" onchange="set_properties(JJ(this).val(), 'type')">
 <option id="element_date" value="date">MM / DD / YYYY</option>
@@ -296,7 +296,7 @@ Date Format
 
 <li class="right half" id="prop_name_format">
 <label class="desc" for="name_format">
-Name Format
+名字格式
 <a href="#" class="tooltip" title="Name Format" rel="Two format available. A normal name field, or an extended name field with title and suffix.">(?)</a>
 </label>
 <select class="select full" id="name_format" autocomplete="off" onchange="set_properties(JJ(this).val(), 'type')">
@@ -307,7 +307,7 @@ Name Format
 
 <li class="right half" id="prop_phone_format">
 <label class="desc" for="field_size">
-Phone Format
+电话格式
 <a href="#" class="tooltip" title="Phone Format" rel="You can choose between American and International Phone Formats">(?)</a>
 </label>
 <select class="select full" id="phone_format" autocomplete="off" onchange="set_properties(JJ(this).val(), 'type')">
@@ -318,7 +318,7 @@ Phone Format
 
 <li class="right half" id="prop_currency_format">
 <label class="desc" for="field_size">
-Currency Format
+货币格式
 </label>
 <select class="select full" id="money_format" autocomplete="off" onchange="set_properties(JJ(this).val(), 'constraint')">
 <option id="element_money_usd" value="dollar">$ Dollars</option>
@@ -341,26 +341,26 @@ Choices
 
 <li class="left half clear" id="prop_options">
 <fieldset class="fieldset">
-<legend>Rules</legend>
+<legend>规则</legend>
 <input id="element_required" class="checkbox" value="" tabindex="14" onclick="(this.checked) ? checkVal = '1' : checkVal = '0';set_properties(checkVal, 'is_required')" type="checkbox">
-<label class="choice" for="element_required">Required</label>
-<a href="#" class="tooltip" title="Required" rel="Checking this rule will make sure that a user fills out a particular field. A message will be displayed to the user if they have not filled out the field.">(?)</a><br>
+<label class="choice" for="element_required">是否必填</label>
+<a href="#" class="tooltip" title="Required" rel="如果选择此项,那么用户将必须填写此字段">(?)</a><br>
 <span id="element_unique_span">
 <input id="element_unique" class="checkbox" value="" tabindex="15" onchange="(this.checked) ? checkVal = '1' : checkVal = '0';set_properties(checkVal, 'is_unique')" type="checkbox"> 
-<label class="choice" for="element_unique">No Duplicates</label>  
-<a href="#" class="tooltip" title="No Duplicates" rel="Checking this rule will verify that the data entered into this field is unique and has not been submitted previously.">(?)</a></span><br>
+<label class="choice" for="element_unique">数据唯一</label>  
+<a href="#" class="tooltip" title="No Duplicates" rel="如果选择此项,用户填写的数据不能重复">(?)</a></span><br>
 </fieldset>
 </li>
 
 <li class="right half" id="prop_access_control">
 <fieldset class="fieldset">
-<legend>Field Visible to</legend>
+<legend>是否可见</legend>
 <input id="fieldPublic" name="security" class="radio" value="" checked="checked" tabindex="16" onclick="set_properties('0', 'is_private')" type="radio">
-<label class="choice" for="fieldPublic">Everyone</label>
+<label class="choice" for="fieldPublic">所有人可见</label>
 <a href="#" class="tooltip" title="Visible to Everyone" rel="This is the default option. The field will be accessible by anyone when the form is made public.">(?)</a><br>
 <span id="admin_only_span">
 <input id="fieldPrivate" name="security" class="radio" value="" tabindex="17" onclick="set_properties('1', 'is_private')" type="radio">
-<label class="choice" for="fieldPrivate">Admin Only</label>
+<label class="choice" for="fieldPrivate">仅管理员可见</label>
 <a href="#" class="tooltip" title="Admin Only" rel="Fields that are set to 'Admin Only' will not be shown to users when the form is made public.">(?)</a></span><br>
 </fieldset>
 </li>
@@ -386,7 +386,7 @@ Choices
 
 <li class="clear" id="prop_default_value">
 <label class="desc" for="element_default">
-Default Value
+默认值
 <a href="#" class="tooltip" title="Default Value" rel="By setting this value, the field will be prepopulated with the text you enter.">(?)</a>
 </label>
 
@@ -618,7 +618,7 @@ Default Country
 
 <li class="clear" id="prop_phone_default">
 <label class="desc" for="element_phone_default1">
-Default Value
+默认值
 <a href="#" class="tooltip" title="Default Value" rel="By setting this value, the field will be prepopulated with the text you enter.">(?)</a>
 </label>
 
@@ -631,7 +631,7 @@ Default Value
 
 <li class="clear">
 <label class="desc" for="element_instructions">
-Guidelines for User 
+用户提示信息
 <a href="#" class="tooltip" title="Guidelines" rel="This text will be displayed to your users while they're filling out particular field.">(?)</a>
 </label>
 
@@ -642,24 +642,24 @@ Guidelines for User
 <ul id="add_elements_button" style="display: none; padding-top: 5px">
 <li class="buttons" id="list_buttons">
 <a href="#" onclick="display_fields(0);return false">
-<img src="images/icons/textfield_add.gif" alt="">Add Another Field</a>
+<img src="images/icons/textfield_add.gif" alt="">添加另一个组件</a>
 </li>
 </ul>
 <form style="display: none;" id="form_properties" action="" onsubmit="return false;">
 <ul>
 <li>
-<label class="desc" for="form_title">Form Title <a class="tooltip" title="Form Title" rel="The title of your form displayed to the user when they see your form.">(?)</a></label>
+<label class="desc" for="form_title">表单标题<a class="tooltip" title="Form Title" rel="The title of your form displayed to the user when they see your form.">(?)</a></label>
 <input id="form_title" class="text medium" value="" tabindex="1" maxlength="50" onkeyup="update_form(this.value, 'name')" onblur="update_form(this.value, 'name')" type="text">
 </li>
 <li>
-<label class="desc" for="form_description">Description <a class="tooltip" title="Description" rel="This will appear directly below the form name. Useful for displaying a short description or any instructions, notes, guidelines.">(?)</a></label>
+<label class="desc" for="form_description">表单描述<a class="tooltip" title="Description" rel="This will appear directly below the form name. Useful for displaying a short description or any instructions, notes, guidelines.">(?)</a></label>
 <textarea class="textarea small" rows="10" cols="50" id="form_description" tabindex="2" onkeyup="update_form(this.value, 'description')" onblur="update_form(this.value, 'description')"></textarea>
 </li>
 
 <li>
 <input id="form_password_option" class="checkbox" value="" tabindex="5" type="checkbox">
-<label class="choice" for="form_password_option"><b>Turn On Password Protection</b></label>
-<a class="tooltip" title="Turn On Password Protection" rel="If enabled, all users accessing the public form will then be required to type in the password to access the form. Your form is password protected.">(?)</a><br>
+<label class="choice" for="form_password_option"><b>密码保护</b></label>
+<a class="tooltip" title="Turn On Password Protection" rel="如果开启此项,所有用户填写此表单时都需输入密码才能访问">(?)</a><br>
 <div id="form_password" class="password hide">
 <img src="images/icons/key.gif" alt="Password : ">
 <input id="form_password_data" class="text" value="" size="25" tabindex="6" maxlength="255" onkeyup="update_form(this.value, 'password')" onblur="update_form(this.value, 'password')" type="password">
@@ -668,14 +668,14 @@ Guidelines for User
 
 <li>
 <input id="form_captcha" class="checkbox" value="" onchange="(this.checked)?update_form('1', 'captcha'):update_form('0','captcha');" tabindex="6" type="checkbox">
-<label class="choice" for="form_captcha"><b>Turn On Spam Protection (CAPTCHA)</b></label>
-<a class="tooltip" title="Turn On Spam Protection (CAPTCHA)" rel="If enabled, an image with random words will be generated (audio also provided) and users will be required to enter the correct words to be able submitting your form. This is useful to prevent abuse from bots or automated programs usually written to generate spam.">(?)</a><br>
+<label class="choice" for="form_captcha"><b>开启验证码</b></label>
+<a class="tooltip" title="开启验证码" rel="如果启用,将生成图像与随机的单词(音频也提供),用户将被要求输入正确的单词才可以提交表单,以防止机器人或程序自动填表。">(?)</a><br>
 </li>
 
 <li>
 <input id="form_unique_ip" class="checkbox" value="" onchange="(this.checked)?update_form('1', 'unique_ip'):update_form('0','unique_ip');" tabindex="7" type="checkbox">
-<label class="choice" for="form_unique_ip"><b>Limit One Entry Per User</b></label>
-<a class="tooltip" title="Limit One Entry Per User" rel="Use this to prevent users from filling out your form more than once. This is done by comparing user's IP Address.">(?)</a><br>
+<label class="choice" for="form_unique_ip"><b>限制每个用户提交一次</b></label>
+<a class="tooltip" title="限制每个用户一个条目" rel="根据ip限制每个用户只能提交一次">(?)</a><br>
 </li>
 
 <li>
@@ -686,19 +686,18 @@ Guidelines for User
 
 <li>
 <fieldset>
-<legend>Success Message</legend>
+<legend>提交成功消息</legend>
 
 <div class="left">
 <input id="form_success_message_option" name="confirmation" class="radio" value="" checked="checked" tabindex="8" onclick="update_form('', 'redirect'); Element.removeClassName('form_success_message', 'hide');Element.addClassName('form_redirect_url', 'hide')" type="radio">
-<label class="choice" for="form_success_message_option">Show Text</label>
-<a class="tooltip" title="Success Message" rel="This message will be displayed after your users have successfully submitted an entry.">(?)</a>
+<label class="choice" for="form_success_message_option">显示文本</label>
+<a class="tooltip" title="成功消息" rel="用户提交表单成功后将显示此消息">(?)</a>
 </div>
 
 <div class="right">
 <input id="form_redirect_option" name="confirmation" class="radio" value="" tabindex="7" onclick="update_form(redirect_url, 'redirect'); Element.addClassName('form_success_message', 'hide');Element.removeClassName('form_redirect_url', 'hide');" type="radio">
-<label class="choice" for="form_redirect_option">Redirect URL</label>
-<a class="tooltip" title="Redirect URL" rel="After your users have successfully submitted an entry, you can redirect them to another 
-website/URL of your choice.">(?)</a>
+<label class="choice" for="form_redirect_option">跳转到其他页面</label>
+<a class="tooltip" title="Redirect URL" rel="用户提交后可自动跳转到此url">(?)</a>
 </div>
 
 <textarea class="textarea full" rows="10" cols="50" id="form_success_message" tabindex="9" onkeyup="update_form(JJ(this).val(), 'success_message')" onblur="update_form(JJ(this).val(), 'success_message')"><?php echo $form->success_message; ?></textarea>

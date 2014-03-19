@@ -422,14 +422,11 @@ EOT;
 <div class="info">
 
 	<div class="create_new_form">
-		<a href="edit_form.php"><img src="images/create_new_form.gif" align="absmiddle"/></a>
+		<a href="edit_form.php">创建新的表单</a>
 	</div>
-	<h2>Form Manager</h2>
-	<p>Create, edit and manage your forms</p>
+	<h2>表单管理</h2>
+	<p>创建或编辑你的表单</p>
 </div>
-
-
-
 
 <?php 
 	$i=($pageno -1) * $rows_per_page + 1;
@@ -446,7 +443,7 @@ EOT;
 		 	$activation_text = 'Disable this form';
 		 	$activation_link = 'disable_form';
 		 }else{ 
-		 	$form_status 	 = 'Inactive'; 
+		 	$form_status 	 = 'Inactive';
 		 	$image_status 	 = 'disabled.gif';
 		 	$activation_text = 'Enable this form';
 		 	$activation_link = 'enable_form';
@@ -473,29 +470,29 @@ EOT;
 			    <td width="6%"><a href="manage_form.php?pageno=<?php echo $pageno; ?>&delete=<?php echo $data['form_id']; ?>" onclick="javascript: return confirm('Are you sure you want to delete this form and all associated data?');"><img src="images/icons/cross.gif" /></a></td>
 			  </tr>
 			  <tr align="center" >
-			    <td ><a href="<?php echo "manage_entries.php?id={$data['form_id']}"; ?>">Entries</a></td>
-			    <td><a href="<?php echo "edit_form.php?id={$data['form_id']}"; ?>">Edit Form</a></td>
-			    <td nowrap><a href="<?php echo "edit_css.php?id={$data['form_id']}"; ?>">Edit CSS</a></td>
-			    <td nowrap><a href="<?php echo "email_settings.php?id={$data['form_id']}"; ?>">Emails</a></td>
-			    <td nowrap><a href="<?php echo "embed_code.php?id={$data['form_id']}"; ?>">Embed Code</a></td>
+			    <td ><a href="<?php echo "manage_entries.php?id={$data['form_id']}"; ?>">结果数据</a></td>
+			    <td><a href="<?php echo "edit_form.php?id={$data['form_id']}"; ?>">编辑表单</a></td>
+			    <td nowrap><a href="<?php echo "edit_css.php?id={$data['form_id']}"; ?>">编辑CSS</a></td>
+			    <td nowrap><a href="<?php echo "email_settings.php?id={$data['form_id']}"; ?>">邮件</a></td>
+			    <td nowrap><a href="<?php echo "embed_code.php?id={$data['form_id']}"; ?>">嵌入代码</a></td>
 			    <td>&nbsp;</td>
-			    <td><a href="view.php?id=<?php echo $data['form_id']; ?>" target="_blank">View Form</a></td>
+			    <td><a href="view.php?id=<?php echo $data['form_id']; ?>" target="_blank">显示表单</a></td>
 			    <td>&nbsp;</td>
-			    <td><a href="<?php echo "manage_form.php?duplicate={$data['form_id']}"; ?>">Duplicate</a></td>
-			    <td><a href="manage_form.php?pageno=<?php echo $pageno; ?>&delete=<?php echo $data['form_id']; ?>" onclick="javascript: return confirm('Are you sure you want to delete this form and all associated data?');">Delete</a></td>
+			    <td><a href="<?php echo "manage_form.php?duplicate={$data['form_id']}"; ?>">复制表单</a></td>
+			    <td><a href="manage_form.php?pageno=<?php echo $pageno; ?>&delete=<?php echo $data['form_id']; ?>" onclick="javascript: return confirm('Are you sure you want to delete this form and all associated data?');">删除</a></td>
 			  </tr>
 			</table> 
       		<div style="clear:both; padding-left: 10px; padding-top: 10px">
-				Today's Entries: <strong><?php echo $entries[$data['form_id']]['today']; ?></strong><br>
-				Total Entries: <strong><?php echo $entries[$data['form_id']]['total']; ?></strong><br><br>
-				Latest Entry: <strong><?php echo $entries[$data['form_id']]['latest_entry']; ?></strong><br>
+				今日数据: <strong><?php echo $entries[$data['form_id']]['today']; ?></strong><br>
+				总数据: <strong><?php echo $entries[$data['form_id']]['total']; ?></strong><br><br>
+				最新数据: <strong><?php echo $entries[$data['form_id']]['latest_entry']; ?></strong><br>
 						
 				<div id="edit_form_email_text_<?php echo $data['form_id']; ?>" style="margin-top: 15px;display:block">
 					Notifications will be sent to: <strong><span id="form_email_name_box_<?php echo $data['form_id']; ?>"><?php echo $data['form_email']; ?></span></strong>
 				</div>
 								
 				
-				Form Status: 
+				表单状态: 
 				<strong><span id="form_status_<?php echo $data['form_id']; ?>"><?php echo $form_status; ?></span></strong>&nbsp;&nbsp;<img id="image_status_<?php echo $data['form_id']; ?>" align="absmiddle" src="images/icons/<?php echo $image_status; ?>" />&nbsp;&nbsp;&nbsp;<a id="activation_link_<?php echo $data['form_id']; ?>" href="javascript: <?php echo $activation_link; ?>(<?php echo $data['form_id']; ?>)" style="text-decoration: none; border-bottom: 1px dotted #000"><?php echo $activation_text; ?></a>
 				&nbsp;&nbsp;<img id="progress_image_<?php echo $data['form_id']; ?>" align="absmiddle" src="images/loader-red.gif" style="visibility: hidden"/>
 				

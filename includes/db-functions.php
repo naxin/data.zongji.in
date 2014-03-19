@@ -37,7 +37,7 @@
 		$query = "INSERT INTO `ap_forms` ($field_list) VALUES ($field_values);"; 
 		$result = mysql_query($query);
 		if(!$result){
-			$error_message = 'Query failed! Error code: '.mysql_errno().' - '.mysql_error().' - Query: '.$query;
+			$error_message = '数据库错误! 错误代码: '.mysql_errno().' - '.mysql_error().' - Query: '.$query;
 			return $error_message;
 		}
 		

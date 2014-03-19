@@ -1,12 +1,12 @@
 (function() {
     if (typeof v != "undefined") {
-        var u = v
+        var u = v;
     }
     var v = window.jQuery = function(a, b) {
-        return this instanceof v ? this.init(a, b) : new v(a, b)
+        return this instanceof v ? this.init(a, b) : new v(a, b);
     };
     if (typeof $ != "undefined") {
-        var w = $
+        var w = $;
     }
     window.$ = v;
     var x = /^[^<]*(<(.|\s)+>)[^>]*$|^#(\w+)$/;
@@ -17,38 +17,38 @@
                 var m = x.exec(a);
                 if (m && (m[1] || !b)) {
                     if (m[1]) {
-                        a = v.clean([m[1]], b)
+                        a = v.clean([m[1]], b);
                     } else {
                         var c = document.getElementById(m[3]);
                         if (c) {
                             if (c.id != m[3]) {
-                                return v().find(a)
+                                return v().find(a);
                             } else {
                                 this[0] = c;
                                 this.length = 1;
-                                return this
+                                return this;
                             }
                         } else {
-                            a = []
+                            a = [];
                         }
                     }
                 } else {
-                    return new v(b).find(a)
+                    return new v(b).find(a);
                 }
             } else {
                 if (v.isFunction(a)) {
-                    return new v(document)[v.fn.ready ? "ready": "load"](a)
+                    return new v(document)[v.fn.ready ? "ready": "load"](a);
                 }
             }
-            return this.setArray(a.constructor == Array && a || (a.jquery || a.length && a != window && !a.nodeType && a[0] != undefined && a[0].nodeType) && v.makeArray(a) || [a])
+            return this.setArray(a.constructor == Array && a || (a.jquery || a.length && a != window && !a.nodeType && a[0] != undefined && a[0].nodeType) && v.makeArray(a) || [a]);
         },
         jquery: "1.2.1",
         size: function() {
-            return this.length
+            return this.length;
         },
         length: 0,
         get: function(a) {
-            return a == undefined ? v.makeArray(this) : this[a]
+            return a == undefined ? v.makeArray(this) : this[a];
         },
         pushStack: function(a) {
             var b = v(a);
@@ -58,42 +58,42 @@
         setArray: function(a) {
             this.length = 0;
             Array.prototype.push.apply(this, a);
-            return this
+            return this;
         },
         each: function(a, b) {
-            return v.each(this, a, b)
+            return v.each(this, a, b);
         },
         index: function(a) {
             var b = -1;
             this.each(function(i) {
                 if (this == a) {
-                    b = i
+                    b = i;
                 }
             });
-            return b
+            return b;
         },
         attr: function(c, d, e) {
             var f = c;
             if (c.constructor == String) {
                 if (d == undefined) {
-                    return this.length && v[e || "attr"](this[0], c) || undefined
+                    return this.length && v[e || "attr"](this[0], c) || undefined;
                 } else {
                     f = {};
-                    f[c] = d
+                    f[c] = d;
                 }
             }
             return this.each(function(a) {
                 for (var b in f) {
-                    v.attr(e ? this.style: this, b, v.prop(this, f[b], e, a, b))
+                    v.attr(e ? this.style: this, b, v.prop(this, f[b], e, a, b));
                 }
-            })
+            });
         },
         css: function(a, b) {
-            return this.attr(a, b, "curCSS")
+            return this.attr(a, b, "curCSS");
         },
         text: function(e) {
             if (typeof e != "object" && e != null) {
-                return this.empty().append(document.createTextNode(e))
+                return this.empty().append(document.createTextNode(e));
             }
             var t = "";
             v.each(e || this,
@@ -101,75 +101,75 @@
                 v.each(this.childNodes,
                 function() {
                     if (this.nodeType != 8) {
-                        t += this.nodeType != 1 ? this.nodeValue: v.fn.text([this])
+                        t += this.nodeType != 1 ? this.nodeValue: v.fn.text([this]);
                     }
                 })
             });
-            return t
+            return t;
         },
         wrapAll: function(b) {
             if (this[0]) {
                 v(b, this[0].ownerDocument).clone().insertBefore(this[0]).map(function() {
                     var a = this;
                     while (a.firstChild) {
-                        a = a.firstChild
+                        a = a.firstChild;
                     }
-                    return a
-                }).append(this)
+                    return a;
+                }).append(this);
             }
-            return this
+            return this;
         },
         wrapInner: function(a) {
             return this.each(function() {
-                v(this).contents().wrapAll(a)
-            })
+                v(this).contents().wrapAll(a);
+            });
         },
         wrap: function(a) {
             return this.each(function() {
-                v(this).wrapAll(a)
-            })
+                v(this).wrapAll(a);
+            });
         },
         append: function() {
             return this.domManip(arguments, true, 1,
             function(a) {
-                this.appendChild(a)
-            })
+                this.appendChild(a);
+            });
         },
         prepend: function() {
             return this.domManip(arguments, true, -1,
             function(a) {
-                this.insertBefore(a, this.firstChild)
-            })
+                this.insertBefore(a, this.firstChild);
+            });
         },
         before: function() {
             return this.domManip(arguments, false, 1,
             function(a) {
-                this.parentNode.insertBefore(a, this)
-            })
+                this.parentNode.insertBefore(a, this);
+            });
         },
         after: function() {
             return this.domManip(arguments, false, -1,
             function(a) {
-                this.parentNode.insertBefore(a, this.nextSibling)
-            })
+                this.parentNode.insertBefore(a, this.nextSibling);
+            });
         },
         end: function() {
-            return this.prevObject || v([])
+            return this.prevObject || v([]);
         },
         find: function(t) {
             var b = v.map(this,
             function(a) {
-                return v.find(t, a)
+                return v.find(t, a);
             });
-            return this.pushStack(/[^+>] [^+>]/.test(t) || t.indexOf("..") > -1 ? v.unique(b) : b)
+            return this.pushStack(/[^+>] [^+>]/.test(t) || t.indexOf("..") > -1 ? v.unique(b) : b);
         },
         clone: function(d) {
             var e = this.map(function() {
-                return this.outerHTML ? v(this.outerHTML)[0] : this.cloneNode(true)
+                return this.outerHTML ? v(this.outerHTML)[0] : this.cloneNode(true);
             });
             var f = e.find("*").andSelf().each(function() {
                 if (this[y] != undefined) {
-                    this[y] = null
+                    this[y] = null;
                 }
             });
             if (d === true) {
@@ -177,33 +177,33 @@
                     var a = v.data(this, "events");
                     for (var b in a) {
                         for (var c in a[b]) {
-                            v.event.add(f[i], b, a[b][c], a[b][c].data)
+                            v.event.add(f[i], b, a[b][c], a[b][c].data);
                         }
                     }
-                })
+                });
             }
-            return e
+            return e;
         },
         filter: function(t) {
             return this.pushStack(v.isFunction(t) && v.grep(this,
             function(a, b) {
-                return t.apply(a, [b])
-            }) || v.multiFilter(t, this))
+                return t.apply(a, [b]);
+            }) || v.multiFilter(t, this));
         },
         not: function(t) {
             return this.pushStack(t.constructor == String && v.multiFilter(t, this, true) || v.grep(this,
             function(a) {
-                return (t.constructor == Array || t.jquery) ? v.inArray(a, t) < 0 : a != t
-            }))
+                return (t.constructor == Array || t.jquery) ? v.inArray(a, t) < 0 : a != t;
+            }));
         },
         add: function(t) {
-            return this.pushStack(v.merge(this.get(), t.constructor == String ? v(t).get() : t.length != undefined && (!t.nodeName || v.nodeName(t, "form")) ? t: [t]))
+            return this.pushStack(v.merge(this.get(), t.constructor == String ? v(t).get() : t.length != undefined && (!t.nodeName || v.nodeName(t, "form")) ? t: [t]));
         },
         is: function(a) {
-            return a ? v.multiFilter(a, this).length > 0 : false
+            return a ? v.multiFilter(a, this).length > 0 : false;
         },
         hasClass: function(a) {
-            return this.is("." + a)
+            return this.is("." + a);
         },
         val: function(b) {
             if (b == undefined) {
@@ -215,63 +215,63 @@
                         options = c.options,
                         one = c.type == "select-one";
                         if (d < 0) {
-                            return null
+                            return null;
                         }
                         for (var i = one ? d: 0, max = one ? d + 1 : options.length; i < max; i++) {
                             var e = options[i];
                             if (e.selected) {
                                 var b = v.browser.msie && !e.attributes.value.specified ? e.text: e.value;
                                 if (one) {
-                                    return b
+                                    return b;
                                 }
-                                a.push(b)
+                                a.push(b);
                             }
                         }
-                        return a
+                        return a;
                     } else {
-                        return this[0].value.replace(/\r/g, "")
+                        return this[0].value.replace(/\r/g, "");
                     }
                 }
             } else {
                 return this.each(function() {
                     if (b.constructor == Array && /radio|checkbox/.test(this.type)) {
-                        this.checked = (v.inArray(this.value, b) >= 0 || v.inArray(this.name, b) >= 0)
+                        this.checked = (v.inArray(this.value, b) >= 0 || v.inArray(this.name, b) >= 0);
                     } else {
                         if (v.nodeName(this, "select")) {
                             var a = b.constructor == Array ? b: [b];
                             v("option", this).each(function() {
-                                this.selected = (v.inArray(this.value, a) >= 0 || v.inArray(this.text, a) >= 0)
+                                this.selected = (v.inArray(this.value, a) >= 0 || v.inArray(this.text, a) >= 0);
                             });
                             if (!a.length) {
-                                this.selectedIndex = -1
+                                this.selectedIndex = -1;
                             }
                         } else {
-                            this.value = b
+                            this.value = b;
                         }
                     }
-                })
+                });
             }
         },
         html: function(a) {
-            return a == undefined ? (this.length ? this[0].innerHTML: null) : this.empty().append(a)
+            return a == undefined ? (this.length ? this[0].innerHTML: null) : this.empty().append(a);
         },
         replaceWith: function(a) {
-            return this.after(a).remove()
+            return this.after(a).remove();
         },
         eq: function(i) {
-            return this.slice(i, i + 1)
+            return this.slice(i, i + 1);
         },
         slice: function() {
-            return this.pushStack(Array.prototype.slice.apply(this, arguments))
+            return this.pushStack(Array.prototype.slice.apply(this, arguments));
         },
         map: function(b) {
             return this.pushStack(v.map(this,
             function(a, i) {
-                return b.call(a, i, a)
-            }))
+                return b.call(a, i, a);
+            }));
         },
         andSelf: function() {
-            return this.add(this.prevObject)
+            return this.add(this.prevObject);
         },
         domManip: function(c, d, e, f) {
             var g = this.length > 1,
@@ -280,21 +280,21 @@
                 if (!a) {
                     a = v.clean(c, this.ownerDocument);
                     if (e < 0) {
-                        a.reverse()
+                        a.reverse();
                     }
                 }
                 var b = this;
                 if (d && v.nodeName(this, "table") && v.nodeName(a[0], "tr")) {
-                    b = this.getElementsByTagName("tbody")[0] || this.appendChild(document.createElement("tbody"))
+                    b = this.getElementsByTagName("tbody")[0] || this.appendChild(document.createElement("tbody"));
                 }
                 v.each(a,
                 function() {
                     var a = g ? this.cloneNode(true) : this;
                     if (!evalScript(0, a)) {
-                        f.call(b, a)
+                        f.call(b, a);
                     }
-                })
-            })
+                });
+            });
         }
     };
     function evalScript(i, a) {
@@ -305,19 +305,19 @@
                     url: a.src,
                     async: false,
                     dataType: "script"
-                })
+                });
             } else {
-                v.globalEval(a.text || a.textContent || a.innerHTML || "")
+                v.globalEval(a.text || a.textContent || a.innerHTML || "");
             }
             if (a.parentNode) {
-                a.parentNode.removeChild(a)
+                a.parentNode.removeChild(a);
             }
         } else {
             if (a.nodeType == 1) {
-                v("script", a).each(evalScript)
+                v("script", a).each(evalScript);
             }
         }
-        return b
+        return b;
     }
     v.extend = v.fn.extend = function() {
         var b = arguments[0] || {},
@@ -326,30 +326,30 @@
         deep = false;
         if (b.constructor == Boolean) {
             deep = b;
-            b = arguments[1] || {}
+            b = arguments[1] || {};
         }
         if (al == 1) {
             b = this;
-            a = 0
+            a = 0;
         }
         var c;
         for (; a < al; a++) {
             if ((c = arguments[a]) != null) {
                 for (var i in c) {
                     if (b == c[i]) {
-                        continue
+                        continue;
                     }
                     if (deep && typeof c[i] == "object" && b[i]) {
-                        v.extend(b[i], c[i])
+                        v.extend(b[i], c[i]);
                     } else {
                         if (c[i] != undefined) {
-                            b[i] = c[i]
+                            b[i] = c[i];
                         }
                     }
                 }
             }
         }
-        return b
+        return b;
     };
     var y = "jQuery" + (new Date()).getTime(),
     uuid = 0,
@@ -358,32 +358,32 @@
         noConflict: function(a) {
             window.$ = w;
             if (a) {
-                window.jQuery = u
+                window.jQuery = u;
             }
-            return v
+            return v;
         },
         isFunction: function(a) {
-            return !! a && typeof a != "string" && !a.nodeName && a.constructor != Array && /function/i.test(a + "")
+            return !! a && typeof a != "string" && !a.nodeName && a.constructor != Array && /function/i.test(a + "");
         },
         isXMLDoc: function(a) {
-            return a.documentElement && !a.body || a.tagName && a.ownerDocument && !a.ownerDocument.body
+            return a.documentElement && !a.body || a.tagName && a.ownerDocument && !a.ownerDocument.body;
         },
         globalEval: function(a) {
             a = v.trim(a);
             if (a) {
                 if (window.execScript) {
-                    window.execScript(a)
+                    window.execScript(a);
                 } else {
                     if (v.browser.safari) {
-                        window.setTimeout(a, 0)
+                        window.setTimeout(a, 0);
                     } else {
-                        eval.call(window, a)
+                        eval.call(window, a);
                     }
                 }
             }
         },
         nodeName: function(a, b) {
-            return a.nodeName && a.nodeName.toUpperCase() == b.toUpperCase()
+            return a.nodeName && a.nodeName.toUpperCase() == b.toUpperCase();
         },
         cache: {},
         data: function(a, b, c) {
@@ -393,12 +393,12 @@
                 d = a[y] = ++uuid
             }
             if (b && !v.cache[d]) {
-                v.cache[d] = {}
+                v.cache[d] = {};
             }
             if (c != undefined) {
-                v.cache[d][b] = c
+                v.cache[d][b] = c;
             }
-            return b ? v.cache[d][b] : d
+            return b ? v.cache[d][b] : d;
         },
         removeData: function(a, b) {
             a = a == window ? win: a;
@@ -408,81 +408,81 @@
                     delete v.cache[c][b];
                     b = "";
                     for (b in v.cache[c]) {
-                        break
+                        break;
                     }
                     if (!b) {
-                        v.removeData(a)
+                        v.removeData(a);
                     }
                 }
             } else {
                 try {
-                    delete a[y]
+                    delete a[y];
                 } catch(e) {
                     if (a.removeAttribute) {
-                        a.removeAttribute(y)
+                        a.removeAttribute(y);
                     }
                 }
-                delete v.cache[c]
+                delete v.cache[c];
             }
         },
         each: function(a, b, c) {
             if (c) {
                 if (a.length == undefined) {
                     for (var i in a) {
-                        b.apply(a[i], c)
+                        b.apply(a[i], c);
                     }
                 } else {
                     for (var i = 0, ol = a.length; i < ol; i++) {
                         if (b.apply(a[i], c) === false) {
-                            break
+                            break;
                         }
                     }
                 }
             } else {
                 if (a.length == undefined) {
                     for (var i in a) {
-                        b.call(a[i], i, a[i])
+                        b.call(a[i], i, a[i]);
                     }
                 } else {
                     for (var i = 0, ol = a.length, val = a[0]; i < ol && b.call(val, i, val) !== false; val = a[++i]) {}
                 }
             }
-            return a
+            return a;
         },
         prop: function(a, b, c, d, e) {
             if (v.isFunction(b)) {
-                b = b.call(a, [d])
+                b = b.call(a, [d]);
             }
             var f = /z-?index|font-?weight|opacity|zoom|line-?height/i;
-            return b && b.constructor == Number && c == "curCSS" && !f.test(e) ? b + "px": b
+            return b && b.constructor == Number && c == "curCSS" && !f.test(e) ? b + "px": b;
         },
         className: {
             add: function(b, c) {
                 v.each((c || "").split(/\s+/),
                 function(i, a) {
                     if (!v.className.has(b.className, a)) {
-                        b.className += (b.className ? " ": "") + a
+                        b.className += (b.className ? " ": "") + a;
                     }
-                })
+                });
             },
             remove: function(b, c) {
                 b.className = c != undefined ? v.grep(b.className.split(/\s+/),
                 function(a) {
-                    return ! v.className.has(c, a)
-                }).join(" ") : ""
+                    return ! v.className.has(c, a);
+                }).join(" ") : "";
             },
             has: function(t, c) {
-                return v.inArray(c, (t.className || t).toString().split(/\s+/)) > -1
+                return v.inArray(c, (t.className || t).toString().split(/\s+/)) > -1;
             }
         },
         swap: function(e, o, f) {
             for (var i in o) {
                 e.style["old" + i] = e.style[i];
-                e.style[i] = o[i]
+                e.style[i] = o[i];
             }
             f.apply(e, []);
             for (var i in o) {
-                e.style[i] = e.style["old" + i]
+                e.style[i] = e.style["old" + i];
             }
         },
         css: function(e, p) {
@@ -492,13 +492,13 @@
                 v.each(d,
                 function() {
                     b["padding" + this] = 0;
-                    b["border" + this + "Width"] = 0
+                    b["border" + this + "Width"] = 0;
                 });
                 v.swap(e, b,
                 function() {
                     if (v(e).is(":visible")) {
                         oHeight = e.offsetHeight;
-                        oWidth = e.offsetWidth
+                        oWidth = e.offsetWidth;
                     } else {
                         e = v(e.cloneNode(true)).find(":radio").removeAttr("checked").end().css({
                             visibility: "hidden",
@@ -514,68 +514,68 @@
                         oHeight = e.clientHeight;
                         oWidth = e.clientWidth;
                         if (a == "static") {
-                            e.parentNode.style.position = "static"
+                            e.parentNode.style.position = "static";
                         }
-                        e.parentNode.removeChild(e)
+                        e.parentNode.removeChild(e);
                     }
                 });
-                return p == "height" ? oHeight: oWidth
+                return p == "height" ? oHeight: oWidth;
             }
-            return v.curCSS(e, p)
+            return v.curCSS(e, p);
         },
         curCSS: function(d, e, f) {
             var g, stack = [],
             swap = [];
             function color(a) {
                 if (!v.browser.safari) {
-                    return false
+                    return false;
                 }
                 var b = document.defaultView.getComputedStyle(a, null);
-                return ! b || b.getPropertyValue("color") == ""
+                return ! b || b.getPropertyValue("color") == "";
             }
             if (e == "opacity" && v.browser.msie) {
                 g = v.attr(d.style, "opacity");
                 return g == "" ? "1": g
             }
             if (e.match(/float/i)) {
-                e = B
+                e = B;
             }
             if (!f && d.style[e]) {
-                g = d.style[e]
+                g = d.style[e];
             } else {
                 if (document.defaultView && document.defaultView.getComputedStyle) {
                     if (e.match(/float/i)) {
-                        e = "float"
+                        e = "float";
                     }
                     e = e.replace(/([A-Z])/g, "-$1").toLowerCase();
                     var h = document.defaultView.getComputedStyle(d, null);
                     if (h && !color(d)) {
-                        g = h.getPropertyValue(e)
+                        g = h.getPropertyValue(e);
                     } else {
                         for (var a = d; a && color(a); a = a.parentNode) {
-                            stack.unshift(a)
+                            stack.unshift(a);
                         }
                         for (a = 0; a < stack.length; a++) {
                             if (color(stack[a])) {
                                 swap[a] = stack[a].style.display;
-                                stack[a].style.display = "block"
+                                stack[a].style.display = "block";
                             }
                         }
                         g = e == "display" && swap[stack.length - 1] != null ? "none": document.defaultView.getComputedStyle(d, null).getPropertyValue(e) || "";
                         for (a = 0; a < swap.length; a++) {
                             if (swap[a] != null) {
-                                stack[a].style.display = swap[a]
+                                stack[a].style.display = swap[a];
                             }
                         }
                     }
                     if (e == "opacity" && g == "") {
-                        g = "1"
+                        g = "1";
                     }
                 } else {
                     if (d.currentStyle) {
                         var i = e.replace(/\-(\w)/g,
                         function(m, c) {
-                            return c.toUpperCase()
+                            return c.toUpperCase();
                         });
                         g = d.currentStyle[e] || d.currentStyle[i];
                         if (!/^\d+(px)?$/i.test(g) && /^\d/.test(g)) {
@@ -585,12 +585,12 @@
                             d.style.left = g || 0;
                             g = d.style.pixelLeft + "px";
                             d.style.left = j;
-                            d.runtimeStyle.left = k
+                            d.runtimeStyle.left = k;
                         }
                     }
                 }
             }
-            return g
+            return g;
         },
         clean: function(a, e) {
             var r = [];
@@ -598,10 +598,10 @@
             v.each(a,
             function(i, c) {
                 if (!c) {
-                    return
+                    return;
                 }
                 if (c.constructor == Number) {
-                    c = c.toString()
+                    c = c.toString();
                 }
                 if (typeof c == "string") {
                     c = c.replace(/(<(\w+)[^>]*?)\/>/g,
@@ -614,122 +614,122 @@
                     var d = !s.indexOf("<opt") && [1, "<select>", "</select>"] || !s.indexOf("<leg") && [1, "<fieldset>", "</fieldset>"] || s.match(/^<(thead|tbody|tfoot|colg|cap)/) && [1, "<table>", "</table>"] || !s.indexOf("<tr") && [2, "<table><tbody>", "</tbody></table>"] || (!s.indexOf("<td") || !s.indexOf("<th")) && [3, "<table><tbody><tr>", "</tr></tbody></table>"] || !s.indexOf("<col") && [2, "<table><tbody></tbody><colgroup>", "</colgroup></table>"] || v.browser.msie && [1, "div<div>", "</div>"] || [0, "", ""];
                     div.innerHTML = d[1] + c + d[2];
                     while (d[0]--) {
-                        div = div.lastChild
+                        div = div.lastChild;
                     }
                     if (v.browser.msie) {
                         if (!s.indexOf("<table") && s.indexOf("<tbody") < 0) {
-                            tb = div.firstChild && div.firstChild.childNodes
+                            tb = div.firstChild && div.firstChild.childNodes;
                         } else {
                             if (d[1] == "<table>" && s.indexOf("<tbody") < 0) {
-                                tb = div.childNodes
+                                tb = div.childNodes;
                             }
                         }
                         for (var n = tb.length - 1; n >= 0; --n) {
                             if (v.nodeName(tb[n], "tbody") && !tb[n].childNodes.length) {
-                                tb[n].parentNode.removeChild(tb[n])
+                                tb[n].parentNode.removeChild(tb[n]);
                             }
                         }
                         if (/^\s/.test(c)) {
-                            div.insertBefore(e.createTextNode(c.match(/^\s*/)[0]), div.firstChild)
+                            div.insertBefore(e.createTextNode(c.match(/^\s*/)[0]), div.firstChild);
                         }
                     }
-                    c = v.makeArray(div.childNodes)
+                    c = v.makeArray(div.childNodes);
                 }
                 if (0 === c.length && (!v.nodeName(c, "form") && !v.nodeName(c, "select"))) {
-                    return
+                    return;
                 }
                 if (c[0] == undefined || v.nodeName(c, "form") || c.options) {
-                    r.push(c)
+                    r.push(c);
                 } else {
-                    r = v.merge(r, c)
+                    r = v.merge(r, c);
                 }
             });
-            return r
+            return r;
         },
         attr: function(a, c, d) {
             var e = v.isXMLDoc(a) ? {}: v.props;
             if (c == "selected" && v.browser.safari) {
-                a.parentNode.selectedIndex
+                a.parentNode.selectedIndex;
             }
             if (e[c]) {
                 if (d != undefined) {
-                    a[e[c]] = d
+                    a[e[c]] = d;
                 }
-                return a[e[c]]
+                return a[e[c]];
             } else {
                 if (v.browser.msie && c == "style") {
-                    return v.attr(a.style, "cssText", d)
+                    return v.attr(a.style, "cssText", d);
                 } else {
                     if (d == undefined && v.browser.msie && v.nodeName(a, "form") && (c == "action" || c == "method")) {
-                        return a.getAttributeNode(c).nodeValue
+                        return a.getAttributeNode(c).nodeValue;
                     } else {
                         if (a.tagName) {
                             if (d != undefined) {
                                 if (c == "type" && v.nodeName(a, "input") && a.parentNode) {
-                                    throw "type property can't be changed"
+                                    throw "type property can't be changed";
                                 }
-                                a.setAttribute(c, d)
+                                a.setAttribute(c, d);
                             }
                             if (v.browser.msie && /href|src/.test(c) && !v.isXMLDoc(a)) {
-                                return a.getAttribute(c, 2)
+                                return a.getAttribute(c, 2);
                             }
-                            return a.getAttribute(c)
+                            return a.getAttribute(c);
                         } else {
                             if (c == "opacity" && v.browser.msie) {
                                 if (d != undefined) {
                                     a.zoom = 1;
-                                    a.filter = (a.filter || "").replace(/alpha\([^)]*\)/, "") + (parseFloat(d).toString() == "NaN" ? "": "alpha(opacity=" + d * 100 + ")")
+                                    a.filter = (a.filter || "").replace(/alpha\([^)]*\)/, "") + (parseFloat(d).toString() == "NaN" ? "": "alpha(opacity=" + d * 100 + ")");
                                 }
-                                return a.filter ? (parseFloat(a.filter.match(/opacity=([^)]*)/)[1]) / 100).toString() : ""
+                                return a.filter ? (parseFloat(a.filter.match(/opacity=([^)]*)/)[1]) / 100).toString() : "";
                             }
                             c = c.replace(/-([a-z])/ig,
                             function(z, b) {
-                                return b.toUpperCase()
+                                return b.toUpperCase();
                             });
                             if (d != undefined) {
-                                a[c] = d
+                                a[c] = d;
                             }
-                            return a[c]
+                            return a[c];
                         }
                     }
                 }
             }
         },
         trim: function(t) {
-            return (t || "").replace(/^\s+|\s+$/g, "")
+            return (t || "").replace(/^\s+|\s+$/g, "");
         },
         makeArray: function(a) {
             var r = [];
             if (typeof a != "array") {
                 for (var i = 0, al = a.length; i < al; i++) {
-                    r.push(a[i])
+                    r.push(a[i]);
                 }
             } else {
-                r = a.slice(0)
+                r = a.slice(0);
             }
-            return r
+            return r;
         },
         inArray: function(b, a) {
             for (var i = 0, al = a.length; i < al; i++) {
                 if (a[i] == b) {
-                    return i
+                    return i;
                 }
             }
-            return - 1
+            return - 1;
         },
         merge: function(a, b) {
             if (v.browser.msie) {
                 for (var i = 0; b[i]; i++) {
                     if (b[i].nodeType != 8) {
-                        a.push(b[i])
+                        a.push(b[i]);
                     }
                 }
             } else {
                 for (var i = 0; b[i]; i++) {
-                    a.push(b[i])
+                    a.push(b[i]);
                 }
             }
-            return a
+            return a;
         },
         unique: function(a) {
             var r = [],
@@ -739,41 +739,41 @@
                     var b = v.data(a[i]);
                     if (!done[b]) {
                         done[b] = true;
-                        r.push(a[i])
+                        r.push(a[i]);
                     }
                 }
             } catch(e) {
-                r = a
+                r = a;
             }
-            return r
+            return r;
         },
         grep: function(a, b, c) {
             if (typeof b == "string") {
-                b = eval("false||function(a,i){return " + b + "}")
+                b = eval("false||function(a,i){return " + b + "}");
             }
             var d = [];
             for (var i = 0, el = a.length; i < el; i++) {
                 if (!c && b(a[i], i) || c && !b(a[i], i)) {
-                    d.push(a[i])
+                    d.push(a[i]);
                 }
             }
-            return d
+            return d;
         },
         map: function(a, b) {
             if (typeof b == "string") {
-                b = eval("false||function(a){return " + b + "}")
+                b = eval("false||function(a){return " + b + "}");
             }
             var c = [];
             for (var i = 0, el = a.length; i < el; i++) {
                 var d = b(a[i], i);
                 if (d !== null && d != undefined) {
                     if (d.constructor != Array) {
-                        d = [d]
+                        d = [d];
                     }
-                    c = c.concat(d)
+                    c = c.concat(d);
                 }
             }
-            return c
+            return c;
         }
     });
     var A = navigator.userAgent.toLowerCase();
@@ -3219,61 +3219,61 @@ data_source.prototype = {
         title = "Untitled";
         switch (A) {
         case "text":
-            title = "Text";
+            title = "单行文本";
             break;
         case "textarea":
-            title = "Paragraph";
+            title = "多行文本";
             break;
         case "select":
-            title = "Drop Down";
+            title = "下拉菜单";
             break;
         case "radio":
-            title = "Multiple Choice";
+            title = "单项选择";
             break;
         case "checkbox":
-            title = "Checkboxes";
+            title = "多项选择";
             break;
         case "name":
-            title = "Name";
+            title = "名字";
             break;
         case "simple_name":
             title = "Name";
             break;
         case "date":
-            title = "Date";
+            title = "日期";
             break;
         case "europe_date":
             title = "Date";
             break;
         case "time":
-            title = "Time";
+            title = "时间";
             break;
         case "phone":
-            title = "Phone";
+            title = "电话";
             break;
         case "simple_phone":
             title = "Phone";
             break;
         case "address":
-            title = "Address";
+            title = "地址";
             break;
         case "money":
-            title = "Price";
+            title = "价格";
             break;
         case "url":
-            title = "Web Site";
+            title = "网址";
             break;
         case "email":
             title = "Email";
             break;
         case "number":
-            title = "Number";
+            title = "数字";
             break;
         case "file":
-            title = "Upload a File";
+            title = "上传文件";
             break;
         case "section":
-            title = "Section Break";
+            title = "节分割";
             break
         }
         this.data.elements.push({
@@ -3291,19 +3291,19 @@ data_source.prototype = {
             default_value: "",
             constraint: "",
             options: [{
-                option: "First option",
+                option: "第一个选项",
                 is_default: 0,
                 is_db_live: "0",
                 id: "0"
             },
             {
-                option: "Second option",
+                option: "第二个选项",
                 is_default: 0,
                 is_db_live: "0",
                 id: "0"
             },
             {
-                option: "Third option",
+                option: "第三个选项",
                 is_default: 0,
                 is_db_live: "0",
                 id: "0"
@@ -3485,6 +3485,7 @@ function insert_element(A) {
             A = "money"
         }
         ctrl = initialize_control(A);
+        console.log(ctrl);
         if (A == "address") {
             ds.set(ctrl.id, "size", "large")
         }
@@ -3503,7 +3504,7 @@ function initialize_control(A) {
     ctrl = new field();
     ctrl.initialize(pos);
     ds.new_element(A, pos, ctrl);
-    return ctrl
+    return ctrl;
 }
 function display_control(A) {
     markup = A.display();

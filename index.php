@@ -13,6 +13,10 @@
 	require('includes/db-core.php');
 	require('includes/db-functions.php');
 	require('includes/helper-functions.php');
+
+    //短连接测试
+    $urls = shorturl('http://www.i5good.com/shorturl.html');
+var_dump($urls);
 	
 	$ssl_suffix = get_ssl_suffix();
 	
@@ -31,7 +35,7 @@
 		$username = trim($_POST['admin_username']);
 		$password = trim($_POST['admin_password']);
 		if(($username != ADMIN_USER) || ($password != ADMIN_PASSWORD)){
-			$_SESSION['AP_LOGIN_ERROR'] = 'Please enter the correct user and password!';
+			$_SESSION['AP_LOGIN_ERROR'] = '请输入正确的用户名及密码!';
 		}else{
 			$_SESSION['logged_in'] = true;
 			
@@ -62,8 +66,8 @@
 <div id="form_manager" style="padding-left: 50px;padding-top: 50px;padding-bottom: 50px">
 <?php show_message(); ?>
 <div class="info" style="width: 40%">
-	<h2><img src="images/icons/lock.gif" align="absmiddle" /> Admin Panel Login</h2>
-	<p>Please login below to access Admin Panel</p>
+	<h2><img src="images/icons/lock.gif" align="absmiddle" /> 用户登陆</h2>
+	<p></p>
 </div>
 
 <div id="form_container" style="align: center">
@@ -81,20 +85,20 @@
 		?>	
 			<li class="highlighted"  style="padding-left: 30px;padding-top: 30px;padding-right: 30px">
 								
-				<label class="desc" for="admin_username"><img src="images/icons/edit_user.gif" align="absmiddle" style="padding-bottom: 5px"/> Username</label>
+				<label class="desc" for="admin_username"><img src="images/icons/edit_user.gif" align="absmiddle" style="padding-bottom: 5px"/> 用户名</label>
 				<div>
 					<input id="admin_username" name="admin_username" class="element text large" type="text" maxlength="255" value=""/> 
 				</div>
 				
 			</li>		
 			<li class="highlighted" style="padding-left: 30px;padding-bottom: 30px;padding-right: 30px">
-				<label class="desc" for="admin_password"><img src="images/icons/decrypted.gif" align="absmiddle" style="padding-bottom: 5px"/> Password </label>
+				<label class="desc" for="admin_password"><img src="images/icons/decrypted.gif" align="absmiddle" style="padding-bottom: 5px"/> 密码</label>
 				<div>
 					<input id="admin_password" name="admin_password" class="element text large" type="password" maxlength="255" value=""/> 
 				</div> 
 			</li>
     		<li class="buttons" style="padding-left:0px">
-		    	<input id="login" class="button_text" type="submit" name="submit" value="Login" style="padding: 8px" />
+		    	<input id="login" class="button_text" type="submit" name="submit" value="登陆" style="padding: 8px" />
 			</li>
 		</ul>
 		</form>	
