@@ -1,18 +1,24 @@
 <?php
-/******************************************************************************
- MachForm
-  
- Copyright 2007 Appnitro Software. This code cannot be redistributed without
- permission from http://www.nulledscriptz.com/
- 
- More info at: http://www.nulledscriptz.com/
- ******************************************************************************/
+/*=============================================================================
+#     FileName: post-functions.php
+#         Desc:  
+#       Author: RainYang - https://github.com/rainyang
+#        Email: rainyang2012@qq.com
+#     HomePage: http://360mb.cn
+#      Version: 0.0.1
+#   LastChange: 2014-04-15 17:00:01
+#      History:
+=============================================================================*/
+
 	function process_form($input){
 		
 		$form_id = (int) trim($input['form_id']);
 		
 		global $lang;
+		global $elements_crm;
 		
+        $array_eles = $elements_crm;
+        array_shift($array_eles);
 		//this function handle password submission and general form submission
 		//check for password requirement
 		$query = "select form_password from `ap_forms` where form_id='$form_id'";
@@ -127,6 +133,9 @@
 		}
 					
 						
+        //print_r($element_info);
+        //exit;
+
 		$error_elements = array();
 		$table_data = array();
 		//validate input based on rules specified for each field
@@ -152,7 +161,7 @@
 			}
 			
 			
-			if('text' == $element_type){ //Single Line Text
+			if(('text' == $element_type) || (in_array($element_type, $array_eles))){ //Single Line Text
 											
 				if($element_info[$element_id]['is_required']){
 					$rules[$element_name]['required'] 	= true;
@@ -200,7 +209,7 @@
 				//prepare data for table column
 				$table_data[$element_name] = $element_data; 
 				
-			}elseif ('radio' == $element_type){ //Multiple Choice
+			}elseif ('radio' == $element_type || 'sex' == $element_type){ //Multiple Choice
 				
 				if($element_info[$element_id]['is_required']){
 					$rules[$element_name]['required'] 	= true;
@@ -302,7 +311,9 @@
 				//prepare data for table column
 				$table_data[$element_name] = $element_data; 
 				
-			}elseif ('simple_name' == $element_type){ //Simple Name
+            }
+            /*
+            elseif ('simple_name' == $element_type){ //Simple Name
 				
 				if(!empty($processed_elements) && is_array($processed_elements) && in_array($element_name,$processed_elements)){
 					continue;
@@ -378,7 +389,9 @@
 				$table_data[$element_name_3] = $user_input[$element_name_3];
 				$table_data[$element_name_4] = $user_input[$element_name_4];
 				
-			}elseif ('time' == $element_type){ //Time
+            }
+             */
+            elseif ('time' == $element_type){ //Time
 				
 				if(!empty($processed_elements) && is_array($processed_elements) && in_array($element_name,$processed_elements)){
 					continue;
@@ -439,7 +452,8 @@
 				//prepare data for table column
 				$table_data[substr($element_name,0,-2)] 	 = @$target_input['element_time_no_meridiem'];
 								
-			}elseif ('address' == $element_type){ //Address
+            }
+            /*elseif ('address' == $element_type){ //Address
 				
 				if(!empty($processed_elements) && is_array($processed_elements) && in_array($element_name,$processed_elements)){
 					continue;
@@ -496,7 +510,8 @@
 				$table_data[$element_name_5] = $user_input[$element_name_5];
 				$table_data[$element_name_6] = $user_input[$element_name_6];
 				
-			}elseif ('money' == $element_type){ //Price
+            }*/
+            elseif ('money' == $element_type){ //Price
 				
 				if(!empty($processed_elements) && is_array($processed_elements) && in_array($element_name,$processed_elements)){
 					continue;
@@ -700,7 +715,8 @@
 				$form_data[$element_name_2]['default_value'] = htmlspecialchars($user_input[$element_name_2]);
 				$form_data[$element_name_3]['default_value'] = htmlspecialchars($user_input[$element_name_3]);
 								
-			}elseif ('simple_phone' == $element_type){ //Simple Phone
+            }
+            /*elseif ('simple_phone' == $element_type){ //Simple Phone
 							
 				if($element_info[$element_id]['is_required']){
 					$rules[$element_name]['required'] 	= true;
@@ -799,7 +815,9 @@
 				//prepare data for table column
 				$table_data[$element_name] = $user_input[$element_name]; 
 				
-			}elseif ('file' == $element_type){ //File
+            }
+             */
+            elseif ('file' == $element_type){ //File
 				
 				$rules[$element_name]['filetype'] 	= true;
 				if($element_info[$element_id]['is_required']){

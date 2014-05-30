@@ -390,7 +390,7 @@
             a = a == window ? win: a;
             var d = a[y];
             if (!d) {
-                d = a[y] = ++uuid
+                d = a[y] = ++uuid;
             }
             if (b && !v.cache[d]) {
                 v.cache[d] = {};
@@ -606,7 +606,7 @@
                 if (typeof c == "string") {
                     c = c.replace(/(<(\w+)[^>]*?)\/>/g,
                     function(m, a, b) {
-                        return b.match(/^(abbr|br|col|img|input|link|meta|param|hr|area)$/i) ? m: a + "></" + b + ">"
+                        return b.match(/^(abbr|br|col|img|input|link|meta|param|hr|area)$/i) ? m: a + "></" + b + ">";
                     });
                     var s = v.trim(c).toLowerCase(),
                     div = e.createElement("div"),
@@ -819,10 +819,10 @@
         v.fn[i] = function(a) {
             var b = v.map(this, n);
             if (a && typeof a == "string") {
-                b = v.multiFilter(a, b)
+                b = v.multiFilter(a, b);
             }
-            return this.pushStack(v.unique(b))
-        }
+            return this.pushStack(v.unique(b));
+        };
     });
     v.each({
         appendTo: "append",
@@ -836,51 +836,51 @@
             var a = arguments;
             return this.each(function() {
                 for (var j = 0, al = a.length; j < al; j++) {
-                    v(a[j])[n](this)
+                    v(a[j])[n](this);
                 }
-            })
-        }
+            });
+        };
     });
     v.each({
         removeAttr: function(a) {
             v.attr(this, a, "");
-            this.removeAttribute(a)
+            this.removeAttribute(a);
         },
         addClass: function(c) {
-            v.className.add(this, c)
+            v.className.add(this, c);
         },
         removeClass: function(c) {
-            v.className.remove(this, c)
+            v.className.remove(this, c);
         },
         toggleClass: function(c) {
-            v.className[v.className.has(this, c) ? "remove": "add"](this, c)
+            v.className[v.className.has(this, c) ? "remove": "add"](this, c);
         },
         remove: function(a) {
             if (!a || v.filter(a, [this]).r.length) {
                 v.removeData(this);
-                this.parentNode.removeChild(this)
+                this.parentNode.removeChild(this);
             }
         },
         empty: function() {
             v("*", this).each(function() {
-                v.removeData(this)
+                v.removeData(this);
             });
             while (this.firstChild) {
-                this.removeChild(this.firstChild)
+                this.removeChild(this.firstChild);
             }
         }
     },
     function(i, n) {
         v.fn[i] = function() {
-            return this.each(n, arguments)
-        }
+            return this.each(n, arguments);
+        };
     });
     v.each(["Height", "Width"],
     function(i, a) {
         var n = a.toLowerCase();
         v.fn[n] = function(h) {
-            return this[0] == window ? v.browser.safari && self["inner" + a] || v.boxModel && Math.max(document.documentElement["client" + a], document.body["client" + a]) || document.body["client" + a] : this[0] == document ? Math.max(document.body["scroll" + a], document.body["offset" + a]) : h == undefined ? (this.length ? v.css(this[0], n) : null) : this.css(n, h.constructor == String ? h: h + "px")
-        }
+            return this[0] == window ? v.browser.safari && self["inner" + a] || v.boxModel && Math.max(document.documentElement["client" + a], document.body["client" + a]) || document.body["client" + a] : this[0] == document ? Math.max(document.body["scroll" + a], document.body["offset" + a]) : h == undefined ? (this.length ? v.css(this[0], n) : null) : this.css(n, h.constructor == String ? h: h + "px");
+        };
     });
     var C = v.browser.safari && parseInt(v.browser.version) < 417 ? "(?:[\\w*_-]|\\\\.)": "(?:[\\w\u0128-\uFFFF*_-]|\\\\.)",
     quickChild = new RegExp("^>\\s*(" + C + "+)"),
@@ -933,16 +933,16 @@
                 d = a;
                 var f = v.filter(a, b, c);
                 a = f.t.replace(/^\s*,\s*/, "");
-                cur = c ? b = f.r: v.merge(cur, f.r)
+                cur = c ? b = f.r: v.merge(cur, f.r);
             }
-            return cur
+            return cur;
         },
         find: function(t, a) {
             if (typeof t != "string") {
-                return [t]
+                return [t];
             }
             if (a && !a.nodeType) {
-                a = null
+                a = null;
             }
             a = a || document;
             var b = [a],
@@ -960,16 +960,16 @@
                     for (var i = 0; b[i]; i++) {
                         for (var c = b[i].firstChild; c; c = c.nextSibling) {
                             if (c.nodeType == 1 && (f == "*" || c.nodeName.toUpperCase() == f.toUpperCase())) {
-                                r.push(c)
+                                r.push(c);
                             }
                         }
                     }
                     b = r;
                     t = t.replace(e, "");
                     if (t.indexOf(" ") == 0) {
-                        continue
+                        continue;
                     }
-                    d = true
+                    d = true;
                 } else {
                     e = /^([>+~])\s*(\w*)/i;
                     if ((m = e.exec(t)) != null) {
@@ -983,84 +983,84 @@
                                 if (n.nodeType == 1) {
                                     var g = v.data(n);
                                     if (m == "~" && merge[g]) {
-                                        break
+                                        break;
                                     }
                                     if (!f || n.nodeName.toUpperCase() == f.toUpperCase()) {
                                         if (m == "~") {
-                                            merge[g] = true
+                                            merge[g] = true;
                                         }
-                                        r.push(n)
+                                        r.push(n);
                                     }
                                     if (m == "+") {
-                                        break
+                                        break;
                                     }
                                 }
                             }
                         }
                         b = r;
                         t = v.trim(t.replace(e, ""));
-                        d = true
+                        d = true;
                     }
                 }
                 if (t && !d) {
                     if (!t.indexOf(",")) {
                         if (a == b[0]) {
-                            b.shift()
+                            b.shift();
                         }
                         done = v.merge(done, b);
                         r = b = [a];
-                        t = " " + t.substr(1, t.length)
+                        t = " " + t.substr(1, t.length);
                     } else {
                         var h = quickID;
                         var m = h.exec(t);
                         if (m) {
-                            m = [0, m[2], m[3], m[1]]
+                            m = [0, m[2], m[3], m[1]];
                         } else {
                             h = quickClass;
-                            m = h.exec(t)
+                            m = h.exec(t);
                         }
                         m[2] = m[2].replace(/\\/g, "");
                         var k = b[b.length - 1];
                         if (m[1] == "#" && k && k.getElementById && !v.isXMLDoc(k)) {
                             var l = k.getElementById(m[2]);
                             if ((v.browser.msie || v.browser.opera) && l && typeof l.id == "string" && l.id != m[2]) {
-                                l = v('[@id="' + m[2] + '"]', k)[0]
+                                l = v('[@id="' + m[2] + '"]', k)[0];
                             }
-                            b = r = l && (!m[3] || v.nodeName(l, m[3])) ? [l] : []
+                            b = r = l && (!m[3] || v.nodeName(l, m[3])) ? [l] : [];
                         } else {
                             for (var i = 0; b[i]; i++) {
                                 var o = m[1] == "#" && m[3] ? m[3] : m[1] != "" || m[0] == "" ? "*": m[2];
                                 if (o == "*" && b[i].nodeName.toLowerCase() == "object") {
-                                    o = "param"
+                                    o = "param";
                                 }
-                                r = v.merge(r, b[i].getElementsByTagName(o))
+                                r = v.merge(r, b[i].getElementsByTagName(o));
                             }
                             if (m[1] == ".") {
-                                r = v.classFilter(r, m[2])
+                                r = v.classFilter(r, m[2]);
                             }
                             if (m[1] == "#") {
                                 var p = [];
                                 for (var i = 0; r[i]; i++) {
                                     if (r[i].getAttribute("id") == m[2]) {
                                         p = [r[i]];
-                                        break
+                                        break;
                                     }
                                 }
-                                r = p
+                                r = p;
                             }
-                            b = r
+                            b = r;
                         }
-                        t = t.replace(h, "")
+                        t = t.replace(h, "");
                     }
                 }
                 if (t) {
                     var q = v.filter(t, r);
                     b = r = q.r;
-                    t = v.trim(q.t)
+                    t = v.trim(q.t);
                 }
             }
             if (t) {
-                b = []
+                b = [];
             }
             if (b && a == b[0]) {
                 b.shift()
@@ -2737,15 +2737,8 @@ JJ(document).ready(function() {
         JJ("#statusPanel").fadeOut("normal")
     });
     load_all();
-    load_footer()
 });
-function load_footer() {
-    if (JJ("#footer").html() != null) {
-        JJ("#footer").html('<div align="center">&#80;&#111;&#119;&#101;&#114;&#101;&#100;&#32;&#98;&#121; <a href="http://&#119;&#119;&#119;&#46;&#97;&#112;&#112;&#110;&#105;&#116;&#114;&#111;&#46;&#99;&#111;&#109;" style="font-size: 100%"><strong>&#77;&#97;&#99;&#104;&#70;&#111;&#114;&#109;</strong></a><br />&copy; &#67;&#111;&#112;&#121;&#114;&#105;&#103;&#104;&#116;&#32;&#50;&#48;&#48;&#55;&#45;&#50;&#48;&#48;&#56;&#32;&#65;&#112;&#112;&#110;&#105;&#116;&#114;&#111;&#32;&#83;&#111;&#102;&#116;&#119;&#97;&#114;&#101;</div>')
-    } else {
-        JJ("body").append('<div id="footer"><div align="center">&#80;&#111;&#119;&#101;&#114;&#101;&#100;&#32;&#98;&#121; <a href="http://&#119;&#119;&#119;&#46;&#97;&#112;&#112;&#110;&#105;&#116;&#114;&#111;&#46;&#99;&#111;&#109;" style="font-size: 100%"><strong>&#77;&#97;&#99;&#104;&#70;&#111;&#114;&#109;</strong></a><br />&copy; &#67;&#111;&#112;&#121;&#114;&#105;&#103;&#104;&#116;&#32;&#50;&#48;&#48;&#55;&#45;&#50;&#48;&#48;&#56;&#32;&#65;&#112;&#112;&#110;&#105;&#116;&#114;&#111;&#32;&#83;&#111;&#102;&#116;&#119;&#97;&#114;&#101;</div></div>')
-    }
-}
+
 function load_tooltips() {
     JJ(".tooltip").each(function(A) {
         JJ(this).click(function() { (JJ(this).next().attr("id") == "tooltip") ? remove_tooltip(this.nextSibling) : show_tooltip(this);
@@ -2763,7 +2756,7 @@ function show_tooltip(A) {
 function remove_tooltip(A) {
     JJ(A).fadeOut("normal",
     function() {
-        JJ(this).remove()
+        JJ(this).remove();
     })
 }
 function prepare_form_property_values() {
@@ -2775,7 +2768,7 @@ function prepare_form_property_values() {
             JJ("#form_password").removeClass("hide");
             update_form(tmp_form_password, "password");
             JJ("#form_password_data").val(tmp_form_password);
-            JJ("#form_password_data").focus().select()
+            JJ("#form_password_data").focus().select();
         } else {
             JJ("#form_password").addClass("hide");
             tmp_form_password = JJ("#form_password_data").val();
@@ -2830,6 +2823,7 @@ element_properties.prototype = {
         JJ("#prop_element_type").css("display", "none");
         JJ("#prop_randomize").css("display", "none");
         JJ("#list_buttons").css("display", "none");
+        JJ("#prop_add_product").css("display", "none");
         JJ("#element_position").css("display", "none");
         JJ("#prop_default_value").css("display", "none");
         JJ("#prop_phone_format").css("display", "none");
@@ -2841,7 +2835,9 @@ element_properties.prototype = {
         JJ("#element_inactive").css("display", "none");
         JJ("#all_properties").css("display", "none");
         JJ("#element_label").val(ds.get(this.id, "title"));
+        JJ("#mb_element_title").text(ds.get(this.id, "title"));
         for (var A = 0; A < components[ds.get(this.id, "type")].length; A++) {
+            console.log(components[ds.get(this.id, "type")][A]);
             this[components[ds.get(this.id, "type")][A]]()
         }
         JJ("#element_instructions").val(ds.get(this.id, "guidelines"));
@@ -2880,28 +2876,28 @@ element_properties.prototype = {
     required: function() {
         JJ("#prop_options").css("display", "block");
         if (ds.get(active_element, "is_required") == "1") {
-            JJ("#element_required").attr("checked", "checked")
+            JJ("#element_required").attr("checked", "checked");
         } else {
-            JJ("#element_required").attr("checked", "")
+            JJ("#element_required").attr("checked", "");
         }
         var A = ds.get(active_element, "type");
         if (A == "checkbox" || A == "radio") {
-            this.switch_unique("hide")
+            this.switch_unique("hide");
         } else {
-            this.switch_unique("show")
+            this.switch_unique("show");
         }
     },
     switch_unique: function(A) {
         if (A == "hide") {
-            JJ("#element_unique").css("visibility", "hidden")
+            JJ("#element_unique").css("visibility", "hidden");
         } else {
-            JJ("#element_unique").css("visibility", "visible")
+            JJ("#element_unique").css("visibility", "visible");
         }
         var B = ds.get(active_element, "type");
         if (B == "radio" || B == "checkbox" || B == "select" || B == "simple_name" || B == "name" || B == "address" || B == "file") {
-            JJ("#element_unique_span").css("display", "none")
+            JJ("#element_unique_span").css("display", "none");
         } else {
-            JJ("#element_unique_span").css("display", "block")
+            JJ("#element_unique_span").css("display", "block");
         }
     },
     size: function() {
@@ -2910,7 +2906,7 @@ element_properties.prototype = {
         field_sizes = document.getElementById("field_size");
         for (var A = 0; A < field_sizes.options.length; A++) {
             if (field_sizes.options[A].value == B) {
-                field_sizes.selectedIndex = A
+                field_sizes.selectedIndex = A;
             }
         }
     },
@@ -2924,28 +2920,47 @@ element_properties.prototype = {
             el_val = options[A].option.replace(/\"/g, "&quot;");
             if (options[A].is_default == 1) {
                 loc = "images/icons/star.gif";
-                msg = "Default"
+                msg = "Default";
             } else {
                 loc = "images/icons/stardim.gif";
-                msg = "Make Default"
+                msg = "Make Default";
             }
-            all_markup[A] = '<li><input id="choice' + A + '" class="text" type="text" autocomplete="off" value="' + el_val + "\" onkeyup=\"set_properties(this.value, 'choices', " + A + ')" onkeypress="choices_event(event,' + A + ')" /> <img class="button" src="images/icons/add.gif" alt="Add" title="Add" onclick="insert_choice(' + (A + 1) + ')" /> <img class="button" src="images/icons/delete.gif" alt="Delete" title="Delete" onclick="delete_checkbox(' + options[A].id + ", " + options[A].is_db_live + ", '" + field_type + "', " + A + ')" /> <img class="button" src="' + loc + '" alt="' + msg + '" title="' + msg + '" onclick="set_choice_default(' + A + ')" /></li>'
+            all_markup[A] = '<li><input id="choice' + A + '" class="text" type="text" autocomplete="off" value="' + el_val + "\" onkeyup=\"set_properties(this.value, 'choices', " + A + ')" onkeypress="choices_event(event,' + A + ')" /> <img class="button" src="images/icons/add.gif" alt="Add" title="Add" onclick="insert_choice(' + (A + 1) + ')" /> <img class="button" src="images/icons/delete.gif" alt="Delete" title="Delete" onclick="delete_checkbox(' + options[A].id + ", " + options[A].is_db_live + ", '" + field_type + "', " + A + ')" /> <img class="button" src="' + loc + '" alt="' + msg + '" title="' + msg + '" onclick="set_choice_default(' + A + ')" /></li>';
         }
-        JJ("#element_choices").html(all_markup.join(""))
+        JJ("#element_choices").html(all_markup.join(""));
+    },
+    choices_sex: function() {
+        JJ("#prop_choices").css("display", "block");
+        JJ("#element_choices").html("");
+        var options = ds.get(this.id, "sexs");
+        var field_type = ds.get(this.id, "type");
+        var all_markup = new Array();
+        for (var A = 0; A < options.length; A++) {
+            var el_val = options[A].option.replace(/\"/g, "&quot;");
+            if (options[A].is_default == 1) {
+                loc = "images/icons/star.gif";
+                msg = "Default";
+            } else {
+                loc = "images/icons/stardim.gif";
+                msg = "Make Default";
+            }
+            all_markup[A] = '<li><input id="choice_sex' + A + '" class="text" type="text" autocomplete="off" value="' + el_val + "\" onkeyup=\"set_properties(this.value, 'choices_sex', " + A + ')" onkeypress="choices_event_sex(event,' + A + ')" /> <img class="button" src="images/icons/add.gif" alt="Add" title="Add" onclick="insert_choice_sex(' + (A + 1) + ')" /> <img class="button" src="images/icons/delete.gif" alt="Delete" title="Delete" onclick="delete_checkbox_sex(' + options[A].id + ", " + options[A].is_db_live + ", '" + field_type + "', " + A + ')" /> <img class="button" src="' + loc + '" alt="' + msg + '" title="' + msg + '" onclick="set_choice_sex_default(' + A + ')" /></li>';
+        }
+        JJ("#element_choices").html(all_markup.join(""));
     },
     unique: function() {
         if (ds.get(active_element, "is_unique") == "1") {
-            JJ("#element_unique").attr("checked", "checked")
+            JJ("#element_unique").attr("checked", "checked");
         } else {
-            JJ("#element_unique").attr("checked", "")
+            JJ("#element_unique").attr("checked", "");
         }
     },
     is_private: function() {
         JJ("#prop_access_control").css("display", "block");
         if (ds.get(active_element, "is_private") == "1") {
-            JJ("#fieldPrivate").attr("checked", "checked")
+            JJ("#fieldPrivate").attr("checked", "checked");
         } else {
-            JJ("#fieldPublic").attr("checked", "checked")
+            JJ("#fieldPublic").attr("checked", "checked");
         }
     },
     phone_default: function() {
@@ -2953,7 +2968,7 @@ element_properties.prototype = {
         el_val = ds.get(this.id, "default_value");
         JJ("#element_phone_default1").val(el_val.substring(0, 3));
         JJ("#element_phone_default2").val(el_val.substring(3, 6));
-        JJ("#element_phone_default3").val(el_val.substring(6, 10))
+        JJ("#element_phone_default3").val(el_val.substring(6, 10));
     },
     address_default: function() {
         JJ("#prop_default_country").css("display", "block");
@@ -2961,29 +2976,35 @@ element_properties.prototype = {
         countries = document.getElementById("element_countries");
         for (var A = 0; A < countries.options.length; A++) {
             if (countries.options[A].value == el_val) {
-                countries.selectedIndex = A
+                countries.selectedIndex = A;
             }
         }
     },
     randomize: function() {
         JJ("#prop_randomize").css("display", "block");
         if (ds.get(active_element, "constraint") == "random") {
-            JJ("#element_random").attr("checked", "checked")
+            JJ("#element_random").attr("checked", "checked");
         } else {
-            JJ("#element_not_random").attr("checked", "checked")
+            JJ("#element_not_random").attr("checked", "checked");
         }
+    },
+    product: function() {
+        JJ("#prop_add_product").css("display", "block");
+        JJ("#element_product").click(function(){
+            alert('11');
+        });
     },
     noseconds: function() {
         JJ("#prop_time_noseconds").css("display", "block");
         if (ds.get(active_element, "constraint") == "show_seconds") {
-            JJ("#time_noseconds").attr("checked", "checked")
+            JJ("#time_noseconds").attr("checked", "checked");
         } else {
-            JJ("#time_noseconds").attr("checked", "")
+            JJ("#time_noseconds").attr("checked", "");
         }
     },
     text_default: function() {
         JJ("#prop_default_value").css("display", "block");
-        JJ("#element_default").val(ds.get(this.id, "default_value"))
+        JJ("#element_default").val(ds.get(this.id, "default_value"));
     },
     date: function() {
         JJ("#prop_date_format").css("display", "block");
@@ -2991,22 +3012,22 @@ element_properties.prototype = {
         dates = document.getElementById("date_type");
         for (var A = 0; A < dates.options.length; A++) {
             if (dates.options[A].value == date_type) {
-                dates.selectedIndex = A
+                dates.selectedIndex = A;
             }
         }
     },
     name: function() {
         JJ("#prop_name_format").css("display", "block");
         if (ds.get(this.id, "is_db_live") == "1") {
-            JJ("#name_format").attr("disabled", "disabled")
+            JJ("#name_format").attr("disabled", "disabled");
         } else {
-            JJ("#name_format").attr("disabled", "")
+            JJ("#name_format").attr("disabled", "");
         }
         name_type = ds.get(active_element, "type");
         name_format = document.getElementById("name_format");
         for (var A = 0; A < name_format.options.length; A++) {
             if (name_format.options[A].value == name_type) {
-                name_format.selectedIndex = A
+                name_format.selectedIndex = A;
             }
         }
     },
@@ -3016,7 +3037,7 @@ element_properties.prototype = {
         phone_format = document.getElementById("phone_format");
         for (var A = 0; A < phone_format.options.length; A++) {
             if (phone_format.options[A].value == phone_type) {
-                phone_format.selectedIndex = A
+                phone_format.selectedIndex = A;
             }
         }
     },
@@ -3026,15 +3047,16 @@ element_properties.prototype = {
         money_format = document.getElementById("money_format");
         for (var A = 0; A < money_format.options.length; A++) {
             if (money_format.options[A].value == constraint) {
-                money_format.selectedIndex = A
+                money_format.selectedIndex = A;
             }
         }
     }
 };
+
 var field = function() {};
 field.prototype = {
     initialize: function(A) {
-        this.id = A
+        this.id = A;
     },
     display: function() {
         this.li = document.createElement("li");
@@ -3042,18 +3064,18 @@ field.prototype = {
         this.li.id = "li_" + this.id;
         JJ(this.li).addClass("drag");
         if (ds.get(this.id, "is_private") == "1") {
-            JJ(this.li).addClass("private")
+            JJ(this.li).addClass("private");
         }
-        return this.li
+        return this.li;
     },
     selected: function() {
-        JJ(this.li).addClass("current_edit")
+        JJ(this.li).addClass("current_edit");
     },
     unselect: function() {
-        JJ(this.li).removeClass("current_edit")
+        JJ(this.li).removeClass("current_edit");
     },
     generate_markup: function() {
-        this.li.innerHTML = '<img id="arrow" src="images/icons/arrow.gif" alt="" class="arrow"><a href="#" class="hover_ready" onclick="return false;" title="Click to edit. Drag to reorder.">' + this.field_label() + this[ds.get(this.id, "type")]() + "</a>" + this.element_actions()
+        this.li.innerHTML = '<img id="arrow" src="images/icons/arrow.gif" alt="" class="arrow"><a href="#" class="hover_ready" onclick="return false;" title="Click to edit. Drag to reorder.">' + this.field_label() + this[ds.get(this.id, "type")]() + "</a>" + this.element_actions();
     },
     field_label: function() {
         label_id = "title" + this.id;
@@ -3061,24 +3083,54 @@ field.prototype = {
         label_val = label_val.replace(/\n/g, "<br />");
         var B = "";
         if (ds.get(this.id, "is_required") == "1") {
-            B = '<span class="req"> *</span>'
+            B = '<span class="req"> *</span>';
         }
         var A = '<label class="desc" id="' + label_id + '">' + label_val + B + "</label>";
-        return A
+        return A;
     },
     element_actions: function() {
         if (JJ.browser.msie) {
-            style = 'style="margin-top: -18px"'
+            style = 'style="margin-top: -18px"';
         } else {
-            style = ""
+            style = "";
         }
-        return '<div class="element_actions" ' + style + '><img src="images/icons/duplicate.gif" alt="Duplicate" title="Duplicate" onclick="duplicate_element(' + this.id + ')"> <img src="images/icons/delete.gif" alt="Delete." title="Delete" onclick="delete_element(' + this.id + ')"></div>'
+        return '<div class="element_actions" ' + style + '><img src="images/icons/duplicate.gif" alt="Duplicate" title="Duplicate" onclick="duplicate_element(' + this.id + ')"> <img src="images/icons/delete.gif" alt="Delete." title="Delete" onclick="delete_element(' + this.id + ')"></div>';
     },
     text: function() {
-        return '<div><input readonly="readonly" id="field' + this.id + '" class="text ' + ds.get(this.id, "size") + '" type="text"></div>'
+        return '<div><input readonly="readonly" id="field' + this.id + '" class="text ' + ds.get(this.id, "size") + '" type="text"></div>';
+    },
+    xingming: function() {
+        return '<div><input readonly="readonly" id="field' + this.id + '" class="text ' + ds.get(this.id, "size") + '" type="text"></div>';
+    },
+    zhiwei: function() {
+        return '<div><input readonly="readonly" id="field' + this.id + '" class="text ' + ds.get(this.id, "size") + '" type="text"></div>';
+    },
+    dianhua: function() {
+        return '<div><input readonly="readonly" id="field' + this.id + '" class="text ' + ds.get(this.id, "size") + '" type="text"></div>';
+    },
+    dizhi: function() {
+        return '<div><input readonly="readonly" id="field' + this.id + '" class="text ' + ds.get(this.id, "size") + '" type="text"></div>';
+    },
+    city: function() {
+        return '<div><input readonly="readonly" id="field' + this.id + '" class="text ' + ds.get(this.id, "size") + '" type="text"></div>';
+    },
+    tel: function() {
+        return '<div><input readonly="readonly" id="field' + this.id + '" class="text ' + ds.get(this.id, "size") + '" type="text"></div>';
+    },
+    weixin: function() {
+        return '<div><input readonly="readonly" id="field' + this.id + '" class="text ' + ds.get(this.id, "size") + '" type="text"></div>';
+    },
+    QQ: function() {
+        return '<div><input readonly="readonly" id="field' + this.id + '" class="text ' + ds.get(this.id, "size") + '" type="text"></div>';
+    },
+    fax: function() {
+        return '<div><input readonly="readonly" id="field' + this.id + '" class="text ' + ds.get(this.id, "size") + '" type="text"></div>';
+    },
+    company: function() {
+        return '<div><input readonly="readonly" id="field' + this.id + '" class="text ' + ds.get(this.id, "size") + '" type="text"></div>';
     },
     textarea: function() {
-        return '<div><textarea type="text" readonly="readonly" id="field' + this.id + '" class="textarea ' + ds.get(this.id, "size") + '" rows="" cols=""></textarea></div>'
+        return '<div><textarea type="text" readonly="readonly" id="field' + this.id + '" class="textarea ' + ds.get(this.id, "size") + '" rows="" cols=""></textarea></div>';
     },
     checkbox: function() {
         element_options = ds.get(this.id, "options");
@@ -3086,126 +3138,162 @@ field.prototype = {
         for (i = 0; i < element_options.length; i++) {
             el_val = element_options[i].option;
             if (el_val == "") {
-                el_val = "&nbsp;"
+                el_val = "&nbsp;";
             }
             if (element_options[i].is_default == 1) {
-                checked = 'checked="checked"'
+                checked = 'checked="checked"';
             } else {
-                checked = ""
+                checked = "";
             }
-            A = A + '<input class="checkbox" ' + checked + ' type="checkbox"><label class="choice">' + el_val + "</label>\n"
+            A = A + '<input class="checkbox" ' + checked + ' type="checkbox"><label class="choice">' + el_val + "</label>\n";
         }
         A = '<span id="field' + this.id + '">' + A + "</span>";
-        return A
+        return A;
     },
     select: function() {
         element_options = ds.get(this.id, "options");
         var A = "";
         for (i = 0; i < element_options.length; i++) {
             if (element_options[i].is_default == 1) {
-                selected = 'selected="selected"'
+                selected = 'selected="selected"';
             } else {
-                selected = ""
+                selected = "";
             }
-            A = A + "<option " + selected + ">" + element_options[i].option + "</option>"
+            A = A + "<option " + selected + ">" + element_options[i].option + "</option>";
         }
         A = '<div><select id="field' + this.id + '" class="select ' + ds.get(this.id, "size") + '">' + A + "</select></div>";
-        return A
+        return A;
     },
     radio: function() {
         element_options = ds.get(this.id, "options");
+        console.log(element_options);
         var A = "";
         for (i = 0; i < element_options.length; i++) {
             el_val = element_options[i].option;
             if (el_val == "") {
-                el_val = "&nbsp;"
+                el_val = "&nbsp;";
             }
             if (element_options[i].is_default == 1) {
                 name = "radiogroup" + this.id;
-                checked = 'checked="checked"'
+                checked = 'checked="checked"';
             } else {
                 name = "radiogroup";
-                checked = ""
+                checked = "";
             }
-            A = A + '<input class="radio" name="' + name + '" ' + checked + ' type="radio"><label class="choice">' + el_val + "</label>\n"
+            A = A + '<input class="radio" name="' + name + '" ' + checked + ' type="radio"><label class="choice">' + el_val + "</label>\n";
         }
         A = '<span id="field' + this.id + '">' + A + "</span>";
-        return A
+        return A;
+    },
+    sex: function() {
+        element_options = ds.get(this.id, "sexs");
+        var A = "";
+        for (i = 0; i < element_options.length; i++) {
+            el_val = element_options[i].option;
+            if (el_val == "") {
+                el_val = "&nbsp;";
+            }
+            if (element_options[i].is_default == 1) {
+                name = "sexgroup" + this.id;
+                checked = 'checked="checked"';
+            } else {
+                name = "sexgroup";
+                checked = "";
+            }
+            A = A + '<input class="radio" name="' + name + '" ' + checked + ' type="radio"><label class="choice">' + el_val + "</label>\n";
+        }
+        A = '<span id="field' + this.id + '">' + A + "</span>";
+        return A;
+    },
+
+    name1: function() {
+        return '<div><span><input readonly="readonly" class="text" size="2" type="text"><label>Title</label></span><span><input readonly="readonly" class="text" size="12" type="text"><label>First</label></span><span><input readonly="readonly" class="text" size="14" type="text"><label>Last</label></span><span><input readonly="readonly" class="text" size="3" type="text"><label>Suffix</label></span></div>';
     },
     name: function() {
-        return '<div><span><input readonly="readonly" class="text" size="2" type="text"><label>Title</label></span><span><input readonly="readonly" class="text" size="12" type="text"><label>First</label></span><span><input readonly="readonly" class="text" size="14" type="text"><label>Last</label></span><span><input readonly="readonly" class="text" size="3" type="text"><label>Suffix</label></span></div>'
+        return '<div><span><input readonly="readonly" class="text" size="8" type="text"></span></div>';
     },
     simple_name: function() {
-        return '<div><span><input readonly="readonly" class="text" size="12" type="text"><label>First</label></span><span><input readonly="readonly" class="text" size="14" type="text"><label>Last</label></span></div>'
+        return '<div><span><input readonly="readonly" class="text" size="12" type="text"><label>First</label></span><span><input readonly="readonly" class="text" size="14" type="text"><label>Last</label></span></div>';
     },
     date: function() {
-        return '<div><span><input readonly="readonly" class="text" size="2" type="text"> / <label>MM</label></span><span><input readonly="readonly" class="text" size="2" type="text"> / <label>DD</label></span><span><input readonly="readonly" class="text" size="4" type="text"> <label>YYYY</label></span><img src="images/icons/calendar.gif" alt="Pick Date." class="icon"></div>'
+        return '<div><span><input readonly="readonly" class="text" size="2" type="text"> / <label>MM</label></span><span><input readonly="readonly" class="text" size="2" type="text"> / <label>DD</label></span><span><input readonly="readonly" class="text" size="4" type="text"> <label>YYYY</label></span><img src="images/icons/calendar.gif" alt="Pick Date." class="icon"></div>';
     },
     europe_date: function() {
-        return '<div><span><input readonly="readonly" class="text" size="2" type="text"> / <label>DD</label></span><span><input readonly="readonly" class="text" size="2" type="text"> / <label>MM</label></span><span><input readonly="readonly" class="text" size="4" type="text"> <label>YYYY</label></span><img src="images/icons/calendar.gif" alt="Pick Date." class="icon"></div>'
+        return '<div><span><input readonly="readonly" class="text" size="2" type="text"> / <label>DD</label></span><span><input readonly="readonly" class="text" size="2" type="text"> / <label>MM</label></span><span><input readonly="readonly" class="text" size="4" type="text"> <label>YYYY</label></span><img src="images/icons/calendar.gif" alt="Pick Date." class="icon"></div>';
     },
     time: function() {
         if (ds.get(this.id, "constraint") == "show_seconds") {
-            return '<div id="time' + this.id + '"><span><input readonly="readonly" class="text" size="2" type="text"> : <label>HH</label></span><span><input readonly="readonly" class="text" size="2" type="text"> : <label>MM</label></span><span><input readonly="readonly" class="text" size="2" type="text"><label>SS</label></span><span><select class="select" style="width: 4em;"><option>AM</option><option>PM</option></select><label>AM/PM</label></span></div>'
+            return '<div id="time' + this.id + '"><span><input readonly="readonly" class="text" size="2" type="text"> : <label>HH</label></span><span><input readonly="readonly" class="text" size="2" type="text"> : <label>MM</label></span><span><input readonly="readonly" class="text" size="2" type="text"><label>SS</label></span><span><select class="select" style="width: 4em;"><option>AM</option><option>PM</option></select><label>AM/PM</label></span></div>';
         } else {
-            return '<div id="time' + this.id + '"><span><input readonly="readonly" class="text" size="2" type="text"> : <label>HH</label></span><span><input readonly="readonly" class="text" size="2" type="text"><label>MM</label></span><span><select class="select" style="width: 4em;"><option>AM</option><option>PM</option></select><label>AM/PM</label></span></div>'
+            return '<div id="time' + this.id + '"><span><input readonly="readonly" class="text" size="2" type="text"> : <label>HH</label></span><span><input readonly="readonly" class="text" size="2" type="text"><label>MM</label></span><span><select class="select" style="width: 4em;"><option>AM</option><option>PM</option></select><label>AM/PM</label></span></div>';
         }
     },
+    product: function() {
+        return '<div class="shopping"><ul class="shoppingList"><li class="shopping-item empty">暂时没有商品</li></ul></div>';
+    },
     phone: function() {
-        return '<div><span><input readonly="readonly" class="text" size="3" type="text"> - <label>(###)</label></span><span><input readonly="readonly" class="text" size="3" type="text"> - <label>###</label></span><span><input readonly="readonly" class="text" size="4" type="text"><label>####</label></span></div>'
+        return '<div><span><input readonly="readonly" class="text" size="3" type="text"> - <label>(###)</label></span><span><input readonly="readonly" class="text" size="3" type="text"> - <label>###</label></span><span><input readonly="readonly" class="text" size="4" type="text"><label>####</label></span></div>';
     },
     simple_phone: function() {
-        return '<div class="full"><input readonly="readonly" id="field' + this.id + '" class="text medium" type="text"></div>'
+        return '<div class="full"><input readonly="readonly" id="field' + this.id + '" class="text medium" type="text"></div>';
     },
     address: function() {
-        return '<div class="full"><div class="full"><input readonly="readonly" class="text large" type="text"><label>Street Address</label></div><div class="full"><input readonly="readonly" class="text large" type="text"><label>Address Line 2</label></div><div class="left"><input readonly="readonly" class="text medium" type="text"><label>City</label></div><div class="right"><input readonly="readonly" class="text medium" type="text"><label>State / Province / Region</label></div><div class="left"><input readonly="readonly" class="text medium" type="text"><label>Zip / Postal Code</label></div><div class="right"><select class="select medium" name=""><option value=""></option></select><label>Country</label></div></div>'
+        return '<div class="full"><div class="full"><input readonly="readonly" class="text large" type="text"><label>Street Address</label></div><div class="full"><input readonly="readonly" class="text large" type="text"><label>Address Line 2</label></div><div class="left"><input readonly="readonly" class="text medium" type="text"><label>City</label></div><div class="right"><input readonly="readonly" class="text medium" type="text"><label>State / Province / Region</label></div><div class="left"><input readonly="readonly" class="text medium" type="text"><label>Zip / Postal Code</label></div><div class="right"><select class="select medium" name=""><option value=""></option></select><label>Country</label></div></div>';
     },
     money: function() {
         currency = ds.get(this.id, "constraint");
-        symbol = "$";
-        main_curr = "Dollars";
-        sub_curr = "Cents";
-        major = "10";
-        decimal = " . ";
+        symbol = "&#165;";
+        main_curr = "人民币";
+        sub_curr = "";
+        major = "15";
+        decimal = "";
+
+        if (currency == "Dollars") {
+            symbol = "$";
+            main_curr = "Dollars";
+            sub_curr = "Cents";
+            major = "10";
+            decimal = " . ";
+        }
         if (currency == "euro") {
             symbol = "&#8364;";
             main_curr = "Euros";
-            sub_curr = "Cents"
+            sub_curr = "Cents";
         }
         if (currency == "pound") {
             symbol = "&#163;";
             main_curr = "Pounds";
-            sub_curr = "Pence"
+            sub_curr = "Pence";
         }
         if (currency == "yen") {
             symbol = "&#165;";
             main_curr = "Yen";
             decimal = "";
-            major = "15"
+            major = "15";
         }
-        if (currency != "yen") {
-            minor = '<span><input readonly="readonly" class="text" size="2" type="text"><label>' + sub_curr + "</label></span>"
+        if (currency != "yen" && currency != "rmb" && currency != "") {
+            minor = '<span><input readonly="readonly" class="text" size="2" type="text"><label>' + sub_curr + "</label></span>";
         } else {
-            minor = ""
+            minor = "";
         }
-        return "<div><span>" + symbol + '</span><span><input readonly="readonly" class="text" size="' + major + '" type="text">' + decimal + "<label>" + main_curr + "</label></span>" + minor + "</div>"
+        return "<div><span>" + symbol + '</span><span><input readonly="readonly" class="text" size="' + major + '" type="text">' + decimal + "<label>" + main_curr + "</label></span>" + minor + "</div>";
     },
     file: function() {
-        return '<div><input class="text" readonly="readonly" type="file"></div>'
+        return '<div><input class="text" readonly="readonly" type="file"></div>';
     },
     email: function() {
-        return '<div><input value="@" readonly="readonly" id="field' + this.id + '" class="text ' + ds.get(this.id, "size") + '" type="text"></div>'
+        return '<div><input value="@" readonly="readonly" id="field' + this.id + '" class="text ' + ds.get(this.id, "size") + '" type="text"></div>';
     },
     url: function() {
-        return '<div><input value="http://" readonly="readonly" id="field' + this.id + '" class="text ' + ds.get(this.id, "size") + '" type="text"></div>'
+        return '<div><input value="http://" readonly="readonly" id="field' + this.id + '" class="text ' + ds.get(this.id, "size") + '" type="text"></div>';
     },
     number: function() {
-        return '<div><input value="0123456789" readonly="readonly" id="field' + this.id + '" class="text ' + ds.get(this.id, "size") + '" type="text"></div>'
+        return '<div><input value="0123456789" readonly="readonly" id="field' + this.id + '" class="text ' + ds.get(this.id, "size") + '" type="text"></div>';
     },
     section: function() {
         var A = ds.get(this.id, "guidelines");
         A = A.replace(/\n/g, "<br />");
-        return '<span id="guidelines' + ds.get(this.id, "id") + '">' + A + "</span>"
+        return '<span id="guidelines' + ds.get(this.id, "id") + '">' + A + "</span>";
     }
 };
 var data_source = function() {};
@@ -3218,8 +3306,41 @@ data_source.prototype = {
     new_element: function(A, C, B) {
         title = "Untitled";
         switch (A) {
+        case "xingming":
+            title = "姓名";
+            break;
         case "text":
             title = "单行文本";
+            break;
+        case "zhiwei":
+            title = "职位";
+            break;
+        case "dianhua":
+            title = "手机";
+            break;
+        case "dizhi":
+            title = "地址";
+            break;
+        case "city":
+            title = "城市";
+            break;
+        case "tel":
+            title = "固话";
+            break;
+        case "weixin":
+            title = "微信";
+            break;
+        case "QQ":
+            title = "QQ";
+            break;
+        case "company":
+            title = "公司";
+            break;
+        case "product":
+            title = "商品";
+            break;
+        case "fax":
+            title = "传真";
             break;
         case "textarea":
             title = "多行文本";
@@ -3234,7 +3355,10 @@ data_source.prototype = {
             title = "多项选择";
             break;
         case "name":
-            title = "名字";
+            title = "姓名";
+            break;
+        case "sex":
+            title = "称谓";
             break;
         case "simple_name":
             title = "Name";
@@ -3248,14 +3372,8 @@ data_source.prototype = {
         case "time":
             title = "时间";
             break;
-        case "phone":
-            title = "电话";
-            break;
         case "simple_phone":
             title = "Phone";
-            break;
-        case "address":
-            title = "地址";
             break;
         case "money":
             title = "价格";
@@ -3283,6 +3401,7 @@ data_source.prototype = {
             is_required: "0",
             is_unique: "0",
             is_private: "0",
+
             type: A,
             object: B,
             position: C,
@@ -3307,6 +3426,18 @@ data_source.prototype = {
                 is_default: 0,
                 is_db_live: "0",
                 id: "0"
+            }],
+            sexs:[{
+                option: "先生",
+                is_default: 0,
+                is_db_live: "0",
+                id: "0"
+            },
+            {
+                option: "女士",
+                is_default: 0,
+                is_db_live: "0",
+                id: "0"
             }]
         })
     },
@@ -3315,10 +3446,10 @@ data_source.prototype = {
             var C = this.data.elements[B];
             if (D == C.id) {
                 el = C;
-                break
+                break;
             }
         }
-        return el[A]
+        return el[A];
     },
     set: function(C, A, B) {
         jQuery.each(this.data.elements,
@@ -3331,14 +3462,51 @@ data_source.prototype = {
             }
         })
     },
-    set_option: function(C, A, B) {
+    set_sex_option: function(C, A, B) {
         if (A.replace) {
             A = A.replace(/\\\"/g, '\\ "')
         }
         jQuery.each(this.data.elements,
         function(E, D) {
             if (D.id == C) {
-                D.options[B].option = A
+                D.sexs[B].option = A;
+            }
+        })
+    },
+    set_sex_default_option: function(B, A) {
+        jQuery.each(this.data.elements,
+        function(D, C) {
+            if (C.id == A) {
+                jQuery.each(C.sexs,
+                function(E, F) {
+                    if (E == B && F.is_default == 0) {
+                        F.is_default = 1
+                    } else {
+                        if (E == B && F.is_default == 1) {
+                            F.is_default = 0
+                        } else {
+                            if (C.type != "checkbox") {
+                                F.is_default = 0
+                            }
+                        }
+                    }
+                })
+            }
+        })
+    },
+    set_option: function(C, A, B) {
+        if (A.replace) {
+            A = A.replace(/\\\"/g, '\\ "')
+        }
+        console.log(this.data.elements);
+        jQuery.each(this.data.elements,
+        function(E, D) {
+            console.log("******");
+            console.log(D.id);
+            console.log(C);
+            console.log("******");
+            if (D.id == C) {
+                D.options[B].option = A;
             }
         })
     },
@@ -3427,20 +3595,32 @@ form.prototype = {
 };
 var components = {
     text: ["types", "size", "required", "unique", "is_private", "text_default"],
+    xingming: ["types", "size", "required", "unique", "is_private", "text_default"],
+    zhiwei: ["types", "size", "required", "unique", "is_private", "text_default"],
+    tel: ["types", "size", "required", "unique", "is_private", "text_default"],
+    dianhua: ["types", "size", "required", "unique", "is_private", "text_default"],
+    dizhi: ["types", "size", "required", "unique", "is_private", "text_default"],
+    fax: ["types", "size", "required", "unique", "is_private", "text_default"],
+    company: ["types", "size", "required", "unique", "is_private", "text_default"],
+    weixin: ["types", "size", "required", "unique", "is_private", "text_default"],
+    QQ: ["types", "size", "required", "unique", "is_private", "text_default"],
+    city: ["types", "size", "required", "unique", "is_private", "text_default"],
     textarea: ["types", "size", "required", "unique", "is_private", "text_default"],
     select: ["types", "size", "required", "choices", "is_private"],
-    radio: ["types", "choices", "required", "randomize", "is_private"],
+    radio: ["types", "choices", "required", "is_private"],
+    sex: ["types", "choices_sex", "required", "is_private"],
     checkbox: ["types", "choices", "required", "is_private"],
     name: ["types", "required", "is_private", "name"],
     simple_name: ["types", "required", "is_private", "name"],
     date: ["types", "required", "unique", "is_private", "date"],
     europe_date: ["types", "required", "unique", "is_private", "date"],
     time: ["types", "required", "unique", "is_private", "noseconds"],
-    phone: ["types", "required", "unique", "is_private", "phone", "phone_default"],
+    //phone: ["types", "required", "unique", "is_private", "phone", "phone_default"],
     simple_phone: ["types", "required", "unique", "is_private", "phone", "text_default"],
-    address: ["types", "required", "is_private", "address_default"],
+    //address: ["types", "required", "is_private", "address_default"],
     money: ["types", "required", "unique", "is_private", "currency"],
     url: ["types", "size", "required", "unique", "is_private", "text_default"],
+    product: ["types", "size", "required", "unique", "is_private", "product"],
     email: ["types", "size", "required", "unique", "is_private", "text_default"],
     number: ["types", "size", "required", "unique", "is_private", "text_default"],
     file: ["types", "required", "is_private"],
@@ -3464,7 +3644,7 @@ function load_all() {
     populate_elements();
     populate_form();
     JJ("#form_save_button").click(function() {
-        save_form_data()
+        save_form_data();
     });
     JJ("#statusPanel").fadeOut("normal")
 }
@@ -3475,28 +3655,28 @@ function new_form() {
     markup = ctrl.display();
     document.getElementById("form_elements").insertBefore(markup, document.getElementById("form_elements").lastChild);
     JJ(ctrl.li).mousedown(function() {
-        activate_form()
+        activate_form();
     })
 }
 function insert_element(A) {
     if (A != "pagebreak") {
         JJ("#nofields").css("display", "none");
         if (A == "currency") {
-            A = "money"
+            A = "money";
         }
         ctrl = initialize_control(A);
-        console.log(ctrl);
+        //console.log(ctrl);
         if (A == "address") {
-            ds.set(ctrl.id, "size", "large")
+            ds.set(ctrl.id, "size", "large");
         }
         if (A == "simple_name") {
-            ds.set(ctrl.id, "size", "small")
+            ds.set(ctrl.id, "size", "small");
         }
         display_control(ctrl);
         add_element_events(ctrl);
         display_save_button();
         init_dragdrop();
-        update_pos("true")
+        update_pos("true");
     }
 }
 function initialize_control(A) {
@@ -3534,32 +3714,33 @@ function create_id(A) {
     ret = element_count;
     element_count += 1;
     if (A == "address") {
-        element_count += 5
+        element_count += 5;
     }
     if (A == "simple_name") {
-        element_count += 3
+        element_count += 3;
     }
     if (A == "name") {
-        element_count += 3
+        element_count += 3;
     }
     if (A == "checkbox") {
-        element_count += 100
+        element_count += 100;
     }
-    return ret
+    return ret;
 }
+//显示字段属性
 function select_element(A) {
     unselect_allfields();
     main_form.unselect();
     A.selected();
     active_element = A.id;
-    JJ("#element_properties").css("margin-top", JJ(A.li).offset().top - 146 + "px");
+    JJ("#element_properties").css("margin-top", JJ(A.li).offset().top - 196 + "px");
     show_field_property();
     display_properties();
     current_offset = JJ(A.li).offset().top - 146;
-    adjust_element_properties()
+    adjust_element_properties();
 }
 function adjust_element_properties() {
-    JJ("#element_properties").css("margin-top", JJ(ds.get(active_element, "object").li).offset().top - 146 + "px")
+    JJ("#element_properties").css("margin-top", JJ(ds.get(active_element, "object").li).offset().top - 226 + "px");
 }
 function unselect_allfields() {
     jQuery.each(ds.data.elements,
@@ -3569,21 +3750,32 @@ function unselect_allfields() {
     JJ("#element_inactive").css("display", "block");
     JJ("#element_position").css("display", "none");
     JJ("#all_properties").css("display", "none");
-    JJ("#list_buttons").css("display", "none")
+    JJ("#list_buttons").css("display", "none");
 }
 function display_properties() {
     display_sidebar("element_properties");
     element_view = new element_properties(active_element);
     element_view.initialize(active_element);
-    element_view.render()
+    element_view.render();
 }
 function set_properties(B, A, C) {
-    if (A != "choices") {
-        ds.set(active_element, A, B)
-    } else {
-        ds.set_option(active_element, B, C)
+    if (A == "choices") {
+        ds.set_option(active_element, B, C);
     }
-    live_preview[A](B)
+    else if(A == "choices_sex"){
+        ds.set_sex_option(active_element, B, C);
+    }
+    else{
+        ds.set(active_element, A, B);
+    }
+    /*
+    if (A != "choices" && A !="choices_sex") {
+        ds.set(active_element, A, B);
+    } else {
+        ds.set_option(active_element, B, C);
+    }
+    */
+    live_preview[A](B);
 }
 live_preview = {
     title: function(A) {
@@ -3640,6 +3832,9 @@ live_preview = {
     choices: function() {
         this.redraw()
     },
+    choices_sex: function() {
+        this.redraw();
+    },
     constraint: function() {
         this.redraw()
     },
@@ -3652,6 +3847,78 @@ live_preview = {
         ds.get(active_element, "object").selected()
     }
 };
+
+//sex start
+function insert_choice_sex(A) {
+    ds.get(active_element, "sexs").splice(A, 0, {
+        option: "",
+        is_default: "0",
+        is_db_live: "0",
+        id: "0"
+    });
+    element_view.choices_sex();
+    set_properties("", "choices_sex", A);
+    if (JJ("#choice_sex" + (A)).length) {
+        JJ("#choice_sex" + A).focus()
+    }
+}
+function delete_choice_sex(A) {
+    if (A == 0 && ds.get(active_element, "sexs").length == 1) {
+        alert("你不能删除这个选项");
+        return false
+    } else {
+        ds.get(active_element, "sexs").splice(A, 1)
+    }
+    element_view.choices_sex();
+    live_preview.choices_sex();
+    if (JJ("#choice_sex" + (A - 1)).length) {
+        JJ("#choice_sex" + (A - 1)).focus()
+    } else {
+        JJ("#choice_sex" + (A)).focus()
+    }
+}
+function delete_checkbox_sex(c, d, e, f) {
+    if (e == "checkbox" && ds.get(active_element, "sexs").length == 1) {
+        alert("You cannot delete all choices.");
+        return false;
+    }
+    if (e == "checkbox" && d == 1) {
+        confirmed = confirm("所有相关数据都将被删除,确定吗?");
+    } else {
+        confirmed = true;
+    }
+    if (confirmed) {
+        if (d == 1 && e == "checkbox") {
+            JJ("#statusText").html("删除中,请稍后...");
+            JJ.post("delete_element_option.php", {
+                form_id: json_form.id,
+                element_id: active_element,
+                option_id: c
+            },
+            function(a) {
+                var b = eval("(" + a + ")");
+                if (b.status == "ok") {
+                    delete_choice_sex(f);
+                } else {
+                    alert("删除错误!");
+                }
+            })
+        } else {
+            delete_choice_sex(f);
+        }
+    }
+}
+function set_choice_sex_default(A) {
+    ds.set_sex_default_option(A, active_element);
+    element_view.choices_sex();
+    ds.get(active_element, "object").li.innerHTML = "";
+    ds.get(active_element, "object").generate_markup();
+    ds.get(active_element, "object").selected()
+}
+
+
+//sex end
+
 function insert_choice(A) {
     ds.get(active_element, "options").splice(A, 0, {
         option: "",
@@ -3667,7 +3934,7 @@ function insert_choice(A) {
 }
 function delete_choice(A) {
     if (A == 0 && ds.get(active_element, "options").length == 1) {
-        alert("You cannot delete all choices.");
+        alert("你不能删除这个选项");
         return false
     } else {
         ds.get(active_element, "options").splice(A, 1)
@@ -3682,17 +3949,17 @@ function delete_choice(A) {
 }
 function delete_checkbox(c, d, e, f) {
     if (e == "checkbox" && ds.get(active_element, "options").length == 1) {
-        alert("You cannot delete all choices.");
+        alert("你不能删除这个选项");
         return false
     }
     if (e == "checkbox" && d == 1) {
-        confirmed = confirm("All data associated with this choice will be deleted. Are you sure you want to delete this choice?")
+        confirmed = confirm("所有相关数据都将被删除,确定吗?")
     } else {
         confirmed = true
     }
     if (confirmed) {
         if (d == 1 && e == "checkbox") {
-            JJ("#statusText").html("Deleting... Please Wait...");
+            JJ("#statusText").html("删除中,请稍后...");
             JJ.post("delete_element_option.php", {
                 form_id: json_form.id,
                 element_id: active_element,
@@ -3703,7 +3970,7 @@ function delete_checkbox(c, d, e, f) {
                 if (b.status == "ok") {
                     delete_choice(f)
                 } else {
-                    alert("An error occured while deleting your field!")
+                    alert("删除错误!")
                 }
             })
         } else {
@@ -3795,7 +4062,7 @@ function switch_display(A, B) {
 }
 function delete_element(A) {
     if (ds.get(A, "is_db_live") == "1") {
-        confirmed = confirm("All data associated with this field will be deleted. Are you sure you want to delete this field?")
+        confirmed = confirm("与此字段相关的所有数据将被删除。你确定你要删除这个字段吗?")
     } else {
         confirmed = true
     }
@@ -3806,7 +4073,7 @@ function delete_element(A) {
 }
 function delete_from_db(c) {
     if (ds.get(c, "is_db_live") == "1") {
-        JJ("#statusText").html("Deleting ... Please wait ...");
+        JJ("#statusText").html("删除中...请等待");
         JJ.post("delete_element.php", {
             form_id: json_form.id,
             element_id: c
@@ -3816,7 +4083,7 @@ function delete_from_db(c) {
             if (b.status == "ok") {
                 delete_element_markup(c)
             } else {
-                alert("An error occured while deleting your field!")
+                alert("删除出错!")
             }
         })
     } else {
@@ -3922,7 +4189,12 @@ function get_prev_siblings(A) {
 }
 function choices_event(A, B) {
     if (A.keyCode == 13) {
-        insert_choice(B + 1)
+        insert_choice(B + 1);
+    }
+}
+function choices_event_sex(A, B) {
+    if (A.keyCode == 13) {
+        insert_choice_sex(B + 1);
     }
 }
 function show_field_property() {
@@ -3932,10 +4204,12 @@ function show_form_property() {
     JJ("#tabs").attr("class", "form_prop_tab")
 }
 function save_form_data() {
-    JJ("#statusText").html("Saving ... Please wait ...");
+    JJ("#statusText").html("保存中...请稍后...");
     JJ("#form_save_button").html('<img src="images/icons/filesave.gif" /> Saving');
     main_form.data.frame_height = JJ("#main").outerHeight();
     JJ("#form_save_button").unbind("click");
+    /*console.log(ds.stringify());*/
+    /*return;*/
     JJ.post("save.php", {
         form: JSON.stringify(main_form.data),
         elements: ds.stringify()
@@ -3945,9 +4219,10 @@ function save_form_data() {
     })
 }
 function form_aftersave_callback(a) {
+    console.log(a);
     JJ("#form_save_button").html('<img src="images/icons/filesave.gif" /> Save Form');
     JJ("#form_save_button").click(function() {
-        save_form_data()
+        save_form_data();
     });
     var b = eval("(" + a + ")");
     if (b.status == "ok") {

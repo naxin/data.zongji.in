@@ -1,12 +1,15 @@
 <?php
-/******************************************************************************
- MachForm
-  
- Copyright 2007 Appnitro Software. This code cannot be redistributed without
- permission from http://www.nulledscriptz.com/
- 
- More info at: http://www.nulledscriptz.com/
- ******************************************************************************/
+/*=============================================================================
+#     FileName: save.php
+#         Desc: view page
+#       Author: RainYang - https://github.com/rainyang
+#        Email: rainyang2012@qq.com
+#     HomePage: http://360mb.cn
+#      Version: 0.0.1
+#   LastChange: 2014-04-05 10:36:13
+#      History:
+=============================================================================*/
+
 	session_start();
 	
 	require('config.php');
@@ -25,6 +28,8 @@
 	require('includes/filter-functions.php');
 	require('includes/common-validator.php');
 	require('includes/JSON.php');
+	require('includes/elements.conf.php');
+	require('includes/helper-functions.php');
 
 	
 	/* Variables */
@@ -32,24 +37,38 @@
 	$element_child_lookup['simple_name'] = 1;
 	$element_child_lookup['name'] 		 = 3;
 	
-	$comment_desc['text'] 		= 'Single Line Text';
-	$comment_desc['phone'] 		= 'Phone';
+	$comment_desc['text'] 		= '单行文本';
 	$comment_desc['simple_phone'] = 'Phone';
-	$comment_desc['url'] 		= 'Web Site';
+	$comment_desc['url'] 		= '网址';
 	$comment_desc['email'] 		= 'Email';
 	$comment_desc['file'] 		= 'File Upload';
-	$comment_desc['textarea'] 	= 'Paragraph Text';
-	$comment_desc['radio'] 		= 'Multiple Choice';
-	$comment_desc['select'] 	= 'Drop Down';
+	$comment_desc['textarea'] 	= '多行文本';
+	$comment_desc['radio'] 		= 'radio';
+	$comment_desc['select'] 	= '下拉';
 	$comment_desc['time'] 		= 'Time';
 	$comment_desc['date'] 		= 'Date';
 	$comment_desc['europe_date'] = 'Europe Date';
 	$comment_desc['money'] 		 = 'Price';
 	$comment_desc['number'] 	 = 'Number';
 	$comment_desc['simple_name'] = 'Normal Name';
-	$comment_desc['name'] 		 = 'Extended Name';
-	$comment_desc['address'] 	 = 'Address';
+	//$comment_desc['name'] 		 = 'Extended Name';
+	$comment_desc['xingming']    = '姓名';
+	$comment_desc['address'] 	 = '地址';
 	$comment_desc['checkbox'] 	 = 'Checkbox';
+	$comment_desc['sex'] 		 = '称谓';
+	$comment_desc['zhiwei']      = '职位';
+	$comment_desc['email']       = 'email';
+	//$comment_desc['phone']       = '手机';
+	$comment_desc['dianhua']     = '手机';
+	$comment_desc['city']        = '城市';
+	$comment_desc['tel']         = '固话';
+	$comment_desc['weixin']      = '微信';
+	$comment_desc['company']     = '公司';
+	$comment_desc['fax']         = '传真';
+	$comment_desc['QQ']          = 'QQ';
+	$comment_desc['url']         = '网址';
+	//$comment_desc['address']     = '地址';
+	$comment_desc['dizhi']     = '地址';
 	
 	
 	connect_db();
@@ -63,6 +82,7 @@
 	
 	$form_object 	   = $json->decode($input_array['form']);
 	$elements_object   = $json->decode($input_array['elements']); 
+    file_put_contents('sform1.log', print_r($elements_object, true));
 	
 	$form_id = $form_object->id;
 	
@@ -80,6 +100,7 @@
 	}
 	
 	$form_input['form_id'] 			    = $form_id;
+	$form_input['user_id'] 			    = $user_id;
 	$form_input['form_name'] 			= $form_object->name;
 	$form_input['form_description'] 	= $form_object->description;
 	$form_input['form_redirect'] 		= $form_object->redirect;
@@ -91,10 +112,16 @@
 	$form_input['form_frame_height'] 	= $form_object->frame_height;
 		
 	if($is_new_form){ //this is a new form, insert new form data
+        //表单信息
 		$result = ap_forms_insert($form_input);
 		check_result($result);
 		
 		$form_id = mysql_insert_id();
+
+        $shorturl = shorturl($form_id);
+	    $form_input['shorturl'] = $shorturl[0];
+        //create qrcode and shorturl
+        qrcode($form_input['shorturl'], "./data/qrcode/{$form_input['shorturl']}.png");
 		
 		//create new table for this form
 		$query = "CREATE TABLE `ap_form_{$form_id}` (
@@ -123,6 +150,7 @@
 			if(copy("./view.css",DATA_DIR."/form_{$form_id}/css/view.css")){
 				//on success update 'form_has_css' field on ap_forms table
 				$form_update_input['form_has_css'] = 1;
+				$form_update_input['shorturl'] = $shorturl[0];
 				ap_forms_update($form_id,$form_update_input);
 			}
 		}
@@ -140,13 +168,21 @@
 	$optionable_elements = array();
 	
 	foreach ($elements_array as $key=>$value){
-		if(($value->type == 'radio') || ($value->type == 'checkbox') || ($value->type == 'select')){
+        //是否crm在配置文件中设置
+        $value->element_is_crm = in_array($value->type, $elements_crm) ? 1 : 0;
+
+        if($value->type == 'sex'){
+			$value->options = $value->sexs; //remove options for elements other than checkbox/radio/dropdown 
+        }
+		if(($value->type == 'sex') || ($value->type == 'radio') || ($value->type == 'checkbox') || ($value->type == 'select')){
 			$optionable_elements[] = $value;
 		}else{
 			$value->options = null; //remove options for elements other than checkbox/radio/dropdown 
 			$non_optionable_elements[] = $value;
 		}
 	}
+
+    file_put_contents('sform.log', print_r($value, true));
 	
 	//1. Process non optionable elements
 	if(!empty($non_optionable_elements)){
@@ -183,6 +219,7 @@
 			$element_input['element_position'] 		= $element->position;
 			$element_input['element_default_value'] = $element->default_value;
 			$element_input['element_constraint'] 	= $element->constraint;
+			$element_input['element_is_crm'] 	    = $element->element_is_crm;
 			
 			if(empty($element_child_lookup[$element->type])){
 				$element_input['element_total_child'] = 0;
@@ -214,6 +251,7 @@
 			$element_input['element_position'] 		= $element->position;
 			$element_input['element_default_value'] = $element->default_value;
 			$element_input['element_constraint'] 	= $element->constraint;
+			$element_input['element_is_crm'] 	    = $element->element_is_crm;
 			
 			if(empty($element_child_lookup[$element->type])){
 				$element_input['element_total_child'] = 0;
@@ -261,6 +299,7 @@
 			$element_input['element_position'] 		= $element->position;
 			$element_input['element_default_value'] = $element->default_value;
 			$element_input['element_constraint'] 	= $element->constraint;
+			$element_input['element_is_crm'] 	    = $element->element_is_crm;
 			
 			if(empty($element_child_lookup[$element->type])){
 				$element_input['element_total_child'] = 0;
@@ -269,7 +308,7 @@
 			}
 			ap_form_elements_insert($element_input);
 			
-			if(($element->type == 'radio') || ($element->type == 'select')){ //radio button and select only need one field total,,while checkboxes need one field per option
+			if(($element->type == 'radio') || ($element->type == 'select') || ($element->type == 'sex')){ //radio button and select only need one field total,,while checkboxes need one field per option
 				table_add_field($form_id,$next_element_id,$element->type); //actually create the field
 			}
 			
@@ -304,7 +343,7 @@
 				$position++;
 			}
 			
-			//update 'element_total_child' on ap_form_elements
+			//up$elementdate 'element_total_child' on ap_form_elements
 			$position -= 2;
 			do_query("update ap_form_elements set element_total_child='$position' where form_id='$form_id' and element_id='$next_element_id'");
 			
@@ -329,6 +368,7 @@
 			$element_input['element_position'] 		= $element->position;
 			$element_input['element_default_value'] = $element->default_value;
 			$element_input['element_constraint'] 	= $element->constraint;
+			$element_input['element_is_crm'] 	    = $element->element_is_crm;
 			
 			if(empty($element_child_lookup[$element->type])){
 				$element_input['element_total_child'] = 0;
@@ -405,10 +445,13 @@
 	}
 	
 	/******** End processing review table **********************************************************/
+
+
+    
 	
 		
-	$_SESSION['AP_SUCCESS']['title'] = 'Success';
-	$_SESSION['AP_SUCCESS']['desc']  = 'Your form has been saved.';
+	$_SESSION['AP_SUCCESS']['title'] = '操作成功';
+	$_SESSION['AP_SUCCESS']['desc']  = '您的表单已经保存';
 	
 	echo '{ "status" : "ok", "message" : "'.$form_id.'" }';
 	
@@ -432,15 +475,20 @@
 		
 		$comment = @$comment_desc[$type];
 			
-		if(('text' == $type) || ('phone' == $type) || ('simple_phone' == $type) || ('url' == $type) || ('email' == $type) || ('file' == $type)){
+		if(('text' == $type) || ('dianhua' == $type) || ('dizhi' == $type) || ('url' == $type) || ('email' == $type) || ('file' == $type) || ('zhiwei' == $type) || ('weixin' == $type) || ('fax' == $type) || ('tel' == $type) || ('QQ' == $type) || ('fax' == $type) || ('company' == $type) || ('city' == $type) || ('xingming' == $type) ){
 			$query = "ALTER TABLE `ap_form_{$form_id}` ADD COLUMN `element_{$element_id}` text NULL COMMENT '{$comment}';";
 			do_query($query);
 		}elseif ('textarea' == $type){
 			$query = "ALTER TABLE `ap_form_{$form_id}` ADD COLUMN `element_{$element_id}` mediumtext NULL COMMENT '{$comment}';";
 			do_query($query);
+		}elseif (('sex' == $type) || ('select' == $type) || ('radio' == $type)){
+			$query = "ALTER TABLE `ap_form_{$form_id}` ADD COLUMN `element_{$element_id}` int(6) unsigned NOT NULL DEFAULT '0' COMMENT '{$comment}';";
+			do_query($query);
+            /*
 		}elseif (('radio' == $type) || ('select' == $type)){
 			$query = "ALTER TABLE `ap_form_{$form_id}` ADD COLUMN `element_{$element_id}` int(6) unsigned NOT NULL DEFAULT '0' COMMENT '{$comment}';";
 			do_query($query);
+             */
 		}elseif ('time' == $type){
 			$query = "ALTER TABLE `ap_form_{$form_id}` ADD COLUMN `element_{$element_id}` time NULL COMMENT '{$comment}';";
 			do_query($query);

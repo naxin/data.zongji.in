@@ -1,12 +1,15 @@
 <?php
-/******************************************************************************
- MachForm
-  
- Copyright 2007 Appnitro Software. This code cannot be redistributed without
- permission from http://www.nulledscriptz.com/
- 
- More info at: http://www.nulledscriptz.com/
- ******************************************************************************/
+/*=============================================================================
+#     FileName: manage_entries.php
+#         Desc:  
+#       Author: RainYang - https://github.com/rainyang
+#        Email: rainyang2012@qq.com
+#     HomePage: http://360mb.cn
+#      Version: 0.0.1
+#   LastChange: 2014-04-13 22:12:07
+#      History:
+=============================================================================*/
+
 	session_start();
 
 	require('config.php');
@@ -30,8 +33,8 @@
 			//do deletion
 			delete_entries($form_id,$entries_id);
 			
-			$_SESSION['AP_SUCCESS']['title'] = 'Deletion Success';
-			$_SESSION['AP_SUCCESS']['desc']  = 'Selected entries have been deleted.';
+			$_SESSION['AP_SUCCESS']['title'] = '删除成功';
+			$_SESSION['AP_SUCCESS']['desc']  = '所选数据已经成功删除.';
 		}
 		
 		header("Location: manage_entries.php?id={$form_id}&pageno={$_REQUEST['pageno']}");
@@ -49,8 +52,8 @@
 		mkdir(UPLOAD_DIR."/form_{$form_id}/files",0777);
 		umask($old_mask);
 		
-		$_SESSION['AP_SUCCESS']['title'] = 'Deletion Success';
-		$_SESSION['AP_SUCCESS']['desc']  = 'All entries have been deleted.';
+		$_SESSION['AP_SUCCESS']['title'] = '删除成功';
+		$_SESSION['AP_SUCCESS']['desc']  = '所有记录已经删除.';
 		
 		header("Location: manage_entries.php?id={$form_id}");
 		exit;
@@ -200,9 +203,9 @@
 	//set column properties for basic fields
 	$column_name_lookup['id'] 			= '<input type="checkbox" id="col_select" name="col_select" value="1" onclick="toggle_select()" />';
 	$column_name_lookup['row_num'] 		= '#';
-	$column_name_lookup['date_created'] = 'Date Created';
-	$column_name_lookup['date_updated'] = 'Date Updated';
-	$column_name_lookup['ip_address'] 	= 'IP Address';
+	$column_name_lookup['date_created'] = '创建时间';
+	$column_name_lookup['date_updated'] = '更新时间';
+	$column_name_lookup['ip_address'] 	= 'IP地址';
 	
 	$column_type_lookup['id'] 			= 'number';
 	$column_type_lookup['row_num']		= 'number';
@@ -390,16 +393,27 @@ EOT;
 ?>
 
 <?php require('includes/header.php'); ?>
-
-
+      <div class="breadcrumbs">
+        <ol class="breadcrumb">
+          <li><a href="/"><i class="glyphicon glyphicon-home"></i>首页</a></li>
+          <li><a href="/manage_form.php">智能表单</a></li>
+          <li class="active"><?php echo $form_name; ?></li>
+        </ol>
+      </div>
+      <div class="subnav">
+        <ul class="nav nav-tabs">
+          <li><a href="set_form.php?action=overview&id=<?php echo $form_id;?>">概述</a></li>
+          <!--<li><a href="form_created_edit.html">编辑</a></li>
+          <li><a href="form_rule.html">规则</a></li>
+          <li><a href="form_theme.html">样式</a></li>-->
+          <li><a href="set_form.php?action=setting&id=<?php echo $form_id;?>">设置</a></li>
+          <li><a href="set_form.php?action=publish&id=<?php echo $form_id;?>">发布</a></li>
+          <li class="active"><a href="manage_entries.php?id=<?php echo $form_id;?>">数据</a></li>
+        </ul>
+      </div>
 <div id="form_manager">
 <?php show_message(); ?>
 <div class="info">
-<?php if(!empty($form_data)){ ?>
-	<div class="export">Export all entries: <a href="export_entries.php?id=<?php echo $form_id; ?>&type=xls"><img src="images/icons/page_excel.gif" align="absmiddle"/> Excel File</a><a href="export_entries.php?id=<?php echo $form_id; ?>&type=csv"><img src="images/icons/page_white_code.gif" align="absmiddle"/> CSV File</a></div>
-    <?php } ?>	
-	<h2><a class="breadcrumb" href="manage_form.php?id=<?php echo $form_id; ?>"><?php echo $form_name; ?></a> <img src="images/icons/resultset_next.gif" align="bottom" /> Entries</h2>
-	<p>Edit and manage your form entries</p>
 </div>
 
 <?php if(!empty($form_data)){ ?>
@@ -407,11 +421,11 @@ EOT;
 <form id="form_manage_entries" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div style="width: 100%; overflow:hidden; margin-bottom: 5px">
 <div style="float: left;padding-bottom: 5px;padding-left: 8px"><img src="images/icons/arrow_turn_left.gif" align="absmiddle"/>&nbsp;
-     <input name="submit_del_selected" type="submit" id="submit_del_selected" value="Delete Selected" onclick="return confirm('Are you sure you want to delete the selected entries?');" /> or
-	 <input name="submit_del_all" type="submit" id="submit_del_all" value="Delete All Entries" onclick="return confirm('Are you sure you want to delete all your form entries?');"/>
+     <input name="submit_del_selected" type="submit" id="submit_del_selected" value="删除所选数据" onclick="return confirm('你确定要删除此数据吗?');" /> or
+	 <input name="submit_del_all" type="submit" id="submit_del_all" value="删除所有数据" onclick="return confirm('你确认要删除所有记录吗?');"/>
 </div>
 <div id="me_choose_col" style="padding-top: 5px">
-<img src="images/icons/show_table_column.gif" style="margin-top: -2px" align="absmiddle"/> <a href="columns_preference.php?id=<?php echo $form_id; ?>">Choose Columns</a>
+<img src="images/icons/show_table_column.gif" style="margin-top: -2px" align="absmiddle"/> <a href="columns_preference.php?id=<?php echo $form_id; ?>">选择列</a>
 </div>
 </div>
 
@@ -471,7 +485,7 @@ EOT;
 </div>
 
 <?php }else{
-		echo "<div style=\"height: 200px; text-align: center;padding-top: 70px\"><h2 style=\"font-size: 155%\">This form doesn't have any entry yet.</h2></div>";
+		echo "<div style=\"height: 200px; text-align: center;padding-top: 70px\"><h2 style=\"font-size: 155%\">还没有数据哦,您可要把表单<a href=\"set_form.php?action=publish&id={$form_id}\">发布出去.</h2></div>";
 	}	
 ?>
 
@@ -612,17 +626,9 @@ EOT;
 			
 			
 			//next we inform the user of his current position in the sequence of available pages
-			?>
-			<div class="footer">
-				Viewing <b><?php echo $first_row_number.'</b>-<b>'.$last_row_number; ?></b> of <b><?php echo $numrows; ?></b> entries
-			</div>
-			<?php
 		}
 ?>
 </div>
 <!-- end paging div - -->
-
-
-
 </div>
 <?php require('includes/footer.php'); ?>

@@ -2,11 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>智能表单 - 莫比网</title>
+<title><?php echo SITE_NAME;?></title>
 <meta name="robots" content="index, follow">
 <meta name="description" content="智能表单">
 <?php if(!empty($header_data)){ echo $header_data; } ?>
-<link rel="stylesheet" type="text/css" href="index.css" media="all">
+<!--<link rel="stylesheet" type="text/css" href="index.css" media="all">-->
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="all">
+	<link rel="stylesheet" type="text/css" href="css/index.css" media="all">
 </head>
 <body id="form_builder">
 
@@ -23,10 +25,9 @@
 
 <!--start header-->
 <div id="header">
-<img src="images/appnitro_logo.png" class="fix_png" id="appnitro_logo" width="179" height="55"/>
+<img src="images/appnitro_logo.png" class="fix_png" id="appnitro_logo"/>
 <?php if(empty($hide_nav)){ ?>
 <ul id="header_tab">
-	<li><a href="manage_form.php" title="Form Manager">表单管理</a></li>
 	<li class="lgo"><a href="logout.php" class="lbOn" title="Logout!">退出</a></li>
 </ul>
 <?php } ?>

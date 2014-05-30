@@ -2,7 +2,8 @@
 /*
 MachForm Configuration File
 THIS FILE MUST BE RENAMED config.php BEFORE STARTING INSTALLATION
-*/
+ */
+date_default_timezone_set('PRC');
 
 /** MySQL settings **/
 define('DB_NAME', 'myform'); //The name of your database. Note that this database must exist before running installer.php
@@ -33,7 +34,7 @@ define('RECAPTCHA_PRIVATE_KEY','');
 
 /** Set below to 'true' if you prefer to use the internal CAPTCHA implementation instead of reCAPTCHA **/
 /** GD extension must be enabled in order to use this option **/
-define('USE_INTERNAL_CAPTCHA',false);
+define('USE_INTERNAL_CAPTCHA',true);
 
 /** SMTP settings **/
 /** Don't modify it unless you know you are using SMTP **/
@@ -52,7 +53,10 @@ define('NOTIFICATION_MAIL_FROM_NAME',''); //default is 'MachForm'
 define('NOTIFICATION_MAIL_SUBJECT',''); //default is '{form_name} [#{entry_no}]'
 
 /** Current MachForm Version **/
-define('MACHFORM_VERSION','2.1');
+define('MBDATA_VERSION','2.1');
+define('SITE_NAME','莫比数据');
+//define('SITE_URL','http://data.360mb.cn');
+define('SITE_URL','http://218.29.188.212:8098');
 
 error_reporting(E_ALL ^ E_NOTICE);
 @header("Content-Type: text/html; charset=UTF-8"); 

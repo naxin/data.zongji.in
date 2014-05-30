@@ -1,12 +1,15 @@
 <?php
-/******************************************************************************
- MachForm
-  
- Copyright 2007 Appnitro Software. This code cannot be redistributed without
- permission from http://www.nulledscriptz.com/
- 
- More info at: http://www.nulledscriptz.com/
- ******************************************************************************/
+/*=============================================================================
+#     FileName: export_entries.php
+#         Desc:  
+#       Author: RainYang - https://github.com/rainyang
+#        Email: rainyang2012@qq.com
+#     HomePage: http://360mb.cn
+#      Version: 0.0.1
+#   LastChange: 2014-04-13 22:37:41
+#      History:
+=============================================================================*/
+
 	session_start();
 	
 	ini_set("include_path", './lib/pear/'.PATH_SEPARATOR.ini_get("include_path"));
@@ -143,7 +146,7 @@
 		$workbook->setTempDir(DATA_DIR);
 		
 		// sending HTTP headers
-		$clean_form_name = ereg_replace("[^a-zA-Z0-9_-]", "",$form_name);
+		$clean_form_name = preg_replace("[^a-zA-Z0-9_-]", "",$form_name);
 		$workbook->send("{$clean_form_name}.xls");
 		
 		if(function_exists('iconv')){
@@ -167,7 +170,7 @@
 	}elseif ($type == 'csv'){
 		require('Compat/Function/fputcsv.php');
 		
-		$clean_form_name = ereg_replace("[^a-zA-Z0-9_-]", "",$form_name);
+		$clean_form_name = preg_replace("[^a-zA-Z0-9_-]", "",$form_name);
 		
 		//Prepare headers
         header("Pragma: public");

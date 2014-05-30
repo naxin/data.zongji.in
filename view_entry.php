@@ -1,12 +1,15 @@
 <?php
-/******************************************************************************
- MachForm
-  
- Copyright 2007 Appnitro Software. This code cannot be redistributed without
- permission from http://www.nulledscriptz.com/
- 
- More info at: http://www.nulledscriptz.com/
- ******************************************************************************/
+/*=============================================================================
+#     FileName: view_entry.php
+#         Desc:  
+#       Author: RainYang - https://github.com/rainyang
+#        Email: rainyang2012@qq.com
+#     HomePage: http://360mb.cn
+#      Version: 0.0.1
+#   LastChange: 2014-04-13 22:28:58
+#      History:
+=============================================================================*/
+
 	session_start();
 
 	require('config.php');
@@ -111,13 +114,29 @@ EOT;
 ?>
 
 <?php require('includes/header.php'); ?>
-
+<div class="breadcrumbs">
+        <ol class="breadcrumb">
+          <li><a href="#"><i class="glyphicon glyphicon-home"></i>首页</a></li>
+          <li><a href="#">智能表单</a></li>
+          <li class="active"><?php echo $form_name;?></li>
+        </ol>
+      </div>
+      <div class="subnav">
+        <ul class="nav nav-tabs">
+          <li><a href="set_form.php?action=overview&id=<?php echo $form_id;?>">概述</a></li>
+          <!--<li><a href="form_created_edit.html">编辑</a></li>
+          <li><a href="form_rule.html">规则</a></li>
+          <li><a href="form_theme.html">样式</a></li>-->
+          <li><a href="set_form.php?action=setting&id=<?php echo $form_id;?>">设置</a></li>
+          <li><a href="set_form.php?action=publish&id=<?php echo $form_id;?>">发布</a></li>
+          <li class="active"><a href="manage_entries.php?id=<?php echo $form_id;?>">数据</a></li>
+        </ul>
+      </div>
 
 <div id="form_manager">
 <?php show_message(); ?>
 <div class="info">
-	<h2><a class="breadcrumb" href="manage_form.php?id=<?php echo $form_id; ?>"><?php echo $form_name; ?></a> <img src="images/icons/resultset_next.gif" align="bottom" /> <a id="ve_a_entries" class="breadcrumb" href="manage_entries.php?id=<?php echo $form_id; ?>">Entries</a> <img id="ve_a_next" src="images/icons/resultset_next.gif" align="bottom" /> #<?php echo $entry_id; ?> </h2>
-	<p>Viewing entry #<?php echo $entry_id; ?></p>
+	<h2><a class="breadcrumb" href="manage_form.php?id=<?php echo $form_id; ?>"><?php echo $form_name; ?></a> <img src="images/icons/resultset_next.gif" align="bottom" /> <a id="ve_a_entries" class="breadcrumb" href="manage_entries.php?id=<?php echo $form_id; ?>">数据</a> <img id="ve_a_next" src="images/icons/resultset_next.gif" align="bottom" /> #<?php echo $entry_id; ?> </h2>
 </div>
 
 
@@ -150,20 +169,20 @@ EOT;
 <table id="ve_table_info" width="100%" border="0" cellspacing="0" cellpadding="0">
   <tbody>		
 		<tr>
-  	    <td style="font-size: 85%;color: #444; font-weight: bold"><img src="images/icons/date.gif"/> Entry Info</td>
+  	    <td style="font-size: 85%;color: #444; font-weight: bold"><img src="images/icons/date.gif"/> 相关信息</td>
   		<td >&nbsp; </td>
   		</tr> 
 		
 		<tr class="alt">
-  	    <td width="40%"><strong>Date Created </strong></td>
+  	    <td width="40%"><strong>创建时间</strong></td>
   		<td width="60%"><?php echo $date_created; ?></td>
   		</tr>  	<tr >
-  	    <td ><strong>Date Updated </strong></td>
+  	    <td ><strong>更新时间</strong></td>
 
   		<td><?php echo $date_updated; ?></td>
   		</tr>  	
 		<tr class="alt">
-  	    <td ><strong>IP Address  </strong></td>
+  	    <td ><strong>IP地址</strong></td>
   		<td><?php echo $ip_address; ?></td>
   	</tr>
   </tbody>
@@ -179,43 +198,4 @@ EOT;
 		$img_old = '_grey';
 	}
 ?>
-<div id="ve_action_container">
-<div style="text-align:center;">
-<?php
-	if(empty($img_new)){
-?>
-	<a href="view_entry.php?<?php echo "form_id={$form_id}&id={$newest_entry_id}"; ?>" alt="Newest"><img src="images/icons/nav_start<?php echo $img_new; ?>.gif" title="Newest"/></a>&nbsp;
-	<a href="view_entry.php?<?php echo "form_id={$form_id}&id={$newer_entry_id}"; ?>" alt="Newer"><img src="images/icons/nav_prev<?php echo $img_new; ?>.gif" title="Newer"/></a>&nbsp;
-
-<?php }else{ ?>
-
-    <img src="images/icons/nav_start<?php echo $img_new; ?>.gif" title="Newest"/>&nbsp;
-	<img src="images/icons/nav_prev<?php echo $img_new; ?>.gif" title="Newer"/>&nbsp;	
-	
-<?php } 
-
-	if(empty($img_old)){
-?>	
-
-<a href="view_entry.php?<?php echo "form_id={$form_id}&id={$older_entry_id}"; ?>" alt="Older"><img src="images/icons/nav_next<?php echo $img_old; ?>.gif" title="Older"/></a>&nbsp;
-	<a href="view_entry.php?<?php echo "form_id={$form_id}&id={$oldest_entry_id}"; ?>" alt="Oldest"><img src="images/icons/nav_end<?php echo $img_old; ?>.gif" title="Oldest"/></a>
-
-<?php } else { ?>
-	<img src="images/icons/nav_next<?php echo $img_old; ?>.gif" title="Older"/>&nbsp;
-	<img src="images/icons/nav_end<?php echo $img_old; ?>.gif" title="Oldest"/>
-<?php } ?>
-</div>
-<div style="font-size: 85%;color: #444;margin-top: 25px;padding-bottom: 5px; font-weight: bold">Entry Options</div>
-<div id="ve_action">
-<ul style="list-style-type: none;padding: 10px">
-<li><img src="images/icons/kate.gif" align="absmiddle"/> &nbsp;<a href="edit_entry.php?form_id=<?php echo $form_id; ?>&id=<?php echo $entry_id; ?>" class="big_dotted_link">Edit</a></li>
-<li><img src="images/icons/fileprint.gif" align="absmiddle"/> &nbsp;<a href="javascript:window.print()" class="big_dotted_link">Print</a></li>
-<li><img src="images/icons/mail_generic2.gif" align="absmiddle"/> &nbsp;<a id="email_entry" href="javascript: email_entry(<?php echo $form_id.','.$entry_id; ?>);" class="big_dotted_link">Email</a></li>
-<li><img src="images/icons/cross_22.gif" align="absmiddle"/> &nbsp;<a onclick="return confirm('Are you sure you want to delete this entry?');" href="view_entry.php?form_id=<?php echo $form_id; ?>&id=<?php echo $entry_id; ?>&delete=1" class="big_dotted_link">Delete</a></li>
-</ul>
-</div>
-</div>
-
-
-</div>
 <?php require('includes/footer.php'); ?>

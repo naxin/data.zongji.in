@@ -1,0 +1,38 @@
+stdClass Object
+(
+    [title] => 商品
+    [guidelines] => 
+    [size] => medium
+    [is_required] => 0
+    [is_unique] => 0
+    [is_private] => 0
+    [type] => product
+    [object] => 
+    [position] => 5
+    [id] => 6
+    [is_db_live] => 0
+    [default_value] => 
+    [constraint] => 
+    [options] => 
+    [sexs] => Array
+        (
+            [0] => stdClass Object
+                (
+                    [option] => 先生
+                    [is_default] => 0
+                    [is_db_live] => 0
+                    [id] => 0
+                )
+
+            [1] => stdClass Object
+                (
+                    [option] => 女士
+                    [is_default] => 0
+                    [is_db_live] => 0
+                    [id] => 0
+                )
+
+        )
+
+    [element_is_crm] => 0
+)

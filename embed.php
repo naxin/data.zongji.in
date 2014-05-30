@@ -23,6 +23,7 @@
 	require('lib/class.phpmailer.php');
 	require('lib/recaptchalib.php');
 	require('lib/php-captcha/php-captcha.inc.php');
+	require('includes/elements.conf.php');
 		
 	//get data from database
 	connect_db();

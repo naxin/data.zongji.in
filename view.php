@@ -1,17 +1,21 @@
 <?php
-/******************************************************************************
- MachForm
-  
- Copyright 2007 Appnitro Software. This code cannot be redistributed without
- permission from http://www.nulledscriptz.com/
- 
- More info at: http://www.nulledscriptz.com/
- ******************************************************************************/
+/*=============================================================================
+#     FileName: view.php
+#         Desc: view & post view
+#       Author: RainYang - https://github.com/rainyang
+#        Email: rainyang2012@qq.com
+#     HomePage: http://360mb.cn
+#      Version: 0.0.1
+#   LastChange: 2014-04-07 07:02:26
+#      History:
+=============================================================================*/
+
 	header("p3p: CP=\"IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT\"");
 	session_start();
 	
 	require('config.php');
 	require('includes/language.php');
+	require('includes/elements.conf.php');
 	require('includes/db-core.php');
 	require('includes/common-validator.php');
 	require('includes/view-functions.php');
@@ -30,6 +34,8 @@
 	if(!empty($_POST['submit'])){ //if form submitted
 		$input_array   = ap_sanitize_input($_POST);
 		
+        //print_r($input_array);
+        //exit;
 		$submit_result = process_form($input_array);
 		
 		if(!isset($input_array['password'])){ //if normal form submitted
@@ -69,7 +75,7 @@
 	}else{
 		$form_id = (int) trim($_GET['id']);
 		if(empty($form_id)){
-			die('ID required.');
+			die('错误的参数');
 		}
 		
 		//check for delete file option

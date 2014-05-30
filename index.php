@@ -1,12 +1,16 @@
 <?php
-/******************************************************************************
- MachForm
-  
- Copyright 2007 Appnitro Software. This code cannot be redistributed without
- permission from http://www.nulledscriptz.com/
- 
- More info at: http://www.nulledscriptz.com/
- ******************************************************************************/
+/*=============================================================================
+#     FileName: index.php
+#         Desc:  
+#       Author: RainYang - https://github.com/rainyang
+#        Email: rainyang2012@qq.com
+#     HomePage: http://360mb.cn
+#      Version: 0.0.1
+#   LastChange: 2014-04-13 23:11:07
+#      History:
+=============================================================================*/
+
+    //session_id($_COOKIE['mb_cookie_session_id']);
 	session_start();	
 
 	require('config.php');
@@ -14,22 +18,35 @@
 	require('includes/db-functions.php');
 	require('includes/helper-functions.php');
 
-    //短连接测试
-    $urls = shorturl('http://www.i5good.com/shorturl.html');
-var_dump($urls);
 	
 	$ssl_suffix = get_ssl_suffix();
 	
+    /*
 	if(file_exists("installer.php")){
 		header("Location: http{$ssl_suffix}://".$_SERVER['HTTP_HOST'].get_dirname($_SERVER['PHP_SELF'])."/installer.php");
 		exit;
 	}
-	
+     */
+
+    /*
+    $mb_user = unserialize($_SESSION['mb_user']['user']);
+
+    if(!$_SESSION['formuser'] or !$mb_user){
+        $db = connect_db();
+        user_sync($mb_user);
+    }
+     */
+
+    $_SESSION['logged_in'] = true;
+    header("Location: http{$ssl_suffix}://".$_SERVER['HTTP_HOST'].get_dirname($_SERVER['PHP_SELF'])."/manage_form.php");
+
 	//redirect to form manager if already logged-in
+    /*
 	if(!empty($_SESSION['logged_in']) && $_SESSION['logged_in'] == true){
 		header("Location: http{$ssl_suffix}://".$_SERVER['HTTP_HOST'].get_dirname($_SERVER['PHP_SELF'])."/manage_form.php");
 		exit;
 	}
+     */
 	
 	if(!empty($_POST['submit'])){
 		$username = trim($_POST['admin_username']);

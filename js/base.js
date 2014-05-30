@@ -1,10 +1,13 @@
-/*  Prototype JavaScript framework, version 1.5.0_rc0
- *  (c) 2005 Sam Stephenson <sam@conio.net>
- *
- *  Prototype is freely distributable under the terms of an MIT-style license.
- *  For details, see the Prototype web site: http://prototype.conio.net/
- *
-/*--------------------------------------------------------------------------*/
+/*=============================================================================
+#     FileName: base.js
+#         Desc: Prototype JavaScript framework, version 1.5.0_rc0
+#       Author: RainYang - https://github.com/rainyang
+#        Email: rainyang2012@qq.com
+#     HomePage: http://360mb.cn
+#      Version: 0.0.1
+#   LastChange: 2014-04-14 00:05:42
+#      History:
+=============================================================================*/
 
 var Prototype = {
   Version: '1.5.0_rc0',
@@ -2368,10 +2371,12 @@ Draggable.prototype = {
   startDrag: function(event) {
     this.dragging = true;
     
+    /*
     if(this.options.zindex) {
       this.originalZ = parseInt(Element.getStyle(this.element,'z-index') || 0);
       this.element.style.zIndex = this.options.zindex;
     }
+    */
     
     if(this.options.ghosting) {
       this._clone = this.element.cloneNode(true);

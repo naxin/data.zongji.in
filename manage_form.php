@@ -1,12 +1,15 @@
 <?php
-/******************************************************************************
- MachForm
-  
- Copyright 2007 Appnitro Software. This code cannot be redistributed without
- permission from http://www.nulledscriptz.com/
- 
- More info at: http://www.nulledscriptz.com/
- ******************************************************************************/
+/*=============================================================================
+#     FileName: manage_form.php
+#         Desc: mobi form manage index
+#       Author: RainYang - https://github.com/rainyang
+#        Email: rainyang2012@qq.com
+#     HomePage: http://360mb.cn
+#      Version: 0.0.1
+#   LastChange: 2014-03-30 10:53:53
+#      History:
+=============================================================================*/
+
 	session_start();
 	
 	require('config.php');
@@ -16,14 +19,14 @@
 	require('includes/helper-functions.php');
 
 	connect_db();
-	
+
 	$rows_per_page = 10;
 	
 	//check for id parameter, if exist, populate the pageno automatically
 	if(!empty($_GET['id'])){
 		$form_id = (int) trim($_GET['id']);
 		
-		$query  = "select form_id from `ap_forms` order by form_id asc";
+		$query  = "select form_id from `ap_forms` where user_id = {$user_id} order by form_id asc";
 		$result = do_query($query);
 		
 		while($row = do_fetch_result($result)){
@@ -44,6 +47,12 @@
 	//check for form delete parameter
 	if(!empty($_GET['delete'])){
 		$deleted_form_id = (int) trim($_GET['delete']);
+
+        $sql = "select * from ap_forms where user_id = {$user_id} and form_id = {$deleted_form_id}";
+        $rs = getRow($sql);
+        if(!$rs){
+            exit("请不要非法操作");
+        }
 		delete_form($deleted_form_id);
 	}
 	
@@ -53,8 +62,8 @@
 		$result_form_id = duplicate_form($target_form_id);
 		
 		if(!empty($result_form_id)){
-			$_SESSION['AP_SUCCESS']['title'] = 'Success';
-			$_SESSION['AP_SUCCESS']['desc']  = 'Form duplicated.';
+			$_SESSION['AP_SUCCESS']['title'] = '成功';
+			$_SESSION['AP_SUCCESS']['desc']  = '表单复制.';
 				
 			header("Location: manage_form.php?id={$result_form_id}");
 			exit;
@@ -73,7 +82,7 @@
 	}
 				
 	//identify how many database rows are available
-	$query = "select count(*) total_row from `ap_forms`";
+	$query = "select count(*) total_row from `ap_forms` where user_id = {$user_id}";
 	$result = do_query($query);
 	$row = do_fetch_result($result);
 	
@@ -102,12 +111,13 @@
 	
 	
 	//get form list
-	$query = "select form_id,form_name,form_active,form_email from `ap_forms` order by form_id asc $limit";
+	$query = "select form_id,shorturl,form_name,form_active,form_email from `ap_forms` where user_id = {$user_id} order by form_id asc $limit";
 	$result = do_query($query);
 	$i=0;
 	$form_id_array = array();
 	while($row = do_fetch_result($result)){
 		$form_list[$i]['form_id']     = $row['form_id'];
+		$form_list[$i]['shorturl']    = $row['shorturl'];
 		$form_list[$i]['form_name']   = $row['form_name'];
 		$form_list[$i]['form_active'] = $row['form_active']; 
 		if(!empty($row['form_email'])){
@@ -128,7 +138,7 @@
 		$entries[$form_id]['total'] = $row['total_entry'];
 	
 		//get todays entries
-		$query = "select count(*) today_entry from `ap_form_{$form_id}` where date_created >= date_format(curdate(),'%Y-%m-%d 00:00:00') ";
+		$query = "select count(*) today_entry from `ap_form_{$form_id}` where  date_created >= date_format(curdate(),'%Y-%m-%d 00:00:00') ";
 		$result = do_query($query);
 		$row = do_fetch_result($result);
 		$entries[$form_id]['today'] = $row['today_entry'];
@@ -140,88 +150,6 @@
 		$entries[$form_id]['latest_entry'] = relative_date($row['date_created']);
 	}
 	
-	$header_data =<<<EOT
-	<script type="text/javascript" src="js/base.js"></script>
-	<script type="text/javascript" src="js/rico.js"></script>
-	<style>
-		.accordionTabTitle {
-		background-color:#6B79A5;
-		border-bottom:1px solid #182052;
-		border-style:solid none;
-		border-top:1px solid #BDC7E7;
-		border-width:1px 0px;
-		color:#CED7EF;
-		font-size:12px;
-		height:30px;
-		padding-left:5px;
-		vertical-align: middle;
-		}
-	</style>
-	<script language="javascript" type="text/javascript">
-	
-	function disable_form(form_id){
-		var progress_image = $('progress_image_' + form_id);
-		progress_image.style.visibility = "visible";
-
-		$('activation_link_' + form_id).innerHTML = 'Processing ...';
-		$('activation_link_' + form_id).href = '#';
-			
-		var url = 'ajax_form_activation.php';
-		var pars = 'form_id=' + form_id + '&operation=disable';
-		
-		var myAjax = new Ajax.Request( url, { method: 'post', parameters: pars, onComplete: showResponseDisabled });
-		
-	}
-	
-	function showResponseDisabled(originalRequest){
-		var response = originalRequest.responseText;
-		
-		$('form_status_' + response).innerHTML = 'Inactive';
-		$('image_status_' + response).src = 'images/icons/disabled.gif';
-		$('activation_link_' + response).innerHTML = 'Enable this form';
-		$('activation_link_' + response).href = 'javascript: enable_form(' + response + ')';
-		
-		var progress_image = $('progress_image_' + response);
-		progress_image.style.visibility = "hidden";
-
-		new Effect.Highlight('form_status_' + response,{duration:1});
-		
-	}
-	
-	function enable_form(form_id){
-		var progress_image = $('progress_image_' + form_id);
-		progress_image.style.visibility = "visible";
-		
-		$('activation_link_' + form_id).innerHTML = 'Processing ...';
-		$('activation_link_' + form_id).href = '#';
-						
-		var url = 'ajax_form_activation.php';
-		var pars = 'form_id=' + form_id + '&operation=enable';
-		
-		var myAjax = new Ajax.Request( url, { method: 'post', parameters: pars, onComplete: showResponseEnabled });
-		
-	}
-	
-	function showResponseEnabled(originalRequest){
-		var response = originalRequest.responseText;
-		
-		$('form_status_' + response).innerHTML = 'Accepting Entries';
-		$('image_status_' + response).src = 'images/icons/checkbox.gif';
-		$('activation_link_' + response).innerHTML = 'Disable this form';
-		$('activation_link_' + response).href = 'javascript: disable_form(' + response + ')';
-		
-		var progress_image = $('progress_image_' + response);
-		progress_image.style.visibility = "hidden";
-		
-		new Effect.Highlight('form_status_' + response,{duration:1});
-				
-	}
-		
-	</script>
-	
-
-	
-EOT;
 
 	//delete a form, definition, entries and uploaded files
 	function delete_form($form_id){
@@ -261,7 +189,7 @@ EOT;
 	function duplicate_form($form_id){
 		
 		//set the new name
-		$query 	= "select form_name,form_review from `ap_forms` where form_id='$form_id'";
+		$query 	= "select form_name,form_review from `ap_forms` where form_id='$form_id' and  user_id = {$user_id}";
 		$result = do_query($query);
 		$row 	= do_fetch_result($result);
 		$form_review = $row['form_review'];
@@ -269,13 +197,13 @@ EOT;
 		$form_name .= " Copy";
 		
 		//get new form_id
-		$query = "select max(form_id)+1 new_form_id from `ap_forms`";
+		$query = "select max(form_id)+1 new_form_id from `ap_forms` where  user_id = {$user_id}";
 		$result = do_query($query);
 		$row 	= do_fetch_result($result);
 		$new_form_id = trim($row['new_form_id']);
 			
 		//insert into ap_forms table
-		$query = "select * from `ap_forms` where form_id='{$form_id}'";
+		$query = "select * from `ap_forms` where form_id='{$form_id}' and user_id = {$user_id}";
 		$result = do_query($query);
 		
 		$i = 0;
@@ -298,9 +226,9 @@ EOT;
 		
 		//insert to ap_forms
 		$query = "insert into 
-							`ap_forms`(form_id,form_name,{$columns_joined}) 
+							`ap_forms`(form_id, user_id, form_name,{$columns_joined}) 
 					   select 
-							{$new_form_id},'{$form_name}',{$columns_joined} 
+							{$new_form_id}, {$user_id}'{$form_name}',{$columns_joined} 
 						from 
 							`ap_forms` 
 						where 
@@ -428,15 +356,33 @@ EOT;
 	<p>创建或编辑你的表单</p>
 </div>
 
+<div class="formManager_detail">
+    <ul class="pull-left form">
+        <li class="noForm">
+          <div class="normal-create">
+            <a href="edit_form.php">
+              <i class="glyphicon glyphicon-plus"></i>
+              <div><a href="edit_form.php">创建新表单</a></div>
+           </a> 
+          </div>
+          <!--
+          <div class="special-create template-create">
+            <a href="#"><div>从模板创建表单</div></a>  
+          </div>
+          <div class="special-create excel-create">
+            <a href="#"><div>从Excel创建表单</div></a>  
+          </div>
+          -->
+        </li>
+
 <?php 
 	$i=($pageno -1) * $rows_per_page + 1;
 	$first_row_number = $i;
 	if(!empty($form_list)){
 
-	echo '<div id="accordionDiv">';	
 		
-	foreach ($form_list as $data){ 
-		
+	foreach ($form_list as $key=>$data){ 
+	     $key ++;
 		 if(!empty($data['form_active'])){ 
 		 	$form_status 	 = 'Accepting Entries'; 
 		 	$image_status 	 = 'checkbox.gif';
@@ -451,55 +397,18 @@ EOT;
 		 
 		 
 ?> 
-   <div id="overviewPanel">
-     <div id="overviewHeader" class="accordionTabTitle">
-       <h3><?php echo "$i.&nbsp; {$data['form_name']}" ?></h3>
-      </div>
-      <div id="panel1Content">
-	      <table width="99%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 10px;">
-			  <tr align="center" valign="middle">
-			    <td width="8%"><a href="<?php echo "manage_entries.php?id={$data['form_id']}"; ?>"><img src="images/icons/entries_32.gif" /></a></td>
-			    <td width="8%"><a href="<?php echo "edit_form.php?id={$data['form_id']}"; ?>"><img src="images/icons/edit_form_32.gif" /></a></td>
-			    <td width="8%"><a href="<?php echo "edit_css.php?id={$data['form_id']}"; ?>"><img src="images/icons/colorize_32.gif" /></a></td>
-			    <td width="8%"><a href="<?php echo "email_settings.php?id={$data['form_id']}"; ?>"><img src="images/icons/mail_forward_32.gif" /></a></td>
-			    <td width="8%"><a href="<?php echo "embed_code.php?id={$data['form_id']}"; ?>"><img src="images/icons/embed_code_32.gif" /></a></td>
-			    <td width="8%">&nbsp;</td>
-			    <td width="8%"><a href="view.php?id=<?php echo $data['form_id']; ?>" target="_blank"><img src="images/icons/view_form_32.gif" /></a></td>
-			    <td width="30%%">&nbsp;</td>
-			    <td width="8%"><a href="<?php echo "manage_form.php?duplicate={$data['form_id']}"; ?>"><img src="images/icons/copy_32.gif" /></a></td>
-			    <td width="6%"><a href="manage_form.php?pageno=<?php echo $pageno; ?>&delete=<?php echo $data['form_id']; ?>" onclick="javascript: return confirm('Are you sure you want to delete this form and all associated data?');"><img src="images/icons/cross.gif" /></a></td>
-			  </tr>
-			  <tr align="center" >
-			    <td ><a href="<?php echo "manage_entries.php?id={$data['form_id']}"; ?>">结果数据</a></td>
-			    <td><a href="<?php echo "edit_form.php?id={$data['form_id']}"; ?>">编辑表单</a></td>
-			    <td nowrap><a href="<?php echo "edit_css.php?id={$data['form_id']}"; ?>">编辑CSS</a></td>
-			    <td nowrap><a href="<?php echo "email_settings.php?id={$data['form_id']}"; ?>">邮件</a></td>
-			    <td nowrap><a href="<?php echo "embed_code.php?id={$data['form_id']}"; ?>">嵌入代码</a></td>
-			    <td>&nbsp;</td>
-			    <td><a href="view.php?id=<?php echo $data['form_id']; ?>" target="_blank">显示表单</a></td>
-			    <td>&nbsp;</td>
-			    <td><a href="<?php echo "manage_form.php?duplicate={$data['form_id']}"; ?>">复制表单</a></td>
-			    <td><a href="manage_form.php?pageno=<?php echo $pageno; ?>&delete=<?php echo $data['form_id']; ?>" onclick="javascript: return confirm('Are you sure you want to delete this form and all associated data?');">删除</a></td>
-			  </tr>
-			</table> 
-      		<div style="clear:both; padding-left: 10px; padding-top: 10px">
-				今日数据: <strong><?php echo $entries[$data['form_id']]['today']; ?></strong><br>
-				总数据: <strong><?php echo $entries[$data['form_id']]['total']; ?></strong><br><br>
-				最新数据: <strong><?php echo $entries[$data['form_id']]['latest_entry']; ?></strong><br>
-						
-				<div id="edit_form_email_text_<?php echo $data['form_id']; ?>" style="margin-top: 15px;display:block">
-					Notifications will be sent to: <strong><span id="form_email_name_box_<?php echo $data['form_id']; ?>"><?php echo $data['form_email']; ?></span></strong>
-				</div>
-								
-				
-				表单状态: 
-				<strong><span id="form_status_<?php echo $data['form_id']; ?>"><?php echo $form_status; ?></span></strong>&nbsp;&nbsp;<img id="image_status_<?php echo $data['form_id']; ?>" align="absmiddle" src="images/icons/<?php echo $image_status; ?>" />&nbsp;&nbsp;&nbsp;<a id="activation_link_<?php echo $data['form_id']; ?>" href="javascript: <?php echo $activation_link; ?>(<?php echo $data['form_id']; ?>)" style="text-decoration: none; border-bottom: 1px dotted #000"><?php echo $activation_text; ?></a>
-				&nbsp;&nbsp;<img id="progress_image_<?php echo $data['form_id']; ?>" align="absmiddle" src="images/loader-red.gif" style="visibility: hidden"/>
-				
-				
-			</div>
-		</div>
-   </div>
+        	<li>
+        		<div class="form_shadow"></div>
+                <a href="<?php echo "set_form.php?id={$data['form_id']}"; ?>" class="cover color_<?php echo $key;?>">
+        			<span class="form-data-count"><?php echo $entries[$data['form_id']]['total']; ?></span>
+        			<div class="content">
+        				<div class="symbol"><i class="glyphicon glyphicon-pencil"></i></div>
+                        <div class="name"><?php echo $data['form_name'];?></div>
+        			</div>
+        		</a>
+        	</li>
+
+
 <?php 
 		$i++;
 	} 
@@ -512,168 +421,26 @@ EOT;
 		$active_tab = 0;
 	}
 	
-	echo '</div>';
-	echo '<script type="text/javascript">';
-	echo 'new Rico.Accordion( $(\'accordionDiv\'), {panelHeight:200,expandedBg: \'#4B75B3\',collapsedBg: \'#4B75B3\',hoverBg: \'#3661A1\', onLoadShowTab: '.$active_tab.'} );';
-	echo '</script>'; 
-
+	echo '</ul>';
 	}else{
-		echo "<div style=\"height: 200px; text-align: center;padding-top: 70px\"><h2>You have no form yet. Go create one!</h2></div>";
+		echo "<li style=\"height: 200px; text-align: center;padding-top: 70px\"><h2>您还没有表单,去<a href=\"edit_form.php\">创建</a>吧!</h2></li>";
 	}
 ?>   
-   
-
-
-
-
-<!-- start paging div -->
-<div id="paging" >
-<br>
-<?php      
-      if(!empty($lastpage))
-		{
-			
-			
-			if ($pageno != 1) 
-			{
-			   
-			   if($lastpage > 19){	
-			   	echo " <a href='{$_SERVER['PHP_SELF']}?pageno=1'>&lt;&lt;First</a> ";
-			   }
-			   $prevpage = $pageno-1;
-							   
-			   
-			} 
-			
-			//middle navigation
-			if($pageno == 1){
-				$i=1;
-				while(($i<=19) && ($i<=$lastpage)){
-					if($i != 1){
-							$active_style = '';
-						}else{
-							$active_style = 'class="active_page"';
-					}
-					 echo " <a href='{$_SERVER['PHP_SELF']}?pageno=$i' $active_style>$i</a> ";
-					$i++;
-				}
-				if($lastpage > $i){
-					echo ' ... ';
-				}
-			}elseif ($pageno == $lastpage){
-				
-				if(($lastpage - 19) > 1){
-					echo ' ... ';
-					$i=1;
-					$j=$lastpage - 18;
-					while($i<=19){
-						if($j != $lastpage){
-							$active_style = '';
-						}else{
-							$active_style = 'class="active_page"';
-						}
-						 echo " <a href='{$_SERVER['PHP_SELF']}?pageno=$j' $active_style>$j</a> ";
-						$i++;
-						$j++;
-					}
-				}else{
-					$i=1;
-					while(($i<=19) && ($i<=$lastpage)){
-						if($i != $lastpage){
-							$active_style = '';
-						}else{
-							$active_style = 'class="active_page"';
-						}
-						 echo " <a href='{$_SERVER['PHP_SELF']}?pageno=$i' $active_style>$i</a> ";
-						$i++;
-					}
-				}
-				
-			}else{
-				$next_pages = false;
-				$prev_pages = false;
-				
-				if(($lastpage - ($pageno + 9)) >= 1){
-					$next_pages = true;
-				}
-				if(($pageno - 9) > 1){
-					$prev_pages = true;
-				}
-				
-				if($prev_pages){ //if there are previous pages
-					echo ' ... ';
-					if($next_pages){ //if there are next pages
-						$i=1;
-						$j=$pageno - 9;
-						while($i<=19){
-							if($j != $pageno){
-								$active_style = '';
-							}else{
-								$active_style = 'class="active_page"';
-							}
-							echo " <a href='{$_SERVER['PHP_SELF']}?pageno=$j' $active_style>$j</a> ";
-							$i++;
-							$j++;
-						}
-						echo ' ... ';
-					}else{
-						
-						$i=1;
-						$j=$pageno - 9;
-						while(($i<=19) && ($j <= $lastpage)){
-							if($j != $pageno){
-								$active_style = '';
-							}else{
-								$active_style = 'class="active_page"';
-							}
-							 echo " <a href='{$_SERVER['PHP_SELF']}?pageno=$j' $active_style>$j</a> ";
-							$i++;
-							$j++;
-						}
-					}	
-				}else{ //if there aren't previous pages
-				
-					$i=1;
-  					while(($i<=19) && ($i <= $lastpage)){
-  						if($i != $pageno){
-								$active_style = '';
-						}else{
-							$active_style = 'class="active_page"';
-						}
-						echo " <a href='{$_SERVER['PHP_SELF']}?pageno=$i' $active_style>$i</a> ";
-						$i++;
-						
-					}
-					if($next_pages){
-						echo ' ... ';
-					}
-					
-				}
-				
-				
-			}
-				
-			if ($pageno != $lastpage) 
-			{
-			   $nextpage = $pageno+1;
-			   if($lastpage > 19){
-			   	echo " <a href='{$_SERVER['PHP_SELF']}?pageno=$lastpage'>Last&gt;&gt;</a> ";
-			   }
-			}
-			
-			
-			//next we inform the user of his current position in the sequence of available pages
-			?>
-			<div class="footer">
-				Viewing <strong><?php echo $first_row_number.'-'.$last_row_number; ?></strong> of <strong><?php echo $numrows; ?></strong> forms
-			</div>
-			<?php
-		}
-?>
+        <div class="clearfix"></div>
+        <!--
+        <div class="links">
+          <a href="#" class="page-title">我为别人填的表单</a>
+          <a href="#" class="page-title">已归档的表单</a>
+        </div>
+        -->
+      </div>
 </div>
-<!-- end paging div - -->
-
-
-
-</div>
+<script src="/js/jquery/jquery-1.9.1.min.js"></script>
+<script>
+    $(function(){
+        $(".noForm").click(function(){
+            window.location.href="edit_form.php";
+        });
+    });    
+</script>
 <?php require('includes/footer.php'); ?>

@@ -1,12 +1,15 @@
 <?php
-/******************************************************************************
- MachForm
-  
- Copyright 2007 Appnitro Software. This code cannot be redistributed without
- permission from http://www.nulledscriptz.com/
- 
- More info at: http://www.nulledscriptz.com/
- ******************************************************************************/
+/*=============================================================================
+#     FileName: language.php
+#         Desc:  
+#       Author: RainYang - https://github.com/rainyang
+#        Email: rainyang2012@qq.com
+#     HomePage: http://360mb.cn
+#      Version: 0.0.1
+#   LastChange: 2014-04-13 23:40:55
+#      History:
+=============================================================================*/
+
 	global $lang;
 	
 	//simple name and extended name
@@ -24,10 +27,10 @@
 	$lang['address_country']	=	'Country';
 
 	//captcha
-	$lang['captcha_required']	=	'This field is required. Please enter the letters shown in the image.';
-	$lang['captcha_mismatch']	=	'The letters in the image do not match. Try again.';
-	$lang['captcha_error']		=	'Error while processing, please try again.';
-	$lang['captcha_title']		=	'Type the letters you see in the image below.';
+	$lang['captcha_required']	=	'请输入验证码';
+	$lang['captcha_mismatch']	=	'验证码不匹配';
+	$lang['captcha_error']		=	'处理错误,请重试';
+	$lang['captcha_title']		=	'请输入下方验证码';
 	
 	//date
 	$lang['date_dd']			=	'DD';
@@ -49,44 +52,44 @@
 	$lang['time_ss']			=	'SS';
 	
 	//error message
-	$lang['error_title']		=	'There was a problem with your submission.';
-	$lang['error_desc']			=	'Errors have been <strong>highlighted</strong> below.';
+	$lang['error_title']		=	'提交错误';
+	$lang['error_desc']			=	'请检查高亮部分';
 	
 	//form buttons
-	$lang['submit_button']		=	'Submit';
-	$lang['continue_button']	=	'Continue';
-	$lang['back_button']		=	'Back';
+	$lang['submit_button']		=	'提交';
+	$lang['continue_button']	=	'继续';
+	$lang['back_button']		=	'返回';
 	
 	//form status
-	$lang['form_inactive']		=	'This form is currently inactive.';
+	$lang['form_inactive']		=	'这个表单已经暂停';
 	
 	//form password
-	$lang['form_pass_title']	=	'This form is password protected.';
-	$lang['form_pass_desc']		=	'Please enter your password.';
-	$lang['form_pass_invalid']	=	'Invalid Password!';
+	$lang['form_pass_title']	=	'表单已设置密码';
+	$lang['form_pass_desc']		=	'请输入密码';
+	$lang['form_pass_invalid']	=	'密码错误!';
 	
 	//form review
-	$lang['review_title']		=	'Review Your Entry';
-	$lang['review_message']		=	'Please review your entry below. Click Submit button to finish.';
+	$lang['review_title']		=	'预览';
+	$lang['review_message']		=	'请检查下面的条目,单击提交按钮来完成。';
 	
 	//validation message 
-	$lang['val_required'] 		=	'This field is required. Please enter a value.';
-	$lang['val_required_file'] 	=	'This field is required. Please upload a file.';
-	$lang['val_unique'] 		=	'This field requires a unique entry and this value has already been used.';
-	$lang['val_integer'] 		=	'This field must be an integer.';
-	$lang['val_float'] 			=	'This field must be a float.';
-	$lang['val_numeric'] 		=	'This field must be a number.';
-	$lang['val_min'] 			=	'This field can not be less than %s characters.';		
-	$lang['val_max'] 			=	'This field can not be greater than %s characters.';
-	$lang['val_range'] 			=	'This field is not in the range %s through %s characters.';
-	$lang['val_email'] 			=	'This field is not in the correct email format.';
-	$lang['val_website'] 		=	'This field is not in the correct website address format.';
-	$lang['val_username'] 		=	'This field may only consist of a-z 0-9 and underscores.';
-	$lang['val_equal'] 			=	'%s must match.';
-	$lang['val_date'] 			=	'This field is not in the correct date format.';
-	$lang['val_time'] 			=	'This field is not in the correct time format.';
-	$lang['val_phone'] 			=	'Please enter a valid phone number.';
-	$lang['val_filetype']		=	'The filetype you are attempting to upload is not allowed.';
+	$lang['val_required'] 		=	'这个字段要求必须填写,请输入值';
+	$lang['val_required_file'] 	=	'必须上传一个文件哦';
+	$lang['val_unique'] 		=	'这个值已经被使用了,请换一个吧';
+	$lang['val_integer'] 		=	'必须输入一个整数哦';
+	$lang['val_float'] 			=	'必须输入一个带小数点的哦';
+	$lang['val_numeric'] 		=	'必须输入一个数字';
+	$lang['val_min'] 			=	'长度不能小于 %s 个字符.';		
+	$lang['val_max'] 			=	'长度不能超过 %s 个字符.';
+	$lang['val_range'] 			=	'这个值必须在%s 和 %s 的范围内.';
+	$lang['val_email'] 			=	'请填写正确的email格式';
+	$lang['val_website'] 		=	'请填写正确的网址格式';
+	$lang['val_username'] 		=	'只能输入 a-z 0-9 和下划线';
+	$lang['val_equal'] 			=	'%s 必须匹配.';
+	$lang['val_date'] 			=	'请填写正确的日期';
+	$lang['val_time'] 			=	'请填写正确的时间';
+	$lang['val_phone'] 			=	'请输入一个有效的电话号码.';
+	$lang['val_filetype']		=	'这个文件类型不允许上传';
 	
 	//fields on excel/csv
 	$lang['export_num']			=	'No.';

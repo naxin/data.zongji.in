@@ -1,13 +1,62 @@
 <?php
-/******************************************************************************
- MachForm
-  
- Copyright 2007 Appnitro Software. This code cannot be redistributed without
- permission from http://www.nulledscriptz.com/
- 
- More info at: http://www.nulledscriptz.com/
- ******************************************************************************/
-	
+/*=============================================================================
+#     FileName: helper-functions.php
+#         Desc: 
+#       Author: RainYang - https://github.com/rainyang
+#        Email: rainyang2012@qq.com
+#     HomePage: http://360mb.cn
+#      Version: 0.0.1
+#   LastChange: 2014-04-13 14:33:04
+#      History:
+=============================================================================*/
+
+    /*
+     * 校验email是否存在
+     * param email
+     */
+    function registValidate($email){
+        $sql = "select id from `ap_users` where username = '{$email}'";
+        $user = getRow($sql);
+
+        if($user){
+            return json_encode(array('flag' => false));
+        }
+        else{
+            return json_encode(array('flag' => true));
+        }
+
+    }
+
+
+    function user_sync($mb_user){
+        //如果是360mb过来的用户
+        if($mb_user){
+            //如果库里没有,写库,否则user_id写入session
+            $sql = "select id, username from ap_users where username = '{$mb_user['username']}' and password = '{$mb_user['password']}'";
+            $user = getRow($sql);
+            if(!$user){
+                $sql = "insert into ap_users(username, password, address, mail) values('{$mb_user['username']}', '{$mb_user['password']}','{$mb_user['address']}','{$mb_user['email']}')";
+                do_query($sql);
+                $formuser['user_id'] = mysql_insert_id();
+                $formuser['username'] = $mb_user['username'];
+            }
+            else{
+                $formuser['user_id'] = $user['id'];
+                $formuser['username'] = $user['username'];
+            }
+
+            $_SESSION['formuser'] = $formuser;
+        }
+        else{
+            exit('请登录');
+        }
+    }
+
+    function qrcode($value = "http://www.360mb.cn", $filename = false, $matrixPointSize = 5, $errorCorrectionLevel = "L"){
+        include('phpqrcode/phpqrcode.php'); 
+        return QRcode::png($value, $filename, $errorCorrectionLevel, $matrixPointSize, 2);
+    }
+
 	//this function accept 'YYYY-MM-DD HH:MM:SS'
 	function relative_date($input_date) {
 	    
@@ -143,26 +192,26 @@
 	    } else {
 	        if ($weeks>0) {
 	            // weeks and days
-	            $relative_date .= ($relative_date?', ':'').$weeks.' week'.($weeks>1?'s':'');
+	            $relative_date .= ($relative_date?', ':'').$weeks.' 周';
 	            //$relative_date .= $days>0?($relative_date?', ':'').$days.' day'.($days>1?'s':''):'';
 	        } elseif ($days>0) {
 	            // days and hours
-	            $relative_date .= ($relative_date?', ':'').$days.' day'.($days>1?'s':'');
+	            $relative_date .= ($relative_date?', ':'').$days.' 天';
 	            //$relative_date .= $hours>0?($relative_date?', ':'').$hours.' hour'.($hours>1?'s':''):'';
 	        } elseif ($hours>0) {
 	            // hours and minutes
-	            $relative_date .= ($relative_date?', ':'').$hours.' hour'.($hours>1?'s':'');
+	            $relative_date .= ($relative_date?', ':'').$hours.' 小时';
 	            //$relative_date .= $minutes>0?($relative_date?', ':'').$minutes.' minute'.($minutes>1?'s':''):'';
 	        } elseif ($minutes>0) {
 	            // minutes only
-	            $relative_date .= ($relative_date?', ':'').$minutes.' minute'.($minutes>1?'s':'');
+	            $relative_date .= ($relative_date?', ':'').$minutes.' 分钟';
 	        } else {
 	            // seconds only
-	            $relative_date .= ($relative_date?', ':'').$seconds.' second'.($seconds>1?'s':'');
+	            $relative_date .= ($relative_date?', ':'').$seconds.' 秒';
 	        }
 	        
 	        // show relative date and add proper verbiage
-	    	return $relative_date.' ago';
+	    	return $relative_date.' 以前';
 	    }
 	    
 	}

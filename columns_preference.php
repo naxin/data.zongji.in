@@ -1,12 +1,15 @@
 <?php
-/******************************************************************************
- MachForm
-  
- Copyright 2007 Appnitro Software. This code cannot be redistributed without
- permission from http://www.nulledscriptz.com/
- 
- More info at: http://www.nulledscriptz.com/
- ******************************************************************************/
+/*=============================================================================
+#     FileName: columns_preference.php
+#         Desc:  
+#       Author: RainYang - https://github.com/rainyang
+#        Email: rainyang2012@qq.com
+#     HomePage: http://360mb.cn
+#      Version: 0.0.1
+#   LastChange: 2014-04-13 22:42:57
+#      History:
+=============================================================================*/
+
 	session_start();
 
 	require('config.php');
@@ -44,8 +47,8 @@
 				do_query("insert into `ap_column_preferences`(form_id,element_name,position) values('{$form_id}','{$element_name}','{$position}')");
 			}
 			
-			$_SESSION['AP_SUCCESS']['title'] = 'Success';
-			$_SESSION['AP_SUCCESS']['desc']  = 'Columns preference successfully saved.';
+			$_SESSION['AP_SUCCESS']['title'] = '成功';
+			$_SESSION['AP_SUCCESS']['desc']  = '列偏好保存成功';
 						
 			header("Location: manage_entries.php?id={$form_id}");
 			exit;
@@ -81,9 +84,9 @@
 	$query  = "select element_id,element_title,element_type,element_constraint from `ap_form_elements` where form_id='$form_id' and element_type != 'section' order by element_position asc";
 	$result = do_query($query);
 	
-	$column_name_lookup['date_created'] = 'Date Created';
-	$column_name_lookup['date_updated'] = 'Date Updated';
-	$column_name_lookup['ip_address'] 	= 'IP Address';
+	$column_name_lookup['date_created'] = '创建时间';
+	$column_name_lookup['date_updated'] = '修改时间';
+	$column_name_lookup['ip_address'] 	= 'IP地址';
 	
 	while($row = do_fetch_result($result)){
 		$element_type = $row['element_type'];
@@ -220,8 +223,8 @@ EOT;
 <div id="form_manager">
 <?php show_message(); ?>
 <div class="info">
-	<h2><a class="breadcrumb" href="manage_form.php?id=<?php echo $form_id; ?>"><?php echo $form_name; ?></a> <img src="images/icons/resultset_next.gif" align="bottom" /> <a class="breadcrumb" href="manage_entries.php?id=<?php echo $form_id; ?>">Entries</a> <img src="images/icons/resultset_next.gif" align="bottom" /> Choose Columns</h2>
-	<p>Specify which columns are displayed in Entries table</p>
+	<h2><a class="breadcrumb" href="manage_form.php?id=<?php echo $form_id; ?>"><?php echo $form_name; ?></a> <img src="images/icons/resultset_next.gif" align="bottom" /> <a class="breadcrumb" href="manage_entries.php?id=<?php echo $form_id; ?>">数据</a> <img src="images/icons/resultset_next.gif" align="bottom" /> 选择列</h2>
+	<p>指定表中显示哪些列</p>
 </div>
 
 
@@ -232,7 +235,7 @@ EOT;
   <thead>
   <tr>
     <th scope="col" style="border-right: none" class="cp_checkbox"><input type="checkbox" id="col_select" name="col_select" value="1" onclick="toggle_select()" /></th>
-  	<th scope="col" style="border-right: none">Choose columns to be displayed:</th>
+  	<th scope="col" style="border-right: none">选择要显示的列:</th>
   	<th scope="col" class="cp_small">&nbsp;</th>
   </tr>
   </thead>
@@ -273,7 +276,7 @@ EOT;
 </table><br />
 <input type="hidden" name="id" value="<?php echo $form_id; ?>" />
 <input type="hidden" name="total_col" value="<?php echo --$i; ?>" />
-<input id="saveForm" class="button_text" type="submit" name="submit" value="Save Changes" />
+<input id="saveForm" class="button_text" type="submit" name="submit" value="保存" />
 </form>
 </div>
 

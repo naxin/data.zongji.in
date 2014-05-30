@@ -1,12 +1,15 @@
 <?php
-/******************************************************************************
- MachForm
-  
- Copyright 2007 Appnitro Software. This code cannot be redistributed without
- permission from http://www.nulledscriptz.com/
- 
- More info at: http://www.nulledscriptz.com/
- ******************************************************************************/
+/*=============================================================================
+#     FileName: view-functions.php
+#         Desc:  view form page
+#       Author: RainYang - https://github.com/rainyang
+#        Email: rainyang2012@qq.com
+#     HomePage: http://360mb.cn
+#      Version: 0.0.1
+#   LastChange: 2014-04-05 09:49:44
+#      History:
+=============================================================================*/
+
 	//Single Line Text
 	function display_text($element){
 		
@@ -362,15 +365,15 @@ $element_markup = <<<EOT
 		<label class="description">{$element->title} {$span_required}</label>
 		<span>
 			<input id="element_{$element->id}_1" name="element_{$element->id}_1" class="element text" size="2" maxlength="2" value="{$element->populated_value['element_'.$element->id.'_1']['default_value']}" type="text" /> /
-			<label for="element_{$element->id}_1">{$lang['date_mm']}</label>
+			<!--<label for="element_{$element->id}_1">{$lang['date_mm']}</label>-->
 		</span>
 		<span>
 			<input id="element_{$element->id}_2" name="element_{$element->id}_2" class="element text" size="2" maxlength="2" value="{$element->populated_value['element_'.$element->id.'_2']['default_value']}" type="text" /> /
-			<label for="element_{$element->id}_2">{$lang['date_dd']}</label>
+			<!--<label for="element_{$element->id}_2">{$lang['date_dd']}</label>-->
 		</span>
 		<span>
 	 		<input id="element_{$element->id}_3" name="element_{$element->id}_3" class="element text" size="4" maxlength="4" value="{$element->populated_value['element_'.$element->id.'_3']['default_value']}" type="text" />
-			<label for="element_{$element->id}_3">{$lang['date_yyyy']}</label>
+			<!--<label for="element_{$element->id}_3">{$lang['date_yyyy']}</label>-->
 		</span>
 	
 		<span id="calendar_{$element->id}">
@@ -457,10 +460,75 @@ EOT;
 	
 		return $element_markup;
 	}
-	
+		
+	//称谓
+	function display_sex($element){
+        //print_r($element);
+		//check for error
+		$error_class = '';
+		$error_message = '';
+		$span_required = '';
+		$guidelines = '';
+		
+		if(!empty($element->is_error)){
+			$error_class = 'class="error"';
+			$error_message = "<p class=\"error\">{$element->error_message}</p>";
+		}
+		
+		//check for required
+		if($element->is_required){
+			$span_required = "<span id=\"required_{$element->id}\" class=\"required\">*</span>";
+		}
+		
+		//check for guidelines
+		if(!empty($element->guidelines)){
+			$guidelines = "<p class=\"guidelines\" id=\"guide_{$element->id}\"><small>{$element->guidelines}</small></p>";
+		}
+		
+		$option_markup = '';
+		
+		if($element->constraint == 'random'){
+			$temp = $element->options;
+			shuffle($temp);
+			$element->options = $temp;
+		}
+		
+		foreach ($element->options as $option){
+			
+			if($option->is_default){
+				$checked = 'checked="checked"';
+			}else{
+				$checked = '';
+			}
+			
+			//check for populated values
+			if(!empty($element->populated_value['element_'.$element->id]['default_value'])){
+				$checked = '';
+				if($element->populated_value['element_'.$element->id]['default_value'] == $option->id){
+					$checked = 'checked="checked"';
+				}
+			}
+						
+			$option_markup .= "<input id=\"element_{$element->id}_{$option->id}\" name=\"element_{$element->id}\" class=\"element radio\" type=\"radio\" value=\"{$option->id}\" {$checked} />\n";
+			$option_markup .= "<label class=\"choice\" for=\"element_{$element->id}_{$option->id}\">{$option->option}</label>\n";
+		}
+		
+$element_markup = <<<EOT
+		<li id="li_{$element->id}" {$error_class}>
+		<label class="description">{$element->title} {$span_required}</label>
+		<span>
+			{$option_markup}
+		</span>{$guidelines} {$error_message}
+		</li>
+EOT;
+		
+		return $element_markup;
+	}
+
 	
 	//Multiple Choice
 	function display_radio($element){
+        //print_r($element);
 		//check for error
 		$error_class = '';
 		$error_message = '';
@@ -786,7 +854,7 @@ EOT;
 			$seconds_markup =<<<EOT
 		<span>
 			<input id="element_{$element->id}_3" name="element_{$element->id}_3" class="element text " size="2" type="text" maxlength="2" value="{$element->populated_value['element_'.$element->id.'_3']['default_value']}" />
-			<label>{$lang['time_ss']}</label>
+			<!--<label>{$lang['time_ss']}</label>-->
 		</span>
 EOT;
 			$seconds_separator = ':';
@@ -844,8 +912,10 @@ EOT;
 		if(!empty($element->guidelines)){
 			$guidelines = "<p class=\"guidelines\" id=\"guide_{$element->id}\"><small>{$element->guidelines}</small></p>";
 		}
+
+        //print_r($element);
 		
-		if($element->constraint != 'yen'){ //for dollar, pound and euro
+		if($element->constraint != 'yen' && $element->constraint != 'rmb' &&  !empty($element->constraint)){ //for dollar, pound and euro
 			if($element->constraint == 'pound'){
 				$main_cur  = $lang['price_pound_main'];
 				$child_cur = $lang['price_pound_sub'];
@@ -886,7 +956,7 @@ $element_markup = <<<EOT
 		<span class="symbol">{$cur_symbol}</span>
 		<span>
 			<input id="element_{$element->id}" name="element_{$element->id}" class="element text currency" size="10" value="{$element->populated_value['element_'.$element->id]['default_value']}" type="text" />	
-			<label for="element_{$element->id}">{$main_cur}</label>
+			<!--<label for="element_{$element->id}">{$main_cur}</label>-->
 		</span>
 		{$guidelines} {$error_message}
 		</li>
@@ -1480,7 +1550,6 @@ EOT;
 		
 		
 		if(USE_INTERNAL_CAPTCHA === true){ //use the internal captcha if enabled
-		
 			$machform_path = '';
 			if(!empty($element->machform_path)){
 				$machform_path = $element->machform_path;
@@ -1532,6 +1601,7 @@ EOT;
 	function display_form($form_id,$populated_values=array(),$error_elements=array(),$custom_error='',$edit_id=0,$embed=false){
 		
 		global $lang;
+        global $elements_crm;
 		
 		//if there is custom error, don't show other errors
 		if(!empty($custom_error)){
@@ -1558,7 +1628,7 @@ EOT;
 		$result = do_query($query);
 		$row 	= do_fetch_result($result);
 	
-		$form =& new stdClass();
+		$form = new stdClass();
 		
 		$form->id 				= $form_id;
 		$form->name 			= $row['form_name'];
@@ -1640,7 +1710,7 @@ EOT;
 				$element_options = array();
 				$i=0;
 				foreach ($options_lookup[$element_id] as $option_id=>$data){
-					$element_options[$i] =& new stdClass();
+					$element_options[$i] = new stdClass();
 					$element_options[$i]->id 		 = $option_id;
 					$element_options[$i]->option 	 = $data['option'];
 					$element_options[$i]->is_default = $data['option_is_default'];
@@ -1651,7 +1721,7 @@ EOT;
 			
 		
 			//populate elements
-			$element[$j] =& new stdClass();
+			$element[$j] = new stdClass();
 			$element[$j]->title 		= $row['element_title'];
 			$element[$j]->guidelines 	= $row['element_guidelines'];
 			$element[$j]->size 			= $row['element_size'];
@@ -1701,7 +1771,7 @@ EOT;
 		
 		//add captcha if enable
 		if(!empty($form->captcha) && (empty($edit_id))){
-			$element[$j] =& new stdClass();
+			$element[$j] = new stdClass();
 			$element[$j]->type 			= 'captcha';
 			$element[$j]->form_id 		= $form_id;
 			$element[$j]->is_private	= 0;
@@ -1712,13 +1782,22 @@ EOT;
 			}
 		}
 		
+        //取配置文件中的类型，省去重复写函数，因为都是text类型的
+        $array_ele = $elements_crm;
+        array_shift($array_ele);
+
 		//generate html markup for each element
 		$all_element_markup = '';
 		foreach ($element as $element_data){
 			if($element_data->is_private && empty($_SESSION['logged_in'])){ //don't show private element
 				continue;
 			}
-			$all_element_markup .= call_user_func('display_'.$element_data->type,$element_data);
+
+
+            $e_type = (in_array($element_data->type, $array_ele)) ? 'text' : $element_data->type;
+
+            //职位等都调用text
+			$all_element_markup .= call_user_func('display_'.$e_type,$element_data);
 		}
 		
 		if(!empty($custom_error)){
@@ -1820,10 +1899,8 @@ EOT;
 			$calendar_js = '';
 		}
 		
-		//If you would like to remove the "Powered by MachForm" link, please contact us at customer.service@appnitro.com before doing so
 		$form_markup = <<<EOT
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>{$form->name}</title>
@@ -1833,7 +1910,6 @@ EOT;
 </head>
 <body id="main_body" {$embed_class}>
 	
-	<img id="top" src="images/top.png" alt="" />
 	<div id="form_container">
 	
 		<h1><a>{$form->name}</a></h1>
@@ -1847,10 +1923,9 @@ EOT;
 			</ul>
 		</form>	
 		<div id="footer">
-			Powered by <a href="http://www.nulledscriptz.com">MachForm</a>
+			Powered by <a href="http://www.360mb.cn" target="_blank">莫比数据</a>
 		</div>
 	</div>
-	<img id="bottom" src="images/bottom.png" alt="" />
 	</body>
 </html>
 EOT;
@@ -1888,7 +1963,7 @@ EOT;
 		$result = do_query($query);
 		$row 	= do_fetch_result($result);
 	
-		$form =& new stdClass();
+		$form = new stdClass();
 		
 		$form->id 				= $form_id;
 		$form->name 			= $row['form_name'];
@@ -1971,7 +2046,7 @@ EOT;
 				$element_options = array();
 				$i=0;
 				foreach ($options_lookup[$element_id] as $option_id=>$data){
-					$element_options[$i] =& new stdClass();
+					$element_options[$i] = new stdClass();
 					$element_options[$i]->id 		 = $option_id;
 					$element_options[$i]->option 	 = $data['option'];
 					$element_options[$i]->is_default = $data['option_is_default'];
@@ -1982,7 +2057,7 @@ EOT;
 			
 		
 			//populate elements
-			$element[$j] =& new stdClass();
+			$element[$j] = new stdClass();
 			$element[$j]->title 		= $row['element_title'];
 			
 			if(empty($edit_id)){
@@ -2038,7 +2113,7 @@ EOT;
 		
 		//add captcha if enable
 		if(!empty($form->captcha) && (empty($edit_id))){
-			$element[$j] =& new stdClass();
+			$element[$j] = new stdClass();
 			$element[$j]->type 			= 'captcha';
 			$element[$j]->form_id 		= $form_id;
 			$element[$j]->machform_path	= $machform_path;
@@ -2163,7 +2238,6 @@ EOT;
 		}
 		
 		
-		//If you would like to remove the "Powered by MachForm" link, please contact us at customer.service@appnitro.com before doing so
 		$form_markup =<<<EOT
 {$css_markup}
 <script type="text/javascript" src="{$machform_path}js/view.js"></script>
@@ -2184,7 +2258,7 @@ EOT;
 			</ul>
 		</form>	
 		<div id="footer">
-			Powered by <a href="http://www.nulledscriptz.com">MachForm</a>
+			Powered by <a href="http://www.360mb.cn">莫比数据</a>
 		</div>
 	</div>
 </div>
@@ -2207,7 +2281,7 @@ EOT;
 		$result = do_query($query);
 		$row 	= do_fetch_result($result);
 	
-		$form =& new stdClass();
+		$form = new stdClass();
 		
 		$form->id 				= $form_id;
 		$form->success_message  = nl2br($row['form_success_message']);
@@ -2225,8 +2299,7 @@ EOT;
 		}
 	
 		$form_markup = <<<EOT
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>{$form->name}</title>
@@ -2234,19 +2307,17 @@ EOT;
 </head>
 <body id="main_body" {$embed_class}>
 	
-	<img id="top" src="images/top.png" alt="" />
 	<div id="form_container">
 	
-		<h1><a>Appnitro MachForm</a></h1>
+		<h1><a>莫比数据</a></h1>
 			
 		<div class="form_success">
 			<h2>{$form->success_message}</h2>
 		</div>
 		<div id="footer" class="success">
-			Powered by <a href="http://www.nulledscriptz.com">MachForm</a>
+			Powered by <a href="http://www.360mb.cn">莫比数据</a>
 		</div>		
 	</div>
-	<img id="bottom" src="images/bottom.png" alt="" />
 	</body>
 </html>
 EOT;
@@ -2267,7 +2338,7 @@ EOT;
 		$result = do_query($query);
 		$row 	= do_fetch_result($result);
 	
-		$form =& new stdClass();
+		$form = new stdClass();
 		
 		$form->id 				= $form_id;
 		$form->success_message  = nl2br($row['form_success_message']);
@@ -2284,13 +2355,13 @@ EOT;
 <link rel="stylesheet" type="text/css" href="{$machform_path}{$css_dir}view.css" media="all" />
 <div id="main_body" class="embed">
 	<div id="form_container">
-		<h1><a>Appnitro MachForm</a></h1>
+		<h1><a>莫比数据</a></h1>
 			
 		<div class="form_success">
 			<h2>{$form->success_message}</h2>
 		</div>
 		<div id="footer" class="success">
-			Powered by <a href="http://www.nulledscriptz.com">MachForm</a>
+			Powered by <a href="http://www.360mb.cn">莫比数据</a>
 		</div>		
 	</div>
 </div>
@@ -2354,8 +2425,7 @@ EOT;
 		}
 	
 		$form_markup = <<<EOT
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>{$form_name}</title>
@@ -2370,7 +2440,6 @@ $(document).ready(function () {
 </head>
 <body id="main_body" {$embed_class}>
 	
-	<img id="top" src="images/top.png" alt="" />
 	<div id="form_container">
 	
 		<h1><a>Appnitro MachForm</a></h1>
@@ -2391,7 +2460,6 @@ $(document).ready(function () {
 		<div id="footer" class="success">
 		</div>		
 	</div>
-	<img id="bottom" src="images/bottom.png" alt="" />
 	</body>
 </html>
 EOT;
@@ -2468,7 +2536,7 @@ $(document).ready(function () {
 </head>
 <div id="main_body" class="embed">
 	<div id="form_container">
-		<h1><a>Appnitro MachForm</a></h1>
+		<h1><a>莫比数据</a></h1>
 		<form id="form_{$form->id}" class="appnitro" method="post" action="{$form_action}">
 		    <div class="form_description">
 				<h2>{$lang['review_title']}</h2>
