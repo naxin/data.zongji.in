@@ -1,10 +1,120 @@
-text
-textarea
-name
-email
-phone
-zhiwei
-weixin
-time
-money
-radio
+Array
+(
+    [0] => stdClass Object
+        (
+            [title] => 单行文本
+            [guidelines] => 
+            [size] => medium
+            [is_required] => 0
+            [is_unique] => 0
+            [is_private] => 0
+            [type] => text
+            [object] => 
+            [position] => 0
+            [id] => 0
+            [is_db_live] => 0
+            [default_value] => 
+            [constraint] => 
+            [options] => 
+            [sexs] => Array
+                (
+                    [0] => stdClass Object
+                        (
+                            [option] => 先生
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                    [1] => stdClass Object
+                        (
+                            [option] => 女士
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                )
+
+            [element_is_crm] => 0
+        )
+
+    [1] => stdClass Object
+        (
+            [title] => 多行文本
+            [guidelines] => 
+            [size] => medium
+            [is_required] => 0
+            [is_unique] => 0
+            [is_private] => 0
+            [type] => textarea
+            [object] => 
+            [position] => 1
+            [id] => 1
+            [is_db_live] => 0
+            [default_value] => 
+            [constraint] => 
+            [options] => 
+            [sexs] => Array
+                (
+                    [0] => stdClass Object
+                        (
+                            [option] => 先生
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                    [1] => stdClass Object
+                        (
+                            [option] => 女士
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                )
+
+            [element_is_crm] => 0
+        )
+
+    [2] => stdClass Object
+        (
+            [title] => 日期
+            [guidelines] => 
+            [size] => medium
+            [is_required] => 0
+            [is_unique] => 0
+            [is_private] => 0
+            [type] => date
+            [object] => 
+            [position] => 5
+            [id] => 105
+            [is_db_live] => 0
+            [default_value] => 
+            [constraint] => 
+            [options] => 
+            [sexs] => Array
+                (
+                    [0] => stdClass Object
+                        (
+                            [option] => 先生
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                    [1] => stdClass Object
+                        (
+                            [option] => 女士
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                )
+
+            [element_is_crm] => 0
+        )
+
+)

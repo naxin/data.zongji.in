@@ -14,6 +14,7 @@
 	session_start();	
 
 	require('config.php');
+	require('includes/check-session.php');
 	require('includes/db-core.php');
 	require('includes/db-functions.php');
 	require('includes/helper-functions.php');
@@ -37,8 +38,19 @@
     }
      */
 
-    $_SESSION['logged_in'] = true;
+	/*
+	 * 修改：dignran
+	 * 时间：20140813
+	 */
+	 if (!$_SESSION['from'] && $_GET['from'] == 'wifi') {
+	    $_SESSION['from'] = true; 
+	 }
+     /*结束*/
+	    
     header("Location: http{$ssl_suffix}://".$_SERVER['HTTP_HOST'].get_dirname($_SERVER['PHP_SELF'])."/manage_form.php");
+    exit;
+
+    $_SESSION['logged_in'] = true;
 
 	//redirect to form manager if already logged-in
     /*

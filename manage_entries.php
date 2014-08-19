@@ -152,6 +152,8 @@
 			$column_type_lookup['element_'.$row['element_id'].'_5'] = $row['element_type'];
 			$column_type_lookup['element_'.$row['element_id'].'_6'] = $row['element_type'];
 			
+		}elseif ('product' == $element_type){ //如果是商品,把字段名存储起来，显示时判断
+            $product_fields[] = 'element_'.$row['element_id'];
 		}elseif ('simple_name' == $element_type){ //simple name has 2 fields
 			$column_name_lookup['element_'.$row['element_id'].'_1'] = $row['element_title'].' - First';
 			$column_name_lookup['element_'.$row['element_id'].'_2'] = $row['element_title'].' - Last';

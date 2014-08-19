@@ -2442,3 +2442,146 @@ margin-left: 0;
 }
 
 .shopping_controller{text-align:center;}
+
+.btn_shopiingimg {
+text-align: center;
+line-height: 22px;
+}
+
+.input_file {
+position: absolute;
+top: 0px;
+left: 0px;
+height: 30px;
+width: 100%;
+color: #999;
+opacity: 0;
+filter: alpha(opacity=0);
+-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+font-size: 160px;
+overflow: hidden;
+z-index: 10;
+}
+
+.shopping-item {
+position: relative;
+float: left;
+width: 155px;
+background-color: #FFF;
+border: 1px solid #D5D5D5;
+box-shadow: 0 2px 2px #EBEBEB;
+margin-bottom: 4px !important;
+padding: 0 !important;
+margin-right: 5px !important;
+margin-left: 4px !important;
+}
+
+.shopping-item .pic_place {
+width: 150px;
+height: 110px;
+margin-right: auto;
+margin-left: auto;
+margin-top: 2px;
+margin-bottom: 4px;
+overflow: hidden;
+}
+
+.shopping-item .pic_place img{
+  width:100%;
+}
+
+.shopping-item .text_place {
+height: 79px;
+position: relative;
+margin-right: auto;
+margin-left: auto;
+}
+
+.shopping-item .text_place .item_name {
+width: 144px;
+display: block;
+margin-left: 8px;
+color: #333;
+font-size: 12px;
+position: absolute;
+background-color: #FFF;
+top: 10px;
+left: 0;
+max-height: 32px;
+height: 32px;
+overflow: hidden;
+}
+
+.shopping-item .text_place .item_price {
+font-size: 12px;
+font-weight: 600;
+color: #0077B3;
+margin-right: 5px;
+position: absolute;
+background-color: #FFF;
+text-align: right;
+top: 49px;
+right: 0;
+}
+
+.item_select {
+margin-left: 8px;
+position: absolute;
+top: 48px;
+left: 0;
+z-index: 20;
+}
+
+.item_select .remove {
+display: inline-block;
+height: 18px;
+border: 1px solid #ABABAB;
+border-radius: 2px 0 0 2px;
+width: 18px;
+line-height: 18px;
+text-align: center;
+border-right: 0;
+background: #EEE;
+vertical-align: top;
+padding: 0;
+margin: 0;
+cursor: pointer;
+float: left;
+}
+
+.item_select .itemnum {
+width: 18px;
+height: 18px;
+line-height: 18px;
+padding: 0;
+outline: 0 none;
+border: 1px solid #ABABAB;
+margin-top: 0;
+text-align: center;
+font-size: 12px;
+float: left;
+display: inline-block;
+}
+
+input:disabled, textarea:disabled {
+background-color: #fff;
+}
+
+.item_select .add {
+display: inline-block;
+height: 18px;
+border: 1px solid #ABABAB;
+border-radius: 0 2px 2px 0;
+width: 18px;
+line-height: 18px;
+text-align: center;
+border-left: 0;
+background: #EEE;
+vertical-align: top;
+padding: 0;
+cursor: pointer;
+}
+
+.btn-add-product{display:none;}
+

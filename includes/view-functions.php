@@ -52,6 +52,56 @@ EOT;
 		return $element_markup;
 	}
 	
+    //view product
+	function display_product($element){
+		
+		//check for error
+		$error_class = '';
+		$error_message = '';
+		$span_required = '';
+		$guidelines = '';
+		
+		//check for required
+		if($element->is_required){
+			$span_required = "<span id=\"required_{$element->id}\" class=\"required\">*</span>";
+		}
+		
+		//check for guidelines
+		if(!empty($element->guidelines)){
+			$guidelines = "<p class=\"guidelines\" id=\"guide_{$element->id}\"><small>{$element->guidelines}</small></p>";
+		}
+		
+		//check for populated value, if exist, use it instead default_value
+		if(isset($element->populated_value['element_'.$element->id]['default_value'])){
+			$element->default_value = $element->populated_value['element_'.$element->id]['default_value'];
+		}
+
+        //print_r($element);
+
+        $productContent = '<ul class="f_shoppingList">';
+        if($element->options){
+            foreach($element->options as $key => $option){
+                $data = explode("||", $option->option);
+                $price = ($data[3]) ? sprintf("%.2f", $data[3]) : "0.00";
+                $newid = $data[6];
+                $maxNum = ($data[4]) ? $data[4] : 999999;
+                $productContent .= '<li class="f_shoppingItem has-pic " itemid="'.$option->id.'"><a class="shopItem_img" href="'.$data[2].'"><img src="'.$data[5].'" alt=""></a><p class="shopItem_name fs_content" title="'.$data[1].'">'.$data[1].'</p><p class="shopItem_select"><span class="shopItem_remove">-</span><input class="shopItem_num" value="0" data-max="'.$maxNum.'" data-newid="'.$option->aeo_id.'" data-element-id="'.$element->id.'"><span class="shopItem_add">+</span><span class="shopItem_price">￥'.$price.'</span></p></li>';    
+            }
+        }
+
+        $productContent .= "</ul>";
+
+$element_markup = <<<EOT
+		<li id="li_{$element->id}" {$error_class}>
+		<label class="description" for="element_{$element->id}">{$element->title} {$span_required}</label>
+		<div>
+            {$productContent}
+		</div>{$guidelines} {$error_message}
+		</li>
+EOT;
+		
+		return $element_markup;
+	}
 	
 	
 	//Paragraph Text
@@ -1656,7 +1706,8 @@ EOT;
 		
 		//get elements data
 		//get element options first and store it into array
-		$query = "select 
+        $query = "select
+                        aeo_id,
 						element_id,
 						option_id,
 						`position`,
@@ -1672,11 +1723,11 @@ EOT;
 		while($row = do_fetch_result($result)){
 			$element_id = $row['element_id'];
 			$option_id  = $row['option_id'];
+			$options_lookup[$element_id][$option_id]['aeo_id'] 		      = $row['aeo_id'];
 			$options_lookup[$element_id][$option_id]['position'] 		  = $row['position'];
 			$options_lookup[$element_id][$option_id]['option'] 			  = $row['option'];
 			$options_lookup[$element_id][$option_id]['option_is_default'] = $row['option_is_default'];
 		}
-	
 		
 		//get elements data
 		$element = array();
@@ -1712,6 +1763,7 @@ EOT;
 				foreach ($options_lookup[$element_id] as $option_id=>$data){
 					$element_options[$i] = new stdClass();
 					$element_options[$i]->id 		 = $option_id;
+					$element_options[$i]->aeo_id     = $data['aeo_id'];
 					$element_options[$i]->option 	 = $data['option'];
 					$element_options[$i]->is_default = $data['option_is_default'];
 					$element_options[$i]->is_db_live = 1;
@@ -1793,7 +1845,6 @@ EOT;
 				continue;
 			}
 
-
             $e_type = (in_array($element_data->type, $array_ele)) ? 'text' : $element_data->type;
 
             //职位等都调用text
@@ -1838,7 +1889,12 @@ EOT;
 				<input id="saveForm" class="button_text" type="submit" name="submit" value="{$button_text}" />
 		</li>
 EOT;
-		
+
+		$product_markup =<<<EOT
+		<li id="li_cart" class="buttons li_cart">
+<div class="f_cart" id="mfcart" style=""><ul class="f_productslist"></ul><div class="f_totalprice"></div></div>
+		</li>
+EOT;
 		//check for specific form css, if any, use it instead
 		if($form->has_css){
 			$css_dir = DATA_DIR."/form_{$form_id}/css/";
@@ -1905,6 +1961,7 @@ EOT;
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>{$form->name}</title>
 <link rel="stylesheet" type="text/css" href="{$css_dir}view.css" media="all" />
+<script src="/js/jquery/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="js/view.js"></script>
 {$calendar_js}
 </head>
@@ -1919,6 +1976,7 @@ EOT;
 			{$form->error_message}
 			{$all_element_markup}
 			{$custom_element}
+			{$product_markup}
 			{$button_markup}
 			</ul>
 		</form>	

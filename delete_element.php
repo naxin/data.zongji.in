@@ -15,8 +15,8 @@
 	require('includes/db-core.php');
 	require('includes/db-functions.php');
 	
-	$form_id 	= (int) trim($_POST['form_id']);
-	$element_id = (int) trim($_POST['element_id']);
+	$form_id 	= (int) trim($_REQUEST['form_id']);
+	$element_id = (int) trim($_REQUEST['element_id']);
 	
 	connect_db();
 	

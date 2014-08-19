@@ -1,38 +1,393 @@
-stdClass Object
+Array
 (
-    [title] => 商品
-    [guidelines] => 
-    [size] => medium
-    [is_required] => 0
-    [is_unique] => 0
-    [is_private] => 0
-    [type] => product
-    [object] => 
-    [position] => 5
-    [id] => 6
-    [is_db_live] => 0
-    [default_value] => 
-    [constraint] => 
-    [options] => 
-    [sexs] => Array
+    [0] => stdClass Object
         (
-            [0] => stdClass Object
+            [title] => 单行文本
+            [guidelines] => 
+            [size] => medium
+            [is_required] => 0
+            [is_unique] => 0
+            [is_private] => 0
+            [type] => text
+            [object] => 
+            [position] => 0
+            [id] => 0
+            [is_db_live] => 0
+            [default_value] => 
+            [constraint] => 
+            [options] => Array
                 (
-                    [option] => 先生
-                    [is_default] => 0
-                    [is_db_live] => 0
-                    [id] => 0
+                    [0] => stdClass Object
+                        (
+                            [option] => 第一个选项
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                    [1] => stdClass Object
+                        (
+                            [option] => 第二个选项
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                    [2] => stdClass Object
+                        (
+                            [option] => 第三个选项
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
                 )
 
-            [1] => stdClass Object
+            [sexs] => Array
                 (
-                    [option] => 女士
-                    [is_default] => 0
-                    [is_db_live] => 0
-                    [id] => 0
+                    [0] => stdClass Object
+                        (
+                            [option] => 先生
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                    [1] => stdClass Object
+                        (
+                            [option] => 女士
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
                 )
 
         )
 
-    [element_is_crm] => 0
+    [1] => stdClass Object
+        (
+            [title] => 多行文本
+            [guidelines] => 
+            [size] => medium
+            [is_required] => 0
+            [is_unique] => 0
+            [is_private] => 0
+            [type] => textarea
+            [object] => 
+            [position] => 1
+            [id] => 1
+            [is_db_live] => 0
+            [default_value] => 
+            [constraint] => 
+            [options] => Array
+                (
+                    [0] => stdClass Object
+                        (
+                            [option] => 第一个选项
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                    [1] => stdClass Object
+                        (
+                            [option] => 第二个选项
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                    [2] => stdClass Object
+                        (
+                            [option] => 第三个选项
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                )
+
+            [sexs] => Array
+                (
+                    [0] => stdClass Object
+                        (
+                            [option] => 先生
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                    [1] => stdClass Object
+                        (
+                            [option] => 女士
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                )
+
+        )
+
+    [2] => stdClass Object
+        (
+            [title] => 多项选择
+            [guidelines] => 
+            [size] => medium
+            [is_required] => 0
+            [is_unique] => 0
+            [is_private] => 0
+            [type] => checkbox
+            [object] => 
+            [position] => 2
+            [id] => 2
+            [is_db_live] => 0
+            [default_value] => 
+            [constraint] => 
+            [options] => Array
+                (
+                    [0] => stdClass Object
+                        (
+                            [option] => 第一个选项
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                    [1] => stdClass Object
+                        (
+                            [option] => 第二个选项
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                    [2] => stdClass Object
+                        (
+                            [option] => 第三个选项
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                )
+
+            [sexs] => Array
+                (
+                    [0] => stdClass Object
+                        (
+                            [option] => 先生
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                    [1] => stdClass Object
+                        (
+                            [option] => 女士
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                )
+
+        )
+
+    [3] => stdClass Object
+        (
+            [title] => 单项选择
+            [guidelines] => 
+            [size] => medium
+            [is_required] => 0
+            [is_unique] => 0
+            [is_private] => 0
+            [type] => radio
+            [object] => 
+            [position] => 3
+            [id] => 103
+            [is_db_live] => 0
+            [default_value] => 
+            [constraint] => 
+            [options] => Array
+                (
+                    [0] => stdClass Object
+                        (
+                            [option] => 第一个选项
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                    [1] => stdClass Object
+                        (
+                            [option] => 第二个选项
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                    [2] => stdClass Object
+                        (
+                            [option] => 第三个选项
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                )
+
+            [sexs] => Array
+                (
+                    [0] => stdClass Object
+                        (
+                            [option] => 先生
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                    [1] => stdClass Object
+                        (
+                            [option] => 女士
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                )
+
+        )
+
+    [4] => stdClass Object
+        (
+            [title] => 下拉菜单
+            [guidelines] => 
+            [size] => medium
+            [is_required] => 0
+            [is_unique] => 0
+            [is_private] => 0
+            [type] => select
+            [object] => 
+            [position] => 4
+            [id] => 104
+            [is_db_live] => 0
+            [default_value] => 
+            [constraint] => 
+            [options] => Array
+                (
+                    [0] => stdClass Object
+                        (
+                            [option] => 第一个选项
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                    [1] => stdClass Object
+                        (
+                            [option] => 第二个选项
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                    [2] => stdClass Object
+                        (
+                            [option] => 第三个选项
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                )
+
+            [sexs] => Array
+                (
+                    [0] => stdClass Object
+                        (
+                            [option] => 先生
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                    [1] => stdClass Object
+                        (
+                            [option] => 女士
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                )
+
+        )
+
+    [5] => stdClass Object
+        (
+            [title] => 日期
+            [guidelines] => 
+            [size] => medium
+            [is_required] => 0
+            [is_unique] => 0
+            [is_private] => 0
+            [type] => date
+            [object] => 
+            [position] => 5
+            [id] => 105
+            [is_db_live] => 0
+            [default_value] => 
+            [constraint] => 
+            [options] => Array
+                (
+                    [0] => stdClass Object
+                        (
+                            [option] => 第一个选项
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                    [1] => stdClass Object
+                        (
+                            [option] => 第二个选项
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                    [2] => stdClass Object
+                        (
+                            [option] => 第三个选项
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                )
+
+            [sexs] => Array
+                (
+                    [0] => stdClass Object
+                        (
+                            [option] => 先生
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                    [1] => stdClass Object
+                        (
+                            [option] => 女士
+                            [is_default] => 0
+                            [is_db_live] => 0
+                            [id] => 0
+                        )
+
+                )
+
+        )
+
 )

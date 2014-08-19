@@ -34,7 +34,11 @@
 	if(!empty($_POST['submit'])){ //if form submitted
 		$input_array   = ap_sanitize_input($_POST);
 		
-        //print_r($input_array);
+        /*
+         *echo "<pre>";
+         *print_r($input_array);
+         *echo "</pre>";
+         */
         //exit;
 		$submit_result = process_form($input_array);
 		

@@ -132,8 +132,12 @@
 			$user_input[$element_name] = @$input[$element_name];
 		}
 					
-						
-        //print_r($element_info);
+        /*
+         *echo "<pre>";
+         *print_r($user_input);
+         *print_r($element_info);
+         *echo "</pre>";
+         */
         //exit;
 
 		$error_elements = array();
@@ -150,8 +154,7 @@
 			$target_input = array();
 			
 			$element_type = $element_info[$element_id]['type'];
-			
-			
+
 			//if this is private fields and not logged-in as admin, bypass operation below, just supply the default value if any
 			if(($element_info[$element_id]['is_private'] == 1) && empty($_SESSION['logged_in'])){
 				if(!empty($element_info[$element_id]['default_value'])){
@@ -173,6 +176,21 @@
 				
 				$rules[$element_name]['max'] 		= 255;
 				
+				$target_input[$element_name] = $element_data;
+				$validation_result = validate_element($target_input,$rules);
+				
+				if($validation_result !== true){
+					$error_elements[$element_id] = $validation_result;
+				}
+				
+				//save old data into array, for form redisplay in case errors occured
+				$form_data[$element_name]['default_value'] = htmlspecialchars($element_data); 
+				
+				//prepare data for table column
+				$table_data[$element_name] = $element_data; 
+				
+			}elseif ('product' == $element_type){ //product
+				$element_data = implode(",", $element_data);
 				$target_input[$element_name] = $element_data;
 				$validation_result = validate_element($target_input,$rules);
 				
@@ -1027,6 +1045,8 @@
 					$query = "INSERT INTO `ap_form_{$form_id}_review` ($field_list) VALUES ($field_values);"; 
 				}
 				
+                //echo $query;
+                //exit("why?");
 				do_query($query);
 			
 				$record_insert_id = mysql_insert_id();

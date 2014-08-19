@@ -21,9 +21,18 @@
       	if($current_dir == "/" || $current_dir == "\\"){
 			$current_dir = '';
 		}
-		
+	   
+		/*
+		 * 修改：dignran
+		 * 时间：20140813
+		 */
+	    if ($_GET['from'] == 'wifi') {
+	      $_SESSION['from'] = true;
+	    }
+        /*结束*/
+	    
 		$_SESSION['AP_LOGIN_ERROR'] = 'Sorry, you must be logged in to do that.';
-		header("Location: http{$ssl_suffix}://".$_SERVER['HTTP_HOST'].$current_dir.'/index.php?from='.base64_encode($_SERVER['REQUEST_URI']));
+		header("Location: http{$ssl_suffix}://".$_SERVER['HTTP_HOST'].$current_dir.'/login.php?from='.base64_encode($_SERVER['REQUEST_URI']));
 		exit;
 	}
 

@@ -248,7 +248,7 @@ function register() {
 		success: function (data) {
 			if (data.flag){
 				$(".login_btn").html("注&nbsp;&nbsp;册&nbsp;&nbsp;成&nbsp;&nbsp;功");
-				location.href = "listContact.php";
+				location.href = "manage_form.php";
 			}
 		}
 	});

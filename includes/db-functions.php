@@ -159,7 +159,69 @@
 		
 		return true;
 	}
-	
+
+    /*
+     * 添加产品到ap_element_options表
+     * option_id:商品序号
+     * option: 商品详情(product_name|product_url|price|...)
+     *
+     * @param:products(array(stdClass, stdClass...))
+     */
+	function add_products($form_id, $products){
+		$rules['form_id']['required'] = true;
+
+        foreach($products as $k => $val){
+            $id = $k + 1;
+            $option = mysql_real_escape_string(implode("||", $val));
+
+            $query = "INSERT INTO `ap_element_options` (`form_id`, `element_id`, `option_id`, `position`, `option`, `option_is_default`, `live`) 
+                VALUES ('".$form_id."','".$val["pid"]."','".$id."','".$id."','".$option."',0,1);"; 
+
+            //echo $query . "\r\n";
+            
+            $result = mysql_query($query);
+            if(!$result){
+                $error_message = 'Query failed! Error code: '.mysql_errno().' - '.mysql_error().' - Query: '.$query;
+                return $error_message;
+            }
+        };
+					
+		return true;
+	}
+
+    /**
+     * 更新商品
+     *
+     */
+	function update_products($form_id, $products){
+		$rules['form_id']['required'] = true;
+        foreach($products as $k => $val){
+            $id = $k + 1;
+            $option = mysql_real_escape_string(implode("||", $val));
+
+            $sql = "select aeo_id from `ap_element_options` where form_id = {$form_id} and element_id = {$val["pid"]} and option_id = {$id}";
+            $result = mysql_query($sql);
+	        $row 	= do_fetch_result($result);
+
+	        if(!empty($row)){
+                $sql = "update `ap_element_options` set `option` = \"{$option}\" where aeo_id = {$row['aeo_id']}";
+                $result = mysql_query($sql);
+            }
+            else{
+                $query = "INSERT INTO `ap_element_options` (`form_id`, `element_id`, `option_id`, `position`, `option`, `option_is_default`, `live`) 
+                VALUES ('".$form_id."','".$val["pid"]."','".$id."','".$id."','".$option."',0,1);";
+                $result = mysql_query($query);
+            }
+
+            if(!$result){
+                $error_message = 'Query failed! Error code: '.mysql_errno().' - '.mysql_error().' - Query: '.$query;
+                return $error_message;
+            }
+        };
+					
+		return true;
+	}	
+
 	/** ap_element_options table ************************************/
 	function ap_element_options_insert($data){
 		

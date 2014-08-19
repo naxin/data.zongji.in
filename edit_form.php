@@ -10,7 +10,7 @@
 #      History:
 =============================================================================*/
 	session_start();
-	
+
 	require('config.php');
 	require('includes/check-session.php');
 	require('includes/db-core.php');
@@ -22,7 +22,7 @@
 	}else{
 		$form_id = 0;
 	}
-	
+
 		
 	//get data from databae
 	connect_db();
@@ -92,7 +92,6 @@
 		$options_lookup[$element_id][$option_id]['option_is_default'] = $row['option_is_default'];
 	}
 
-	
 	//get elements data
 	$element = array();
 	$query = "select 
@@ -125,6 +124,9 @@
 			foreach ($options_lookup[$element_id] as $option_id=>$data){
 				$element_options[$i] = new stdClass();
 				$element_options[$i]->id 		 = $option_id;
+                if($row['element_type'] == 'product'){
+                    $data['option'] = explode("||", $data['option']);    
+                }
 				$element_options[$i]->option 	 = $data['option'];
 				$element_options[$i]->is_default = $data['option_is_default'];
 				$element_options[$i]->is_db_live = 1;
@@ -166,14 +168,17 @@
 
 	
 	$header_data =<<<EOT
-	<script type="text/javascript" src="js/base.js"></script>
+    <script src="js/jquery-1.8.2.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
 	<script type="text/javascript" src="js/machform.js"></script>
+    <script type="text/javascript" src="/js/tmpl.min.js"></script>        
 EOT;
 	
 	$show_status_bar = true; //for header.php
 	
 	require('includes/header.php'); 
 ?>
+<link rel="stylesheet" href="css/jquery.fileupload.css">
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
 <div id="main">
 <form id="form_result" action="">
@@ -423,47 +428,11 @@ EOT;
 </li>
 
 
-<li class="clear buttons" id="prop_add_product" style="display:block;">
-<label class="desc">
-商品列表
-<a href="#" class="tooltip" title="Default Value" rel="By setting this value, the field will be prepopulated with the text you enter.">(?)</a>
-</label>
+<div id="product-list">
+        
+</div> 
 
-<div class="shoppingitem_preview_container">
-    <div class="shoppingitem_preview" style="display: none;">
-        <div class="previewimg">
-            <img src="" alt="">
-        </div>
-        <div class="previewinfo"></div>
-    </div>
-    <div class="shoppingitem_edit" newitem="true">
-        <div class="editimgfield">
-            <img class="defaultimg" src="images/icon/formDefaultImage.png" alt="上传图片" style="width: 94%; display: inline;">
-            <img src="" alt="" class="editimg" style="display:none;">
-            
-            <div class="upload_shopping_file">
-                <input type="file" size="1" class="input_file" name="_FILE_">
-                <a class="btn btn-primary btn_shopiingimg">上传图片</a>
-            </div>
-            <div class="uploadinfo" style="display:none;margin-top:10px;text-align:center;"></div>
-        </div>
-        <div class="editfield">
-            <div class="shopping_name"><p class="namefield">名称:</p><input type="text" class="input"></div>
-            <div class="shopping_link"><p class="namefield">链接:</p><input type="text" class="input"></div>
-            <!-- <div class="shopping_describe"><p class="namefield">描述:</p><input type="text" class="input"></div> -->
-            <div class="shopping_price"><p class="namefield">单价:</p><input type="text" class="input"></div>
-            <div class="shopping_num"><p class="namefield">最多购买份数:</p><input type="text" class="input"></div>
-            <div class="shopping_controller">
-                <a class="btn btn-primary btn_additem">保存</a>
-                <a class="btn btn-primary btn_canceledit">取消</a>
-            </div>
-            <div class="errorinfo" style="display: none;">必须填写商品名称</div>
-        </div>
-    </div>
-</div>
-
-<a id="element_product" class="positive"><i class="glyphicon glyphicon-plus">添加商品</i></a>
-</li>
+<li id="btn-add-product"><a id="element_product" class="positive" data-id=""><i class="glyphicon glyphicon-plus">添加商品</i></a></li>
 
 
 <li class="clear" id="prop_default_value">
@@ -475,26 +444,6 @@ EOT;
 <input id="element_default" class="text large" name="text" value="" tabindex="11" maxlength="255" onkeyup="set_properties(JJ(this).val(), 'default_value')" onblur="set_properties(JJ(this).val(), 'default_value')" type="text">
 </li>
 
-<li class="clear" id="prop_default_country">
-<label class="desc" for="fieldaddress_default">
-Default Country
-<a href="#" class="tooltip" title="Default Country" rel="By setting this value, the country field will be prepopulated with the selection you make.">(?)</a>
-</label>
-<select class="select medium" id="element_countries" onchange="set_properties(JJ(this).val(), 'default_value')">
-<option value=""></option>
-
-<optgroup label="North America">
-<option value="Antigua and Barbuda">Antigua and Barbuda</option>
-<option value="Bahamas">Bahamas</option>
-<option value="Barbados">Barbados</option> 
-<option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option> 
-<option value="Saint Lucia">Saint Lucia</option>
-<option value="Saint Vincent and the Grenadines">Saint Vincent and the Grenadines</option> 
-<option value="Trinidad and Tobago">Trinidad and Tobago</option>
-<option value="United States">United States</option>
-</optgroup>
-</select>
-</li>
 
 <li class="clear" id="prop_phone_default">
 <label class="desc" for="element_phone_default1">
@@ -585,6 +534,13 @@ Default Country
 <fieldset>
 <legend>提交成功消息</legend>
 
+<?php
+ /*
+  *修改：dingran
+  *时间：20140813
+  */
+ 
+ if (!$_SESSION['from']) { ?>
 <div class="left">
 <input id="form_success_message_option" name="confirmation" class="radio" value="" checked="checked" tabindex="8" onclick="update_form('', 'redirect'); Element.removeClassName('form_success_message', 'hide');Element.addClassName('form_redirect_url', 'hide')" type="radio">
 <label class="choice" for="form_success_message_option">显示文本</label>
@@ -600,7 +556,24 @@ Default Country
 <textarea class="textarea full" rows="10" cols="50" id="form_success_message" tabindex="9" onkeyup="update_form(JJ(this).val(), 'success_message')" onblur="update_form(JJ(this).val(), 'success_message')"><?php echo $form->success_message; ?></textarea>
 
 <input id="form_redirect_url" class="text full hide" name="text" value="http://" tabindex="10" onkeyup="redirect_url = JJ(this).val();update_form(JJ(this).val(), 'redirect')" onblur="urlInHistory = JJ(this).val();update_form(JJ(this).val(), 'redirect')" type="text">
-</fieldset>
+<?php } else {?>
+<div class="left">
+<input id="form_success_message_option" name="confirmation" class="radio" value="" tabindex="8" onclick="update_form('', 'redirect'); Element.removeClassName('form_success_message', 'hide');Element.addClassName('form_redirect_url', 'hide')" type="radio">
+<label class="choice" for="form_success_message_option">显示文本</label>
+<a class="tooltip" title="成功消息" rel="用户提交表单成功后将显示此消息">(?)</a>
+</div>
+
+<div class="right">
+<input id="form_redirect_option" name="confirmation" class="radio" value=""  checked="checked" tabindex="7" onclick="update_form(redirect_url, 'redirect'); Element.addClassName('form_success_message', 'hide');Element.removeClassName('form_redirect_url', 'hide');" type="radio">
+<label class="choice" for="form_redirect_option">跳转到其他页面</label>
+<a class="tooltip" title="Redirect URL" rel="用户提交后可自动跳转到此url">(?)</a>
+</div>
+
+<textarea class="textarea full hide" rows="10" cols="50" id="form_success_message" tabindex="9" onkeyup="update_form(JJ(this).val(), 'success_message')" onblur="update_form(JJ(this).val(), 'success_message')"><?php echo $form->success_message; ?></textarea>
+
+<input id="form_redirect_url" class="text full " name="text" value="http://data.zongji.in/channel/directly" tabindex="10" onkeyup="redirect_url = JJ(this).val();update_form(JJ(this).val(), 'redirect')" onblur="urlInHistory = JJ(this).val();update_form(JJ(this).val(), 'redirect')" type="text">
+<?php } ?>
+</fieldset>	
 </li>
 </ul>
 </div>
@@ -624,13 +597,102 @@ Default Country
 <script src="js/jquery.fileupload-video.js"></script>
 <!-- The File Upload validation plugin -->
 <script src="js/jquery.fileupload-validate.js"></script>
+<script src="js/cors/jquery.xdr-transport.js"></script>
 
+
+<script type="text/x-tmpl" id="tmpl-shopping-item">
+    <li class="shopping-item clearB" itemid="{%=o.newProductId%}">
+        <div class="pic_place">
+            <img src="{%=o.uploadImageUrl%}">
+        </div>
+        <div class="text_place">
+            <a class="item_name" a_link="{%=o.shopping_link%}">{%=o.shopping_name%}</a>
+            <p class="item_price">￥{%=o.shopping_price%}</p>
+            <p class="item_select">
+            <span class="remove">-</span>
+            <input class="itemnum" value="0" disabled="disabled">
+            <span class="add">+</span>
+            </p>
+        </div>
+    </li>
+</script>
+
+<script type="text/x-tmpl" id="tmpl-shopping-item-update">
+        <div class="pic_place">
+            <img src="{%=o.uploadImageUrl%}">
+        </div>
+        <div class="text_place">
+            <a class="item_name" a_link="{%=o.shopping_link%}">{%=o.shopping_name%}</a>
+            <p class="item_price">￥{%=o.shopping_price%}</p>
+            <p class="item_select">
+            <span class="remove">-</span>
+            <input class="itemnum" value="0" disabled="disabled">
+            <span class="add">+</span>
+            </p>
+        </div>
+</script>
+
+<script type="text/x-tmpl" id="tmpl-add-product">
+<li class="clear buttons prop_add_product" data-id="{%=o.data_id%}" style="display:block;">
+<label class="desc">
+    商品列表
+    <a href="#" class="tooltip" title="Default Value" rel="By setting this value, the field will be prepopulated with the text you enter.">(?)</a>
+    </label>
+
+    <div class="shopitems">
+        <ul class="editShopping_list">
+            <li class="editShopping_item_meta" style="display:none">
+            <div class="shoppingitem_preview_container">
+                <div class="shoppingitem_preview" style="display: none;" mbid="">
+                    <div class="previewimg">
+                        <img src="" alt="">
+                    </div>
+                    <div class="previewinfo"></div>
+                </div>
+                <div class="shoppingitem_edit" newitem="true">
+                    <div class="editimgfield">
+                        <img class="defaultimg" src="images/defaultImg.png" alt="上传图片" style="width: 94%; display: inline;">
+                        <img src="" alt="" class="editimg" style="display:none;">
+                        
+                        <div class="upload_shopping_file" imgsrc="">
+                            <input type="file"  size="1" class="input_file" name="files[]" multiple>
+                            <a class="btn btn-primary btn_shopiingimg">上传图片</a>
+                            <div id="progress" class="progress">
+                                    <div class="progress-bar progress-bar-success"></div>
+                                </div>
+                        </div>
+                        <div class="uploadinfo" style="display:none;margin-top:10px;text-align:center;"></div>
+                            
+                    </div>
+                    <div class="editfield">
+                        <div class="shopping_name"><p class="namefield">名称:</p><input type="text" class="input"></div>
+                        <div class="shopping_link"><p class="namefield">链接:</p><input type="text" class="input"></div>
+                        <input type="hidden" class="newid" value="no">
+                        <!-- <div class="shopping_describe"><p class="namefield">描述:</p><input type="text" class="input"></div> -->
+                        <div class="shopping_price"><p class="namefield">单价:</p><input type="text" class="input"></div>
+                        <div class="shopping_num"><p class="namefield">最多购买份数:</p><input type="text" class="input"></div>
+                        <div class="shopping_controller">
+                            <a class="btn btn-primary btn_additem add-product-save">保存</a>
+                            <a class="btn btn-primary btn_canceledit">取消</a>
+                        </div>
+                        <div class="errorinfo" style="display: none;">必须填写商品名称</div>
+                    </div>
+                </div>
+            </div>
+
+            </li>
+            
+        </ul>
+    </div>
+</div>
+</script>
 
 <?php 
 	$footer_data =<<<EOT
 <script type="text/javascript">
 var json_form = {$json_form};
 var json_elements = {$json_element};
+var form_id = {$form->id};
 </script>
 EOT;
 	require('includes/footer.php'); 

@@ -6,7 +6,7 @@
  permission from http://www.nulledscriptz.com/
  
  More info at: http://www.nulledscriptz.com/
- ******************************************************************************/
+ ******************************************************************************/	
 	header("p3p: CP=\"IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT\"");
 	session_start();
 	
@@ -29,11 +29,34 @@
 	connect_db();
 	
 	if(!empty($_POST['submit'])){ //if form submitted
-		$input_array   = ap_sanitize_input($_POST);
+		//$input_array   = ap_sanitize_input($_POST);
 		
+		/*
+		 *修改：dingran
+		 *时间：20140812
+		 */
+		$input_array   = ap_sanitize_input($_REQUEST);
+		
+		if ($input_array['gw_address'] && $input_array['gw_port'] && $input_array['gw_id']
+		     && $input_array['mac'] && $input_array['url']) {
+			$gw_address    = $input_array['gw_address'];
+			$gw_port       = $input_array['gw_port'];
+			$gw_id         = $input_array['gw_id'];
+			$mac           = $input_array['mac'];
+			$url           = $input_array['url'];
+	
+		    unset($input_array['gw_address']);
+		    unset($input_array['gw_port']);
+		    unset($input_array['gw_id']);
+		    unset($input_array['mac']);
+		    unset($input_array['url']);
+		}
+		/*结束*/
+	
 		$submit_result = process_form($input_array);
 		
 		if(!isset($input_array['password'])){ //if normal form submitted
+			
 			if($submit_result['status'] === true){
 				
 				if(empty($submit_result['review_id'])){
@@ -43,6 +66,17 @@
 						header("Location: http{$ssl_suffix}://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?id={$input_array['form_id']}&done=1");
 						exit;
 					}else{
+						
+						/*
+						 * 修改：dignran
+						 * 时间：20140812
+						 */
+						if ($gw_address) {
+							$submit_result['form_redirect'] .= '?gw_address='.$gw_address.'&gw_port='
+						                         .$gw_port.'&gw_id='.$gw_id.'&mac='.$mac.'&url='.$url;
+						}
+						 /*结束*/
+						
 						echo "<script type=\"text/javascript\">top.location = '{$submit_result['form_redirect']}'</script>";
 						exit;
 					}
@@ -62,6 +96,7 @@
 				$markup = display_form($input_array['form_id'],$old_values,$error_elements,$custom_error,0,true);
 			}
 		}else{ //if password form submitted
+	
 			if($submit_result['status'] === true){ //on success, display the form
 				$markup = display_form($input_array['form_id'],null,null,'',0,true);
 			}else{

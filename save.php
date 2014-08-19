@@ -51,6 +51,7 @@
 	$comment_desc['money'] 		 = 'Price';
 	$comment_desc['number'] 	 = 'Number';
 	$comment_desc['simple_name'] = 'Normal Name';
+	$comment_desc['product']    = '商品';
 	//$comment_desc['name'] 		 = 'Extended Name';
 	$comment_desc['xingming']    = '姓名';
 	$comment_desc['address'] 	 = '地址';
@@ -75,6 +76,9 @@
 	
 	$input_array['form'] 	 = $_REQUEST['form'];
 	$input_array['elements'] = $_REQUEST['elements'];
+	$input_array['products'] = $_REQUEST['products'];
+
+    //print_r(json_decode($input_array['products'])); 
 	
 	$input_array = ap_sanitize_input($input_array);	//filter from slashes if any
 		
@@ -82,7 +86,8 @@
 	
 	$form_object 	   = $json->decode($input_array['form']);
 	$elements_object   = $json->decode($input_array['elements']); 
-    file_put_contents('sform1.log', print_r($elements_object, true));
+	$products 	       = json_decode($input_array['products'], true);
+    file_put_contents('sform1.log', print_r($products, true));
 	
 	$form_id = $form_object->id;
 	
@@ -94,7 +99,7 @@
 	$row 	= do_fetch_result($result);
 	
 	if(empty($row['form_exist'])){
-		$is_new_form = true;
+        $is_new_form = true;
 	}else{
 		$is_new_form = false;
 	}
@@ -154,8 +159,19 @@
 				ap_forms_update($form_id,$form_update_input);
 			}
 		}
+
+        //新的表单时直接增加商品
+        if(!empty($products)){
+            add_products($form_id, $products);
+        }
+
 	}else{ //this is just an update, update form info
 		$result = ap_forms_update($form_id,$form_input);		
+
+        //更新商品
+        if(!empty($products)){
+            update_products($form_id, $products);
+        }
 		check_result($result);
 	}
 	/******** End Form Section ********************************************************************/
@@ -167,9 +183,28 @@
 	//separate optionable elements (checkbox/radio button/dropdown) from other elements
 	$optionable_elements = array();
 	
+    file_put_contents('sform.log', print_r($elements_array, true));
+
 	foreach ($elements_array as $key=>$value){
         //是否crm在配置文件中设置
         $value->element_is_crm = in_array($value->type, $elements_crm) ? 1 : 0;
+
+        /*
+         * 方法不对,不能体现修改,弃用
+         *
+        if(!empty($products) && $value->type == 'product'){
+	        $product = new stdClass();
+            foreach($products as $k => $val){
+                if($val->pid == $value->id){
+                    $product->option = implode("|", $val);
+                    $product->is_default
+                    $product->is_db_live
+                    $product->id
+                    $value->options[] = ;   
+                }
+            };
+        }
+         */
 
         if($value->type == 'sex'){
 			$value->options = $value->sexs; //remove options for elements other than checkbox/radio/dropdown 
@@ -182,7 +217,6 @@
 		}
 	}
 
-    file_put_contents('sform.log', print_r($value, true));
 	
 	//1. Process non optionable elements
 	if(!empty($non_optionable_elements)){
@@ -206,6 +240,7 @@
 	$element_input 			  = array();
 	$element_input['form_id'] = $form_id; 
 	
+    file_put_contents('sform2.log', print_r($new_non_optionable_elements, true));
 	if(!empty($new_non_optionable_elements)){
 		foreach ($new_non_optionable_elements as $element){
 			$element_input['element_id'] 			= $next_element_id; 
@@ -308,7 +343,7 @@
 			}
 			ap_form_elements_insert($element_input);
 			
-			if(($element->type == 'radio') || ($element->type == 'select') || ($element->type == 'sex')){ //radio button and select only need one field total,,while checkboxes need one field per option
+			if(($element->type == 'radio') || ($element->type == 'select') || ($element->type == 'sex') || ($element->type == 'product')){ //radio button and select only need one field total,,while checkboxes need one field per option
 				table_add_field($form_id,$next_element_id,$element->type); //actually create the field
 			}
 			
@@ -470,7 +505,7 @@
 	
 
 	//add fields to the specified form table
-	function table_add_field($form_id,$element_id,$type,$option_id=0){
+	function table_add_field($form_id, $element_id, $type, $option_id = 0){
 		global $comment_desc;
 		
 		$comment = @$comment_desc[$type];
@@ -508,6 +543,10 @@
 		}elseif ('name' == $type){
 			//add four field, title, first, last, suffix 
 			$query = "ALTER TABLE `ap_form_{$form_id}` ADD COLUMN `element_{$element_id}_1` varchar(255) NULL COMMENT '{$comment} - Title', ADD COLUMN `element_{$element_id}_2` varchar(255) NULL COMMENT '{$comment} - First', ADD COLUMN `element_{$element_id}_3` varchar(255) NULL COMMENT '{$comment} - Last', ADD COLUMN `element_{$element_id}_4` varchar(255) NULL COMMENT '{$comment} - Suffix';";
+			do_query($query);
+        //产品字段
+		}elseif ('product' == $type){
+			$query = "ALTER TABLE `ap_form_{$form_id}` ADD COLUMN `element_{$element_id}` text NULL COMMENT '{$comment} - {$option_id}';";
 			do_query($query);
 		}elseif ('address' == $type){
 			//add six field
